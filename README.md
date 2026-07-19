@@ -38,6 +38,24 @@ cd ../chapter-007 && pytest -q
 
 See `scripts/README.md` for the full automation workflow.
 
+## Git workflow
+
+| Branch | Purpose |
+|--------|---------|
+| `dev` | **Active development** — all new work is committed and pushed here |
+| `main` | Stable line — update via PR/merge from `dev` when ready to release |
+
+```bash
+git checkout dev
+git pull origin dev
+# ... make changes ...
+git add -A
+git commit -m "Your message"
+git push origin dev
+```
+
+Do **not** commit feature work directly to `main`.
+
 ## Chapters present
 
 Manuscript and code slices currently include chapters **1–11** (Part I complete; Part II through prompt engineering). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
