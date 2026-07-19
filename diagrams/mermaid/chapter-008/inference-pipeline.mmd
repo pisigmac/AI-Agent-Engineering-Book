@@ -1,0 +1,10 @@
+flowchart TD
+  A[User / agent messages] --> B[Template + system policy]
+  B --> C[Tokenizer]
+  C --> D[Embedding + positional signals]
+  D --> E[Transformer stack]
+  E --> F[Logits over vocabulary]
+  F --> G[Decoding strategy]
+  G --> H[Detokenize]
+  H --> I[Text / tool call / JSON]
+  I --> J[Your validators and tools]

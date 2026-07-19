@@ -1,0 +1,7 @@
+flowchart LR
+  CLI[main.py] --> Mock[MockLLM]
+  CLI --> Ground[GroundedQA]
+  Ground --> Docs[InMemoryDocs]
+  Ground --> Mock
+  CLI --> Eval[basic_eval]
+  Mock --> Tax[taxonomy / risks]

@@ -1,0 +1,20 @@
+flowchart LR
+  subgraph Training[Training time - offline]
+    Data[Data corpus]
+    Pre[Pretraining]
+    Post[Post-training]
+    Weights[Parameters / weights]
+    Data --> Pre --> Post --> Weights
+  end
+
+  subgraph Inference[Inference time - your product]
+    Prompt[Prompt + context]
+    Tok[Tokenize]
+    Model[Forward pass]
+    Sample[Sample / decode]
+    Out[Tokens out]
+    Prompt --> Tok --> Model --> Sample --> Out
+    Weights -.-> Model
+  end
+
+  Out --> App[Your agents / tools / UI]
