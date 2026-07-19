@@ -839,7 +839,7 @@ Acceptance:
 
 4. Mutable default arguments are a common footgun. **True**  
 5. Bare `except:` is recommended for production agents. **False**  
-6. Enums help eliminate magic strings for statuses. **True**
+6. Enums help eliminate ad-hoc string statuses. **True**
 
 **Short answer**
 
