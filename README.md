@@ -58,7 +58,7 @@ Do **not** commit feature work directly to `main`.
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–11** (Part I complete; Part II through prompt engineering). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–12** (Part I complete; Part II through context engineering). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
 
 ## Philosophy
 

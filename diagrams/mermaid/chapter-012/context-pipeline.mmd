@@ -1,0 +1,30 @@
+flowchart TB
+  subgraph Inputs[Per-step snapshot]
+    Pol[Pinned policy / system]
+    Goal[Active goal / user task]
+    Hist[Conversation history]
+    Tools[Tool results]
+    Mem[Memory + retrieval hits]
+  end
+
+  subgraph CM[ContextManager]
+    Norm[Normalize to ContextItem]
+    Trust[Tag trust + priority + recency]
+    Cap[Compress oversized untrusted payloads]
+    Select[Select under token budget]
+    Render[Render messages + delimiters]
+  end
+
+  subgraph Outputs[Call artifacts]
+    Msgs[Chat messages for the model]
+    Rep[Assembly report for logs/evals]
+  end
+
+  Pol --> Norm
+  Goal --> Norm
+  Hist --> Norm
+  Tools --> Norm
+  Mem --> Norm
+  Norm --> Trust --> Cap --> Select --> Render
+  Render --> Msgs
+  Select --> Rep
