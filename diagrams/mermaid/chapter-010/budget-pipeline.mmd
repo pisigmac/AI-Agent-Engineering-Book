@@ -1,0 +1,27 @@
+flowchart TB
+  subgraph Sources[Context sources]
+    Sys[System policy]
+    Tools[Tool schemas + results]
+    Mem[Memory / RAG]
+    Hist[Conversation history]
+  end
+
+  subgraph Budget[Token budget service]
+    Count[Token counter]
+    Limit[Window - completion - margin]
+    Pack[Priority packer]
+    Comp[Compressors]
+  end
+
+  subgraph Model[Provider]
+    API[Chat / responses API]
+  end
+
+  Sys --> Pack
+  Tools --> Pack
+  Mem --> Pack
+  Hist --> Pack
+  Count --> Pack
+  Limit --> Pack
+  Comp --> Pack
+  Pack --> API

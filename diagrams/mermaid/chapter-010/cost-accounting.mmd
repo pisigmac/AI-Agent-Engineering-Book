@@ -1,0 +1,7 @@
+flowchart LR
+  Step1[Agent step N] --> Count[Count prompt tokens]
+  Count --> Pack[Pack / compress]
+  Pack --> LLM[Provider call]
+  LLM --> Usage[Record usage in ledger]
+  Usage --> Cost[Estimate USD]
+  Cost --> Step2[Agent step N+1]

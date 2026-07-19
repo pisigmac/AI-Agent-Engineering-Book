@@ -1,0 +1,9 @@
+flowchart TD
+  Start[Messages chronological] --> Cap[Cap tool payloads]
+  Cap --> Pin[Pin system / CRITICAL]
+  Pin --> Fill[Fill newest high-signal remainder]
+  Fill --> Check{tokens <= effective budget?}
+  Check -->|yes| Keep[Keep message]
+  Check -->|no| Drop[Drop with audit id]
+  Keep --> Out[Packed prompt]
+  Drop --> Out

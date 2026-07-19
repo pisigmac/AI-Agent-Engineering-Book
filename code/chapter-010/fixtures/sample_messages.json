@@ -1,0 +1,50 @@
+[
+  {
+    "role": "system",
+    "content": "You are a careful support agent. Never invent policy. Refuse when evidence is missing.",
+    "message_id": "sys-1"
+  },
+  {
+    "role": "user",
+    "content": "Hi, I bought a keyboard last month and want a refund.",
+    "message_id": "u-1"
+  },
+  {
+    "role": "assistant",
+    "content": "I can help. Let me check the refund policy and your order details.",
+    "message_id": "a-1"
+  },
+  {
+    "role": "tool",
+    "name": "get_policy",
+    "content": "Refund Policy: Customers may request a refund within 30 days of purchase with a valid receipt. Digital goods are eligible only if unused.",
+    "message_id": "t-1"
+  },
+  {
+    "role": "tool",
+    "name": "get_order",
+    "content": "Order 12345: keyboard, purchased 45 days ago, receipt on file, status delivered.",
+    "message_id": "t-2"
+  },
+  {
+    "role": "assistant",
+    "content": "Your purchase appears to be outside the 30-day refund window.",
+    "message_id": "a-2"
+  },
+  {
+    "role": "user",
+    "content": "Can you make an exception? Also here is a huge paste of logs: " ,
+    "message_id": "u-2"
+  },
+  {
+    "role": "user",
+    "content": "LOG_START repeating payload for budget stress test. Lorem ipsum dolor sit amet. ",
+    "message_id": "u-3",
+    "priority": "low"
+  },
+  {
+    "role": "user",
+    "content": "Please confirm the final decision about my refund.",
+    "message_id": "u-4"
+  }
+]
