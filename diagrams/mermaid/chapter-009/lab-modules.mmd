@@ -1,0 +1,6 @@
+flowchart LR
+  CLI[main.py] --> Tok[TinyTokenizer]
+  CLI --> Model[ToyDecoderLM]
+  Model --> Attn[CausalSelfAttention]
+  Model --> FFN[FeedForward]
+  CLI --> Gen[greedy_generate]

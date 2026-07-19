@@ -40,7 +40,7 @@ See `scripts/README.md` for the full automation workflow.
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–8** (Part I foundations complete; Part II LLM Engineering started). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–9** (Part I complete; Part II through transformer architecture). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
 
 ## Philosophy
 

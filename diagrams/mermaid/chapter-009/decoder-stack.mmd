@@ -1,0 +1,11 @@
+flowchart TD
+  Text[Text] --> Tok[Tokenizer]
+  Tok --> IDs[Token IDs]
+  IDs --> Emb[Token + position embeddings]
+  Emb --> L1[Decoder block 1]
+  L1 --> L2[Decoder block 2]
+  L2 --> LN[Final norm]
+  LN --> Unemb[Vocab projection / logits]
+  Unemb --> Dec[Decode strategy]
+  Dec --> Next[Next token ID]
+  Next --> Tok
