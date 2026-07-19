@@ -1,0 +1,22 @@
+flowchart LR
+  subgraph Types[Contracts]
+    DC[dataclasses]
+    TY[typing]
+    EN[enums]
+    PR[Protocol]
+  end
+
+  subgraph Flow[Control and resources]
+    FN[functions]
+    GEN[generators]
+    DEC[decorators]
+    CM[context managers]
+  end
+
+  subgraph Safety[Failure]
+    EX[exception hierarchy]
+  end
+
+  Types --> Domain[Domain messages]
+  Flow --> Runtime[Runtime behavior]
+  Safety --> Harness[Harness / tools]
