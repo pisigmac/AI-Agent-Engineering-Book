@@ -1,0 +1,27 @@
+id: extract.fields
+version: "1.0.0"
+description: Few-shot extraction of order_id and intent from a support message.
+risk: normal
+tags: [extraction, few-shot]
+required_vars: [message]
+max_tokens_est: 800
+system: |
+  You extract structured fields from support messages.
+  Output a single JSON object only.
+constraints:
+  - Use null for unknown fields.
+  - Do not invent order IDs.
+  - JSON keys must be order_id and intent.
+examples:
+  - user: |
+      Message: Hi, order A-100 won't charge my card.
+    assistant: |
+      {"order_id":"A-100","intent":"billing_issue"}
+  - user: |
+      Message: Where is my package?
+    assistant: |
+      {"order_id":null,"intent":"shipping_status"}
+user_template: |
+  Message: {{message}}
+metadata:
+  owner: platform-nlu

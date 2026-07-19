@@ -1,0 +1,23 @@
+flowchart TB
+  subgraph Library[Prompt library]
+    Reg[Registry]
+    Tpl[Versioned templates]
+    Pat[Pattern builders]
+  end
+
+  subgraph Render[Render pipeline]
+    Vars[Variables]
+    Val[Validate required fields]
+    Msg[ChatMessage list]
+  end
+
+  subgraph Runtime[Runtime]
+    Pack[Ch10 packer]
+    LLM[LLMPort / provider]
+    Eval[Tests / evals]
+  end
+
+  Reg --> Tpl
+  Pat --> Tpl
+  Tpl --> Vars --> Val --> Msg --> Pack --> LLM
+  Msg --> Eval

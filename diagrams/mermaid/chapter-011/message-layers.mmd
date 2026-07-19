@@ -1,0 +1,8 @@
+flowchart TD
+  Sys[System policy + constraints]
+  ExU[Few-shot user]
+  ExA[Few-shot assistant]
+  Task[Task user message]
+
+  Sys --> ExU --> ExA --> Task
+  Task --> Model[LLM]

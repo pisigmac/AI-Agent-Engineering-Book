@@ -1,0 +1,6 @@
+flowchart LR
+  YAML[YAML specs] --> Reg[PromptRegistry]
+  Reg --> Tpl[PromptTemplate]
+  Tpl --> Ren[render]
+  Ren --> Msgs[messages]
+  Msgs --> Tests[PromptTestSuite]
