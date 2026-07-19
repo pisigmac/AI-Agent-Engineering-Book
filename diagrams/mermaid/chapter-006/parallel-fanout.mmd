@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant CLI
+  participant Fanout as map_parallel
+  participant Sem as Semaphore
+  participant Client as AsyncHttpClient
+  participant API as APIs
+
+  CLI->>Fanout: urls + concurrency=N
+  loop each url
+    Fanout->>Sem: acquire
+    Fanout->>Client: get_json(url)
+    Client->>API: await HTTP
+    API-->>Client: response
+    Client-->>Fanout: Result
+    Fanout->>Sem: release
+  end
+  Fanout-->>CLI: list[ItemResult]

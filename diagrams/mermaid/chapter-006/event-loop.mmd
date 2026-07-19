@@ -1,0 +1,24 @@
+flowchart TB
+  subgraph Loop[Event loop thread]
+    T1[Task: tool A]
+    T2[Task: tool B]
+    T3[Task: tool C]
+    Sched[Scheduler]
+  end
+
+  subgraph Wait[Waiting off-CPU]
+    Net[Network I/O]
+  end
+
+  subgraph Offload[Optional]
+    Pool[Thread pool for blocking/CPU]
+  end
+
+  Sched --> T1
+  Sched --> T2
+  Sched --> T3
+  T1 -->|await| Net
+  T2 -->|await| Net
+  T3 -->|await to_thread| Pool
+  Net -->|ready| Sched
+  Pool -->|done| Sched

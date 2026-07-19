@@ -40,7 +40,7 @@ See `scripts/README.md` for the full automation workflow.
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1, 2, 4, 5, and 7** (foundations track). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–7** (full Part I foundations track). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
 
 ## Philosophy
 
