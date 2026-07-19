@@ -1,0 +1,59 @@
+flowchart TB
+  subgraph L0[Cross-cutting]
+    Obs[Observability]
+    Eval[Evaluation]
+    Sec[Security / Policy]
+    Cfg[Configuration]
+  end
+
+  subgraph L7[Application]
+    App[Product API / UI / Jobs]
+  end
+
+  subgraph L6[Multi-Agent]
+    MA[Coordinator / Roles]
+  end
+
+  subgraph L5[Agent]
+    Agent[Goal-directed loop]
+    Plan[Planner]
+  end
+
+  subgraph L4[Control Flow]
+    Graph[Graph Engine]
+    WF[Workflow Engine]
+  end
+
+  subgraph L3[Capabilities]
+    Skill[Skills]
+    Tool[Tools]
+    MCP[MCP Client]
+  end
+
+  subgraph L2[Knowledge]
+    Mem[Memory]
+    Ret[Retriever]
+  end
+
+  subgraph L1[Model]
+    LLM[LLM]
+    Emb[Embeddings]
+  end
+
+  App --> MA
+  App --> Agent
+  MA --> Agent
+  Agent --> Plan
+  Agent --> Graph
+  Agent --> WF
+  Graph --> Skill
+  WF --> Skill
+  Skill --> Tool
+  Tool --> MCP
+  Agent --> Mem
+  Agent --> Ret
+  Agent --> LLM
+  Ret --> Emb
+  L0 -.-> App
+  L0 -.-> Agent
+  L0 -.-> Tool

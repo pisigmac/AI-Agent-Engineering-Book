@@ -1,0 +1,23 @@
+sequenceDiagram
+  participant User
+  participant App as Application
+  participant Harness
+  participant Agent
+  participant Skill
+  participant Tool
+  participant LLM
+
+  User->>App: Goal / request
+  App->>Harness: start_run(goal, policy)
+  Harness->>Agent: execute(budget, permissions)
+  loop until stop or budget
+    Agent->>LLM: reason / select action
+    LLM-->>Agent: tool intent or answer
+    Agent->>Skill: invoke(capability)
+    Skill->>Tool: side effect
+    Tool-->>Skill: result
+    Skill-->>Agent: structured result
+  end
+  Agent-->>Harness: outcome + traces
+  Harness-->>App: response + run metadata
+  App-->>User: result

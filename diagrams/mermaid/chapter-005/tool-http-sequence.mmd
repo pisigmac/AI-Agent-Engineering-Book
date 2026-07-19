@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant Agent
+  participant Tool as Tool/Skill
+  participant Client as HttpClient
+  participant API as External API
+
+  Agent->>Tool: invoke(args)
+  Tool->>Client: request(method, path, json, auth)
+  Client->>Client: rate_limit / timeout / headers
+  Client->>API: HTTP
+  alt application/json
+    API-->>Client: 200 + JSON body
+    Client-->>Tool: ResponseEnvelope
+  else text/event-stream
+    API-->>Client: 200 + stream chunks
+    Client-->>Tool: iterator of events
+  end
+  Tool-->>Agent: structured result / error

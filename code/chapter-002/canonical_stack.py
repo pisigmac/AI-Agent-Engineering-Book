@@ -1,0 +1,161 @@
+"""Canonical stack definition for the AI Agent Engineering Bootcamp platform."""
+
+from __future__ import annotations
+
+from stack_model import Layer, LayerId, StackRegistry
+
+
+def build_canonical_stack() -> StackRegistry:
+    reg = StackRegistry()
+    specs: list[Layer] = [
+        Layer(
+            LayerId.LLM,
+            "LLM",
+            "Probabilistic reasoning and language generation",
+            "CPU",
+            depends_on=(),
+            produces=("messages", "tool_call_intents", "structured_outputs"),
+            failure_modes=("hallucination", "latency_spikes", "format_errors"),
+        ),
+        Layer(
+            LayerId.EMBEDDINGS,
+            "Embeddings",
+            "Map text/code into vectors for similarity",
+            "Index encoding",
+            produces=("vectors",),
+            failure_modes=("domain_mismatch", "stale_embeddings"),
+        ),
+        Layer(
+            LayerId.MEMORY,
+            "Memory",
+            "Persist state across turns and sessions",
+            "Disk",
+            depends_on=(),
+            produces=("working_state", "episodic_records"),
+            failure_modes=("stale_facts", "unbounded_growth"),
+        ),
+        Layer(
+            LayerId.RETRIEVAL,
+            "Retrieval",
+            "Fetch relevant knowledge into context",
+            "Search engine",
+            depends_on=(LayerId.EMBEDDINGS,),
+            produces=("passages", "citations"),
+            failure_modes=("missed_docs", "noisy_context"),
+        ),
+        Layer(
+            LayerId.TOOL,
+            "Tool",
+            "Typed side effects with permissions",
+            "System call",
+            produces=("external_results",),
+            failure_modes=("timeouts", "auth_failures", "overreach"),
+        ),
+        Layer(
+            LayerId.MCP,
+            "MCP",
+            "Protocol for tools/resources/prompts connectivity",
+            "Plugin bus",
+            depends_on=(),
+            produces=("remote_tools", "resources"),
+            failure_modes=("untrusted_servers", "schema_drift"),
+        ),
+        Layer(
+            LayerId.SKILL,
+            "Skill",
+            "Composable domain capabilities over tools",
+            "Function library",
+            depends_on=(LayerId.TOOL, LayerId.MCP),
+            produces=("capability_results",),
+            failure_modes=("hidden_side_effects", "poor_contracts"),
+        ),
+        Layer(
+            LayerId.WORKFLOW,
+            "Workflow",
+            "Deterministic multi-step orchestration",
+            "Scripted job",
+            depends_on=(LayerId.SKILL, LayerId.LLM),
+            produces=("job_outcomes",),
+            failure_modes=("brittle_happy_paths", "weak_retries"),
+        ),
+        Layer(
+            LayerId.GRAPH,
+            "Graph",
+            "Stateful non-linear control flow",
+            "Program control-flow",
+            depends_on=(LayerId.SKILL, LayerId.LLM, LayerId.MEMORY),
+            produces=("graph_state", "routed_outcomes"),
+            failure_modes=("cycles_without_bounds", "checkpoint_loss"),
+        ),
+        Layer(
+            LayerId.PLANNER,
+            "Planner",
+            "Decompose goals into actionable plans",
+            "Scheduler frontend",
+            depends_on=(LayerId.LLM, LayerId.MEMORY),
+            produces=("plans", "task_graphs"),
+            failure_modes=("over_decomposition", "invalid_steps"),
+        ),
+        Layer(
+            LayerId.AGENT,
+            "Agent",
+            "Goal-directed loop under policy and budgets",
+            "Worker process",
+            depends_on=(
+                LayerId.LLM,
+                LayerId.SKILL,
+                LayerId.PLANNER,
+                LayerId.MEMORY,
+                LayerId.RETRIEVAL,
+            ),
+            produces=("goal_outcomes", "action_traces"),
+            failure_modes=("unbounded_loops", "tool_spam", "goal_drift"),
+        ),
+        Layer(
+            LayerId.MULTI_AGENT,
+            "Multi-Agent",
+            "Coordinated specialized agents",
+            "Distributed workers",
+            depends_on=(LayerId.AGENT,),
+            produces=("consensus_results", "role_outputs"),
+            failure_modes=("deadlock", "cost_amplification"),
+        ),
+        Layer(
+            LayerId.HARNESS,
+            "Harness",
+            "Runtime lifecycle, isolation, recovery, budgets",
+            "OS process manager",
+            depends_on=(LayerId.AGENT, LayerId.GRAPH, LayerId.WORKFLOW),
+            produces=("run_records", "enforced_limits"),
+            failure_modes=("resource_leaks", "missed_cancellations"),
+        ),
+        Layer(
+            LayerId.EVAL,
+            "Evaluation",
+            "Measure quality and gate releases",
+            "QA / scoreboards",
+            depends_on=(LayerId.APPLICATION, LayerId.AGENT),
+            produces=("scores", "regression_signals"),
+            failure_modes=("metric_gaming", "offline_online_gap"),
+        ),
+        Layer(
+            LayerId.OBSERVABILITY,
+            "Observability",
+            "Logs, metrics, traces, cost ledgers",
+            "Telemetry",
+            produces=("traces", "metrics"),
+            failure_modes=("blind_spots", "PII_in_logs"),
+        ),
+        Layer(
+            LayerId.APPLICATION,
+            "Application",
+            "Product surface: API/UI/jobs/tenancy",
+            "Product",
+            depends_on=(LayerId.HARNESS, LayerId.OBSERVABILITY),
+            produces=("user_value",),
+            failure_modes=("auth_gaps", "no_SLOs"),
+        ),
+    ]
+    for layer in specs:
+        reg.register(layer)
+    return reg

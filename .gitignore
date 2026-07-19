@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local authoring config & secrets
+scripts/config.yaml
+.env
+.env.*
+
+# Generated workflow state
+.book_state/
+reports/
+build/
+releases/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

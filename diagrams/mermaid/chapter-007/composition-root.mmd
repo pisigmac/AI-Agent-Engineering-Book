@@ -1,0 +1,8 @@
+flowchart LR
+  CLI[main.py] --> Factory[factories.build_container]
+  Factory --> Svc[CompleteText service]
+  Svc --> LLM[LLMPort]
+  Svc --> Repo[RunRepository]
+  Svc --> Clock[Clock]
+  LLM --> Mock[MockLLMAdapter]
+  Repo --> Mem[InMemoryRunRepository]

@@ -1,0 +1,29 @@
+flowchart TB
+  subgraph App[Application / CLI / API]
+    UC[Use cases]
+  end
+
+  subgraph Domain[Domain / Policies]
+    Policies[Retry, budgets, tool permissions]
+    Models[Domain types]
+  end
+
+  subgraph Ports[Ports / Interfaces]
+    LLMPort[LLMPort]
+    ToolPort[ToolPort]
+    StorePort[StorePort]
+    ClockPort[Clock]
+  end
+
+  subgraph Adapters[Adapters]
+    HTTP[HttpLLMAdapter]
+    Mem[(InMemoryStore)]
+    SysClock[SystemClock]
+  end
+
+  UC --> Policies
+  UC --> Ports
+  HTTP --> LLMPort
+  Mem --> StorePort
+  SysClock --> ClockPort
+  HTTP --> HTTPClient[Chapter 5 HttpClient]

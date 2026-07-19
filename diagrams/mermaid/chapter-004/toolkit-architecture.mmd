@@ -1,0 +1,16 @@
+flowchart TB
+  CLI[main.py CLI]
+  CLI --> CV[commit_validator]
+  CLI --> BV[branch_validator]
+  CLI --> CI[change_inventory]
+  CV --> Pol[git_policy]
+  BV --> Pol
+  CI --> Paths[repo path rules]
+
+  subgraph HumanFlow[Human / agent workflow]
+    Edit[Edit files] --> Stage[git add -p]
+    Stage --> Msg[Commit message]
+    Msg --> CV
+    CV -->|ok| Commit[git commit]
+    Commit --> Push[push + PR]
+  end

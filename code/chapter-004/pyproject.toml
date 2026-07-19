@@ -1,0 +1,13 @@
+[project]
+name = "ai-agent-platform-chapter-004"
+version = "0.1.0"
+description = "Chapter 4 Git workflow toolkit"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

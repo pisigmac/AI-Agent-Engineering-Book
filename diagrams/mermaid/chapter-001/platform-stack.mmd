@@ -1,0 +1,38 @@
+flowchart TB
+  subgraph Application
+    UI[API / CLI / UI]
+  end
+
+  subgraph AgentRuntime[Agent Runtime / Harness]
+    Loop[Execution Loop]
+    Planner[Planner]
+    Memory[Memory]
+    Retriever[Retriever]
+    Skills[Skills]
+    Tools[Tools]
+  end
+
+  subgraph ModelLayer[Model Layer]
+    LLM[LLM Provider]
+    Embed[Embedding Provider]
+  end
+
+  subgraph External[External World]
+    APIs[HTTP APIs]
+    DB[(Databases)]
+    Browser[Browser / Files]
+    MCP[MCP Servers]
+  end
+
+  UI --> Loop
+  Loop --> Planner
+  Loop --> Memory
+  Loop --> Skills
+  Skills --> Tools
+  Loop --> LLM
+  Retriever --> Embed
+  Retriever --> DB
+  Tools --> APIs
+  Tools --> Browser
+  Tools --> MCP
+  Memory --> DB

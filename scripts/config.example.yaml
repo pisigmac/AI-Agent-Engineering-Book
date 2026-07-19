@@ -1,0 +1,23 @@
+# Copy to scripts/config.yaml and customize.
+# Environment variables override these values:
+#   BOOK_LLM_PROVIDER, BOOK_LLM_MODEL, BOOK_LLM_BASE_URL,
+#   BOOK_LLM_API_KEY_ENV, BOOK_LLM_TEMPERATURE, BOOK_LLM_MAX_TOKENS
+
+llm:
+  # openai | anthropic | openai_compatible
+  provider: openai
+  model: gpt-4.1
+  # base_url: https://api.openai.com/v1
+  api_key_env: OPENAI_API_KEY
+  temperature: 0.3
+  max_tokens: 16384
+  timeout_seconds: 600
+  max_retries: 3
+
+book:
+  title: "AI Agent Engineering Bootcamp (2026 Edition)"
+  total_chapters: 94
+  default_author: "AI Agent Engineering Bootcamp"
+
+dry_run: false
+verbose: false

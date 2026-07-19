@@ -1,0 +1,14 @@
+flowchart BT
+  domain[domain / errors]
+  ports[ports]
+  services[services]
+  adapters[adapters]
+  factories[factories / main]
+
+  domain --> ports
+  ports --> services
+  domain --> services
+  ports --> adapters
+  domain --> adapters
+  services --> factories
+  adapters --> factories

@@ -1,0 +1,9 @@
+flowchart LR
+  Dev[Local workspace] -->|commit| Branch[Feature branch]
+  Branch -->|push| Remote[GitHub branch]
+  Remote --> PR[Pull Request]
+  PR --> CI[GitHub Actions]
+  CI -->|pass| Review[Human review]
+  Review -->|merge| Main[main]
+  Main --> Tag[Release tag]
+  Tag --> Deploy[Deploy / package]

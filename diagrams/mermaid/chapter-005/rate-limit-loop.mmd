@@ -1,0 +1,12 @@
+flowchart TD
+  A[Build request] --> B{Tokens available?}
+  B -->|no| C[Wait / queue]
+  C --> B
+  B -->|yes| D[Send HTTP]
+  D --> E{Status}
+  E -->|2xx| F[Parse / stream]
+  E -->|429| G[Backoff + Retry-After]
+  G --> B
+  E -->|5xx idempotent| H[Exponential backoff]
+  H --> D
+  E -->|4xx other| I[Fail closed]

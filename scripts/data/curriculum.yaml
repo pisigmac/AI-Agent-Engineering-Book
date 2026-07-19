@@ -1,0 +1,486 @@
+meta:
+  title: "AI Agent Engineering Bootcamp (2026 Edition)"
+  total_chapters: 94
+  version: "1.0"
+  source: "BOOK_SPECIFICATION.md"
+
+chapters:
+  # PART I — Programming Foundations
+  - number: 1
+    title: "Welcome to AI Agent Engineering"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["discipline intro", "roadmap", "environment setup"]
+    objectives:
+      - "Explain what AI Agent Engineering is"
+      - "Describe the learning roadmap"
+      - "Initialize the AI Platform repository"
+  - number: 2
+    title: "The AI Engineering Roadmap"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["LLM", "Tools", "Skills", "Workflows", "Graphs", "Agents", "MCP", "Harnesses"]
+  - number: 3
+    title: "Python for AI Engineers"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["functions", "classes", "typing", "dataclasses", "async prep"]
+  - number: 4
+    title: "Git & GitHub"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["git workflow", "branching", "PRs", "portfolio"]
+  - number: 5
+    title: "HTTP, APIs & JSON"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["REST", "JSON", "auth headers", "error codes"]
+  - number: 6
+    title: "Async Python"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["asyncio", "concurrency", "timeouts"]
+  - number: 7
+    title: "Software Engineering Best Practices"
+    part: "Part I — Foundations"
+    phase: "Programming Foundations"
+    topics: ["SOLID", "testing", "logging", "packaging"]
+
+  # PART II — LLM Engineering
+  - number: 8
+    title: "What is an LLM?"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["capabilities", "limitations", "hallucinations"]
+  - number: 9
+    title: "Transformer Architecture"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["attention", "decoder stack", "inference"]
+  - number: 10
+    title: "Tokens & Context Windows"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["tokenization", "context limits", "cost"]
+  - number: 11
+    title: "Prompt Engineering"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["prompt patterns", "system prompts", "few-shot"]
+  - number: 12
+    title: "Context Engineering"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["context packing", "summarization", "prioritization"]
+  - number: 13
+    title: "Structured Outputs"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["JSON schema", "Pydantic", "validation"]
+  - number: 14
+    title: "Function Calling"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["tools schema", "tool loops", "validation"]
+  - number: 15
+    title: "Embeddings"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["vector space", "similarity", "pipelines"]
+  - number: 16
+    title: "Model Selection"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["routing", "quality vs cost", "latency"]
+  - number: 17
+    title: "Cost & Performance"
+    part: "Part II — LLM Engineering"
+    phase: "LLM Engineering"
+    topics: ["token budgets", "caching", "batching"]
+
+  # PART III — Retrieval Engineering
+  - number: 18
+    title: "Semantic Search"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["similarity search", "ranking"]
+  - number: 19
+    title: "Chunking Strategies"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["chunk sizes", "overlap", "structure-aware chunking"]
+  - number: 20
+    title: "Embedding Models"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["model choice", "multilingual", "domain adaptation"]
+  - number: 21
+    title: "Vector Databases"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["indexes", "filters", "metadata"]
+  - number: 22
+    title: "FAISS"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["local indexes", "IVF", "HNSW concepts"]
+  - number: 23
+    title: "Chroma"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["collections", "persistence", "filters"]
+  - number: 24
+    title: "Production RAG"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["ingest", "retrieve", "generate", "eval"]
+  - number: 25
+    title: "Advanced RAG"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["reranking", "query rewrite", "multi-hop"]
+  - number: 26
+    title: "Hybrid Search"
+    part: "Part III — Retrieval Engineering"
+    phase: "Retrieval Engineering"
+    topics: ["BM25", "fusion", "lexical + dense"]
+
+  # PART IV — Agent Engineering
+  - number: 27
+    title: "What is an AI Agent?"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["autonomy", "lifecycle", "decision making"]
+  - number: 28
+    title: "Agent Architecture"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["planner", "memory", "executor", "tools", "skills", "harness"]
+  - number: 29
+    title: "Execution Loops"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["think-act-observe", "retry", "terminate"]
+  - number: 30
+    title: "Agent Skills"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["skill interfaces", "registries", "composition"]
+  - number: 31
+    title: "Tool Calling"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["tool registry", "sandboxing", "permissions"]
+  - number: 32
+    title: "Planning"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["plan-and-execute", "ReAct", "goal decomposition"]
+  - number: 33
+    title: "Memory Systems"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["working", "episodic", "semantic", "persistence"]
+  - number: 34
+    title: "Reflection"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["self-critique", "verification", "confidence"]
+  - number: 35
+    title: "Agent Graphs"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["DAG", "routing", "checkpointing", "fan-out"]
+  - number: 36
+    title: "Workflow Orchestration"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["sequential", "parallel", "retry policies"]
+  - number: 37
+    title: "Multi-Agent Systems"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["roles", "debate", "consensus", "swarm"]
+  - number: 38
+    title: "Model Context Protocol (MCP)"
+    part: "Part IV — Agent Engineering"
+    phase: "Agent Engineering"
+    topics: ["MCP client/server", "resources", "tools", "transport"]
+
+  # PART V — Agent Systems Engineering
+  - number: 39
+    title: "Agent Harnesses"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["runtime", "recovery", "state", "evaluation hooks"]
+  - number: 40
+    title: "Workflows vs Agents"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["deterministic vs autonomous", "hybrid"]
+  - number: 41
+    title: "State Machines"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["FSM", "guards", "transitions"]
+  - number: 42
+    title: "Event-Driven Agents"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["event bus", "queues", "pubsub"]
+  - number: 43
+    title: "Human-in-the-Loop"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["approval", "interrupts", "escalation"]
+  - number: 44
+    title: "Agent Evaluation"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["metrics", "benchmarks", "regression"]
+  - number: 45
+    title: "Observability"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["logs", "metrics", "traces", "OpenTelemetry"]
+  - number: 46
+    title: "Agent Security"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["prompt injection", "sandboxing", "secrets"]
+  - number: 47
+    title: "Cost Optimization"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["caching", "routing", "token budgeting"]
+  - number: 48
+    title: "Scaling AI Agents"
+    part: "Part V — Agent Systems Engineering"
+    phase: "Agent Systems Engineering"
+    topics: ["horizontal scale", "workers", "queues"]
+
+  # PART VI — Frameworks
+  - number: 49
+    title: "OpenAI Agents SDK"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["OpenAI Agents SDK"]
+  - number: 50
+    title: "LangGraph"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["LangGraph"]
+  - number: 51
+    title: "CrewAI"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["CrewAI"]
+  - number: 52
+    title: "AutoGen"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["AutoGen"]
+  - number: 53
+    title: "PydanticAI"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["PydanticAI"]
+  - number: 54
+    title: "Semantic Kernel"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["Semantic Kernel"]
+  - number: 55
+    title: "Google ADK"
+    part: "Part VI — Frameworks"
+    phase: "Agent Frameworks"
+    frameworks: ["Google ADK"]
+
+  # PART VII — Production Engineering
+  - number: 56
+    title: "FastAPI"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["API design", "streaming", "auth hooks"]
+  - number: 57
+    title: "Background Workers"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["queues", "jobs", "retries"]
+  - number: 58
+    title: "Docker"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["images", "compose", "multi-stage builds"]
+  - number: 59
+    title: "PostgreSQL"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["schema", "persistence", "migrations"]
+  - number: 60
+    title: "Redis"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["cache", "rate limits", "sessions"]
+  - number: 61
+    title: "Authentication"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["API keys", "OAuth", "RBAC"]
+  - number: 62
+    title: "Deployment"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["cloud deploy", "env config", "rollouts"]
+  - number: 63
+    title: "CI/CD"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["pipelines", "tests", "gates"]
+  - number: 64
+    title: "Monitoring"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["SLOs", "alerts", "dashboards"]
+  - number: 65
+    title: "Logging"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["structured logs", "correlation IDs"]
+  - number: 66
+    title: "Tracing"
+    part: "Part VII — Production Engineering"
+    phase: "Production Engineering"
+    topics: ["distributed tracing", "span design"]
+
+  # PART VIII — Build Your Own Framework
+  - number: 67
+    title: "Build an LLM Client"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["provider abstraction", "retries", "streaming"]
+  - number: 68
+    title: "Prompt Manager"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["templates", "versioning", "variables"]
+  - number: 69
+    title: "Tool Registry"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["registration", "schemas", "permissions"]
+  - number: 70
+    title: "Skill Registry"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["composition", "discovery"]
+  - number: 71
+    title: "Planner"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["plan objects", "replanning"]
+  - number: 72
+    title: "Execution Loop"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["loop control", "termination", "budgets"]
+  - number: 73
+    title: "Memory Engine"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["stores", "retrieval", "summaries"]
+  - number: 74
+    title: "Workflow Engine"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["steps", "policies", "orchestration"]
+  - number: 75
+    title: "Graph Engine"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["nodes", "edges", "state"]
+  - number: 76
+    title: "Reflection Engine"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["critique", "repair"]
+  - number: 77
+    title: "Scheduler"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["jobs", "cron", "priorities"]
+  - number: 78
+    title: "Agent Harness"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["lifecycle", "isolation", "hooks"]
+  - number: 79
+    title: "Evaluator"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["scorers", "datasets", "gates"]
+  - number: 80
+    title: "Plugin System"
+    part: "Part VIII — Build Your Own Framework"
+    phase: "Build Your Own Framework"
+    topics: ["extension points", "safe loading"]
+
+  # PART IX — Real Projects
+  - number: 81
+    title: "AI Chatbot"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 82
+    title: "PDF Chat"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 83
+    title: "Research Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 84
+    title: "Browser Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 85
+    title: "SQL Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 86
+    title: "Email Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 87
+    title: "Meeting Assistant"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 88
+    title: "Customer Support Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 89
+    title: "Coding Agent"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+  - number: 90
+    title: "Multi-Agent Platform"
+    part: "Part IX — Real Projects"
+    phase: "Production Projects"
+
+  # PART X — Career
+  - number: 91
+    title: "AI System Design"
+    part: "Part X — Career"
+    phase: "Career Preparation"
+  - number: 92
+    title: "Technical Interviews"
+    part: "Part X — Career"
+    phase: "Career Preparation"
+  - number: 93
+    title: "Portfolio & Open Source"
+    part: "Part X — Career"
+    phase: "Career Preparation"
+  - number: 94
+    title: "Career Roadmap & Startup Guide"
+    part: "Part X — Career"
+    phase: "Career Preparation"

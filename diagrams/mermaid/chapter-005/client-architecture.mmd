@@ -1,0 +1,8 @@
+flowchart LR
+  Caller[Tool / Provider adapter] --> HC[HttpClient]
+  HC --> RL[RateLimiter]
+  HC --> RP[RetryPolicy]
+  HC --> Auth[Auth headers]
+  HC --> JSON[JsonCodec]
+  HC --> Trans[Transport httpx]
+  Trans --> Net[Network]

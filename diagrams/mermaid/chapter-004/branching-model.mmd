@@ -1,0 +1,13 @@
+gitGraph
+  commit id: "main"
+  branch feat/chapter-004-git-toolkit
+  checkout feat/chapter-004-git-toolkit
+  commit id: "feat: toolkit"
+  commit id: "test: validators"
+  checkout main
+  merge feat/chapter-004-git-toolkit id: "PR merge"
+  branch fix/tool-timeout
+  checkout fix/tool-timeout
+  commit id: "fix: timeouts"
+  checkout main
+  merge fix/tool-timeout

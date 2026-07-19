@@ -1,0 +1,41 @@
+flowchart BT
+  llm[LLM]
+  embeddings[Embeddings]
+  memory[Memory]
+  retrieval[Retrieval]
+  tool[Tool]
+  mcp[MCP]
+  skill[Skill]
+  workflow[Workflow]
+  graph[Graph]
+  planner[Planner]
+  agent[Agent]
+  multi_agent[Multi-Agent]
+  harness[Harness]
+  eval[Evaluation]
+  observability[Observability]
+  application[Application]
+
+  embeddings --> retrieval
+  tool --> skill
+  mcp --> skill
+  skill --> workflow
+  llm --> workflow
+  skill --> graph
+  llm --> graph
+  memory --> graph
+  llm --> planner
+  memory --> planner
+  llm --> agent
+  skill --> agent
+  planner --> agent
+  memory --> agent
+  retrieval --> agent
+  agent --> multi_agent
+  agent --> harness
+  graph --> harness
+  workflow --> harness
+  harness --> application
+  observability --> application
+  application --> eval
+  agent --> eval
