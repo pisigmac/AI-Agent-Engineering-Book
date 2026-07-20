@@ -1,0 +1,11 @@
+flowchart TB
+  User[User message] --> Agent[Agent loop]
+  Agent --> LLM[LLM structured choice]
+  LLM -->|final answer| User
+  LLM -->|tool call| Val[Validate name + args]
+  Val -->|invalid| Agent
+  Val -->|valid| Exec[Tool executor]
+  Exec --> Reg[Tool registry]
+  Reg --> Fn[Function implementation]
+  Fn --> Obs[Observation]
+  Obs --> Agent
