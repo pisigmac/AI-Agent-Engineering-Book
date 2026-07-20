@@ -1,0 +1,10 @@
+flowchart TB
+  Prompt[Prompt + context] --> LLM[Model completion]
+  LLM --> Extract[Extract JSON candidate]
+  Extract --> Parse[json.loads]
+  Parse --> Val[Pydantic / JSON Schema validate]
+  Val -->|ok| Out[Typed object]
+  Val -->|error| Repair{attempts left?}
+  Repair -->|yes| LLM2[Model repair call with errors]
+  LLM2 --> Extract
+  Repair -->|no| Err[StructuredOutputError]
