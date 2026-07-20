@@ -415,6 +415,14 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Message Layers](../diagrams/png/chapter-011/message-layers.png)
+
+![Prompt Pipeline](../diagrams/png/chapter-011/prompt-pipeline.png)
+
+![Registry Flow](../diagrams/png/chapter-011/registry-flow.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

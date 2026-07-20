@@ -475,6 +475,14 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Inference Pipeline](../diagrams/png/chapter-008/inference-pipeline.png)
+
+![Lab Architecture](../diagrams/png/chapter-008/lab-architecture.png)
+
+![Training Vs Inference](../diagrams/png/chapter-008/training-vs-inference.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

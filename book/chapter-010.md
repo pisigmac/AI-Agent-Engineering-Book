@@ -443,6 +443,14 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Budget Pipeline](../diagrams/png/chapter-010/budget-pipeline.png)
+
+![Cost Accounting](../diagrams/png/chapter-010/cost-accounting.png)
+
+![Pack Priority](../diagrams/png/chapter-010/pack-priority.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

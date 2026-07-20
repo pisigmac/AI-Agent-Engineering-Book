@@ -771,6 +771,12 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Python Constructs](../diagrams/png/chapter-003/python-constructs.png)
+
+![Pyutils Layout](../diagrams/png/chapter-003/pyutils-layout.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

@@ -1,0 +1,20 @@
+flowchart LR
+  subgraph Part1[Part I Foundations]
+    C1[Ch1 Welcome]
+    C2[Ch2 Roadmap]
+    C3[Ch3 Python]
+    C4[Ch4 Git]
+    C5[Ch5 HTTP]
+    C6[Ch6 Async]
+    C7[Ch7 SE Practices]
+    C1 --> C2 --> C3 --> C4 --> C5 --> C6 --> C7
+  end
+
+  subgraph Part2[Part II LLM Engineering]
+    C8[Ch8 What is LLM]
+    C9[Ch9 Transformers]
+    C10[Ch10 Tokens]
+    C11[Ch11 Prompts]
+    C12[Ch12 Context]
+    C7 --> C8 --> C9 --> C10 --> C11 --> C12
+  end

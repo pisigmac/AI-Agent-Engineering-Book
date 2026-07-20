@@ -56,6 +56,26 @@ git push origin dev
 
 Do **not** commit feature work directly to `main`.
 
+## Workflow diagrams
+
+Rendered PNGs (sources under `diagrams/mermaid/`):
+
+![Book authoring workflow](diagrams/png/platform/book-authoring-workflow.png)
+
+![Runtime agent workflow](diagrams/png/platform/runtime-agent-workflow.png)
+
+![Learning path Parts I–II](diagrams/png/platform/learning-path-part1-2.png)
+
+Regenerate after editing `.mmd` files:
+
+```bash
+npm install --no-fund @mermaid-js/mermaid-cli puppeteer
+./scripts/render_diagrams.sh
+python3 scripts/embed_diagram_images.py
+```
+
+See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section with chapter-local PNGs.
+
 ## Chapters present
 
 Manuscript and code slices currently include chapters **1–12** (Part I complete; Part II through context engineering). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.

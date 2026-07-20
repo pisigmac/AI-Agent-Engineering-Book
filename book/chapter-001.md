@@ -614,6 +614,14 @@ This journal becomes portfolio evidence by Chapter 94.
 
 ---
 
+## Visual diagrams
+
+![Chapter Loop](../diagrams/png/chapter-001/chapter-loop.png)
+
+![Diagram 1](../diagrams/png/chapter-001/diagram-1.png)
+
+![Platform Stack](../diagrams/png/chapter-001/platform-stack.png)
+
 ## Chapter Deliverables
 
 By the end of this chapter you should have:

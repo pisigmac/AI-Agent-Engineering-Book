@@ -784,6 +784,14 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Composition Root](../diagrams/png/chapter-007/composition-root.png)
+
+![Import Rule](../diagrams/png/chapter-007/import-rule.png)
+
+![Ports Adapters](../diagrams/png/chapter-007/ports-adapters.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

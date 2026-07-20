@@ -1062,6 +1062,14 @@ This atlas is referenced whenever a later chapter adds a component: **update the
 
 ---
 
+## Visual diagrams
+
+![Complete Ai Engineering Stack](../diagrams/png/chapter-002/complete-ai-engineering-stack.png)
+
+![Layer Dependencies](../diagrams/png/chapter-002/layer-dependencies.png)
+
+![Run Sequence](../diagrams/png/chapter-002/run-sequence.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

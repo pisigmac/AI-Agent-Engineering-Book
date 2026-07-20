@@ -473,6 +473,14 @@ Acceptance criteria:
 
 ---
 
+## Visual diagrams
+
+![Agent Step](../diagrams/png/chapter-012/agent-step.png)
+
+![Context Pipeline](../diagrams/png/chapter-012/context-pipeline.png)
+
+![Trust Rings](../diagrams/png/chapter-012/trust-rings.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |
