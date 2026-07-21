@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant U as User
+  participant L as ToolLoop
+  participant M as Model
+  participant E as Executor
+  participant W as get_weather
+
+  U->>L: Weather in Berlin?
+  L->>M: messages + tool schemas
+  M-->>L: tool get_weather city=Berlin
+  L->>E: validate + execute
+  E->>W: get_weather
+  W-->>E: temp/condition
+  E-->>L: observation
+  L->>M: untrusted evidence
+  M-->>L: final answer
+  L-->>U: "12 C cloudy (source tool)"

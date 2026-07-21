@@ -1,0 +1,7 @@
+flowchart LR
+  S[Update ContextState] --> A[Assemble context]
+  A --> P[Optional token verify]
+  P --> L[LLM call]
+  L --> T[Tools / retrieval]
+  T --> R[Log AssemblyReport + usage]
+  R --> S

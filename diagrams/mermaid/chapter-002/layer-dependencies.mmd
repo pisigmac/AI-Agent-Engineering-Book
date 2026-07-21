@@ -3,27 +3,27 @@ flowchart BT
   embeddings[Embeddings]
   memory[Memory]
   retrieval[Retrieval]
-  tool[Tool]
+  toolNode[Tool]
   mcp[MCP]
   skill[Skill]
-  workflow[Workflow]
-  graph[Graph]
+  workflowNode[Workflow]
+  graphNode[Graph]
   planner[Planner]
   agent[Agent]
   multi_agent[Multi-Agent]
   harness[Harness]
-  eval[Evaluation]
+  evalNode[Evaluation]
   observability[Observability]
   application[Application]
 
   embeddings --> retrieval
-  tool --> skill
+  toolNode --> skill
   mcp --> skill
-  skill --> workflow
-  llm --> workflow
-  skill --> graph
-  llm --> graph
-  memory --> graph
+  skill --> workflowNode
+  llm --> workflowNode
+  skill --> graphNode
+  llm --> graphNode
+  memory --> graphNode
   llm --> planner
   memory --> planner
   llm --> agent
@@ -33,9 +33,9 @@ flowchart BT
   retrieval --> agent
   agent --> multi_agent
   agent --> harness
-  graph --> harness
-  workflow --> harness
+  graphNode --> harness
+  workflowNode --> harness
   harness --> application
   observability --> application
-  application --> eval
-  agent --> eval
+  application --> evalNode
+  agent --> evalNode

@@ -858,6 +858,14 @@ Acceptance: another engineer can clone the repo and follow `WORKFLOW.md` without
 
 ---
 
+## Visual diagrams
+
+![Branching Model](../diagrams/png/chapter-004/branching-model.png)
+
+![Git Pr Flow](../diagrams/png/chapter-004/git-pr-flow.png)
+
+![Toolkit Architecture](../diagrams/png/chapter-004/toolkit-architecture.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

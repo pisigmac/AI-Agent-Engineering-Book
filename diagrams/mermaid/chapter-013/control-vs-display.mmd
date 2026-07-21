@@ -1,0 +1,6 @@
+flowchart LR
+  Model[LLM] --> Machine[Structured machine fields]
+  Model --> Display[Optional user_summary prose]
+  Machine --> Router[Router / tools / DB]
+  Display --> UI[Customer UI]
+  Router -->|never parses| Display

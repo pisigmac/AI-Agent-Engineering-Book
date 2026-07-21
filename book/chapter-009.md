@@ -440,6 +440,14 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Attention Causal](../diagrams/png/chapter-009/attention-causal.png)
+
+![Decoder Stack](../diagrams/png/chapter-009/decoder-stack.png)
+
+![Lab Modules](../diagrams/png/chapter-009/lab-modules.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

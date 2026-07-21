@@ -1,0 +1,14 @@
+flowchart TB
+  subgraph Trusted[Trusted ring]
+    Sys[System policy]
+    ProductRules[Product non-negotiables]
+  end
+
+  subgraph Untrusted[Untrusted ring]
+    User[User text]
+    Tool[Tool payloads]
+    RAG[Retrieval chunks]
+  end
+
+  Trusted -->|governs interpretation of| Untrusted
+  Untrusted -->|must not override| Trusted

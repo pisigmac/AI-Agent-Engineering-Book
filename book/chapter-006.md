@@ -532,6 +532,12 @@ Acceptance:
 
 ---
 
+## Visual diagrams
+
+![Event Loop](../diagrams/png/chapter-006/event-loop.png)
+
+![Parallel Fanout](../diagrams/png/chapter-006/parallel-fanout.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

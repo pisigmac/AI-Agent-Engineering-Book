@@ -1,0 +1,6 @@
+flowchart LR
+  CLI[main.py] --> SC[StructuredCompleter]
+  SC --> Mock[MockLLM / real LLMPort]
+  SC --> Ex[extract_json]
+  SC --> Val[validate_model]
+  Val --> Models[Pydantic models]

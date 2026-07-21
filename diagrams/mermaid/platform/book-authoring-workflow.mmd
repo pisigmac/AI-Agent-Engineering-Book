@@ -1,0 +1,14 @@
+flowchart LR
+  Spec[BOOK_SPEC / curriculum] --> Author[Chapter authoring]
+  Prompts[prompts/ master prompts] --> Author
+  Author --> BookMD[book/chapter-XXX.md]
+  Author --> Code[code/chapter-XXX/]
+  Author --> Mmd[diagrams/mermaid/chapter-XXX/]
+  Mmd --> Render[scripts/render_diagrams.sh]
+  Render --> Png[diagrams/png/chapter-XXX/]
+  BookMD --> Embed[Markdown image embeds]
+  Png --> Embed
+  Code --> Tests[pytest]
+  Tests --> Gate[check_consistency]
+  Embed --> Gate
+  Gate --> Dev[git push origin dev]

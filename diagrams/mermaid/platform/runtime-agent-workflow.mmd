@@ -1,0 +1,13 @@
+flowchart TB
+  User[User / API request] --> App[Application]
+  App --> Prompt[promptlib render]
+  App --> State[ContextState snapshot]
+  Prompt --> Ctx[contextkit assemble]
+  State --> Ctx
+  Ctx --> Budget[token_kit budget / pack]
+  Budget --> LLM[LLM provider HTTP]
+  LLM --> Struct[Structured outputs Ch13+]
+  Struct --> Tools[Tools / retrieval]
+  Tools --> State
+  LLM --> Log[Logs + assembly report + usage]
+  Struct --> App

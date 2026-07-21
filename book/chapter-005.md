@@ -919,6 +919,14 @@ Acceptance criteria:
 
 ---
 
+## Visual diagrams
+
+![Client Architecture](../diagrams/png/chapter-005/client-architecture.png)
+
+![Rate Limit Loop](../diagrams/png/chapter-005/rate-limit-loop.png)
+
+![Tool Http Sequence](../diagrams/png/chapter-005/tool-http-sequence.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |

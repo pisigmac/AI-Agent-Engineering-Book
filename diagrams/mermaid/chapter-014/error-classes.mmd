@@ -1,0 +1,8 @@
+flowchart LR
+  Call[Tool call] --> V{Validate}
+  V -->|unknown_tool| E1[error observation]
+  V -->|invalid_args| E2[error observation]
+  V -->|ok| R[Run handler]
+  R -->|timeout| E3[error observation]
+  R -->|exception| E4[error observation]
+  R -->|ok| OK[result observation]
