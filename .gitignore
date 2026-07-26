@@ -11,6 +11,7 @@ __pycache__/
 scripts/config.yaml
 .env
 .env.*
+.session
 
 # Generated workflow state
 .book_state/

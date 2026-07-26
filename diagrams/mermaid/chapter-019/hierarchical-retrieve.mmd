@@ -1,0 +1,10 @@
+sequenceDiagram
+  participant Q as Query
+  participant S as Search
+  participant C as Child chunk
+  participant P as Parent chunk
+  participant L as LLM context
+  Q->>S: embed + top-k
+  S->>C: precise match
+  C->>P: expand via parent_id
+  P->>L: pack parent or child+parent

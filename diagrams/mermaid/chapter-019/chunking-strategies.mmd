@@ -1,0 +1,12 @@
+flowchart TB
+  Doc[Long document] --> S{Strategy}
+  S --> F[Fixed / sliding]
+  S --> R[Recursive separators]
+  S --> Sem[Semantic breakpoints]
+  S --> H[Hierarchical parent/child]
+  F --> C[Chunks + offsets]
+  R --> C
+  Sem --> C
+  H --> C
+  C --> Emb[Embed + index]
+  C --> Viz[Visualizer]

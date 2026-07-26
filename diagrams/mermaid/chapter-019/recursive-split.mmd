@@ -1,0 +1,12 @@
+flowchart TD
+  T[Text too large] --> Sep{Try separator}
+  Sep -->|section blank lines| P1[Split sections]
+  Sep -->|paragraphs| P2[Split paragraphs]
+  Sep -->|sentences| P3[Split sentences]
+  Sep -->|words / hard cut| P4[Hard windows]
+  P1 --> Fit{Fits chunk_size?}
+  P2 --> Fit
+  P3 --> Fit
+  P4 --> Fit
+  Fit -->|yes| Out[Emit chunk]
+  Fit -->|no| Sep
