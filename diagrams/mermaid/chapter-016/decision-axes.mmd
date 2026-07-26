@@ -1,0 +1,12 @@
+flowchart LR
+  Task[Task features] --> Q[Quality tier]
+  Task --> C[Cost efficiency]
+  Task --> L[Latency class]
+  Task --> Cap[Capabilities]
+  Q --> S[Weighted score]
+  C --> S
+  L --> S
+  Cap --> Gate{Hard gates}
+  Gate -->|fail| Reject[Ineligible]
+  Gate -->|pass| S
+  S --> Pick[Selected model]

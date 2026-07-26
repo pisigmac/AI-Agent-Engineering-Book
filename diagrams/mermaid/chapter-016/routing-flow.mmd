@@ -1,0 +1,10 @@
+flowchart TB
+  Req[Task request] --> Feat[Feature extract]
+  Feat --> Cat[Model catalog]
+  Feat --> Score[Score + gate]
+  Cat --> Score
+  Score --> Rank[Rank eligible]
+  Rank --> Primary[Primary model]
+  Primary -->|ok| Out[Completion]
+  Primary -->|retryable fail| FB[Fallback chain]
+  FB --> Out

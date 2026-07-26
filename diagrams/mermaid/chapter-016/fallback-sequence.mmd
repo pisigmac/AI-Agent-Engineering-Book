@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant C as Completer
+  participant R as Router
+  participant P as Primary
+  participant F as Fallback
+  C->>R: route(task, strategy)
+  R-->>C: decision + chain
+  C->>P: complete
+  P-->>C: retryable error
+  C->>F: complete next in chain
+  F-->>C: success
+  C-->>C: log attempts + cost
