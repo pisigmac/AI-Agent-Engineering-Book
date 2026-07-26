@@ -1,0 +1,9 @@
+flowchart TB
+  K[Cache key: model+prompt+params] --> L{Lookup}
+  L -->|hit| Save[Return cached; cost 0; log savings]
+  L -->|miss| Est[Estimate tokens and USD]
+  Est --> B{Within budget?}
+  B -->|no| Err[BudgetExceeded]
+  B -->|yes| M[Call model]
+  M --> W[Write cache]
+  M --> Led[Append UsageEvent]

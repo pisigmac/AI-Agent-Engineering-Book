@@ -1,0 +1,10 @@
+flowchart LR
+  Req[Request] --> Comp{Compress?}
+  Comp --> RL[Rate limit]
+  RL --> Cache{Cache lookup}
+  Cache -->|hit| Out[Response + zero bill]
+  Cache -->|miss| Bud[Budget reserve]
+  Bud --> Call[Model call + retries]
+  Call --> Led[Usage ledger]
+  Led --> Dash[Dashboard]
+  Call --> CacheW[Cache write]

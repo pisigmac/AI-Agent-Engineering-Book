@@ -1,0 +1,10 @@
+sequenceDiagram
+  participant U as User/CLI
+  participant E as CostEngine
+  participant L as Ledger
+  participant D as Dashboard
+  U->>E: complete / complete / complete
+  E->>L: UsageEvent stream
+  U->>E: dashboard()
+  E->>D: build_dashboard(events)
+  D-->>U: cost by model, hit rate, recommendations
