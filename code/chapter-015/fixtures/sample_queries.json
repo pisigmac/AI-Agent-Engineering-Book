@@ -1,0 +1,20 @@
+{
+  "queries": [
+    {
+      "query": "How do I get my money back?",
+      "expected_top_ids": ["faq-refund"]
+    },
+    {
+      "query": "Where is my package tracking number?",
+      "expected_top_ids": ["faq-shipping"]
+    },
+    {
+      "query": "I forgot my password",
+      "expected_top_ids": ["faq-auth"]
+    },
+    {
+      "query": "HTTP 429 rate limit",
+      "expected_top_ids": ["faq-api"]
+    }
+  ]
+}

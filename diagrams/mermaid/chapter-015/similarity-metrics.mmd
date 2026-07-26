@@ -1,0 +1,9 @@
+flowchart TB
+  A[Vector A] --> M{Metric}
+  B[Vector B] --> M
+  M -->|cosine| C[Angle-based similarity]
+  M -->|dot product| D[Cosine if unit-normalized]
+  M -->|euclidean| E[Distance: lower is closer]
+  C --> Rank[Rank neighbors]
+  D --> Rank
+  E --> Rank

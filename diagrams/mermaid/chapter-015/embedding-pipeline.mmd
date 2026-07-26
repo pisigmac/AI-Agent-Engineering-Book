@@ -1,0 +1,12 @@
+flowchart LR
+  Docs[Documents] --> Norm[Normalize]
+  Query[Query] --> NormQ[Normalize]
+  Norm --> Emb[Embedding model]
+  NormQ --> Emb
+  Emb --> Vecs[Vectors + metadata]
+  Emb --> QVec[Query vector]
+  Vecs --> Index[Vector index]
+  QVec --> Search[Top-k search]
+  Index --> Search
+  Search --> Hits[Ranked chunks]
+  Hits --> Ctx[Context manager Ch 12]

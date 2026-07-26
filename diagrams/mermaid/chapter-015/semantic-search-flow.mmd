@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant U as User
+  participant S as SemanticSearch
+  participant P as EmbeddingPipeline
+  participant I as VectorIndex
+  participant C as Corpus
+  U->>S: search(query)
+  S->>P: embed_query
+  P-->>S: query vector
+  S->>I: top-k(query vector)
+  Note over I,C: docs embedded at ingest
+  I-->>S: ranked SearchHits
+  S-->>U: hits + scores + metadata
