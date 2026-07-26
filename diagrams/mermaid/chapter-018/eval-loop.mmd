@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant E as Engineer
+  participant S as SearchEngine
+  participant L as Labeled queries
+  participant M as Metrics
+  E->>S: ingest corpus
+  E->>L: define relevant ids
+  loop each query
+    L->>S: search(query, k)
+    S-->>M: hits
+    M->>M: recall@k, RR
+  end
+  M-->>E: EvalReport MRR / recall

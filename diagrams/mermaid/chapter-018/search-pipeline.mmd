@@ -1,0 +1,12 @@
+flowchart TB
+  Docs[Documents + metadata] --> Store[Document store]
+  Docs --> Emb[Embed model]
+  Emb --> Idx[Vector index]
+  Q[Query] --> QE[Embed query]
+  QE --> Ret[Top-n candidates]
+  Idx --> Ret
+  Store --> Filt[Metadata filter]
+  Filt --> Ret
+  Ret --> Rank[Rank: cosine / boost / MMR]
+  Rank --> Hits[SearchHits]
+  Hits --> Ctx[Context manager]

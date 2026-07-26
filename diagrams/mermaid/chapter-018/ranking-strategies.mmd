@@ -1,0 +1,8 @@
+flowchart LR
+  Cand[Candidate hits] --> S{Strategy}
+  S -->|cosine| C[Similarity order]
+  S -->|boost| B[Metadata score multipliers]
+  S -->|mmr| M[Relevance vs diversity]
+  C --> TopK[Top-k cut]
+  B --> TopK
+  M --> TopK
