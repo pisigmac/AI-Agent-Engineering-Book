@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[AI Chatbot]
+  App --> Core[ChatSession]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

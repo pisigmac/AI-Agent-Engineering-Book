@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Multi-Agent Platform]
+  App --> Core[RouterBus]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

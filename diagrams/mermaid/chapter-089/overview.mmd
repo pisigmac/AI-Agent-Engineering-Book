@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Coding Agent]
+  App --> Core[EditTestLoop]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

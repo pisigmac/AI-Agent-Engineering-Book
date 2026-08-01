@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant U as User
+  participant A as PDF Chat
+  participant C as Core
+  participant L as MockLLM
+  U->>A: request
+  A->>C: handle
+  C->>L: complete
+  L-->>C: text
+  C-->>A: result
+  A-->>U: response

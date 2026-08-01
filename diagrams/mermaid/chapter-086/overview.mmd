@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Email Agent]
+  App --> Core[TriageDraft]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[PDF Chat]
+  App --> Core[RAG]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

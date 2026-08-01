@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Research Agent]
+  App --> Core[PlanSearchSynth]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Customer Support Agent]
+  App --> Core[TicketKB]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

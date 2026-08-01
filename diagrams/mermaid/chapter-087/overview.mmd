@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Meeting Assistant]
+  App --> Core[NotesPipeline]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

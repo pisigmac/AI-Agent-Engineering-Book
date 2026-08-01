@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[Browser Agent]
+  App --> Core[BrowseLoop]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

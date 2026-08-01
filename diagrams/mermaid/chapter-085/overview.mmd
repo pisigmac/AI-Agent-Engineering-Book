@@ -1,0 +1,6 @@
+flowchart LR
+  User[User] --> App[SQL Agent]
+  App --> Core[NL2SQL]
+  Core --> LLM[MockLLM]
+  Core --> Store[Store]
+  App --> Obs[Events]

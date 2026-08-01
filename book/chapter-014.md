@@ -334,6 +334,14 @@ LangChain tools, OpenAI tools, etc. are transport formats. Keep **your** registr
 
 ---
 
+## Visual diagrams
+
+![Error Classes](../diagrams/png/chapter-014/error-classes.png)
+
+![Tool Loop](../diagrams/png/chapter-014/tool-loop.png)
+
+![Weather Flow](../diagrams/png/chapter-014/weather-flow.png)
+
 ## Chapter Deliverables
 
 | Artifact | Location |
