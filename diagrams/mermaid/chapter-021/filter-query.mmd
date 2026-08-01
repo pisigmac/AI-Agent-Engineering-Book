@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant U as Client
+  participant C as Collection
+  participant F as Metadata filter
+  participant I as Index
+  U->>C: query(vec, where tenant)
+  C->>F: allow_ids from metadata
+  F-->>C: id subset
+  C->>I: search(vec, allow_ids)
+  I-->>C: hits + n_scanned
+  C-->>U: QueryResult

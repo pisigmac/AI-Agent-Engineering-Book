@@ -1,0 +1,6 @@
+flowchart LR
+  Q[Query vector] --> C[Nearest centroids]
+  C --> P[Select nprobe lists]
+  P --> S[Scan list members only]
+  S --> R[Rank top-k]
+  R --> H[Hits]

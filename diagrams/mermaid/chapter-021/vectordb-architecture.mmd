@@ -1,0 +1,10 @@
+flowchart TB
+  App[Application] --> API[VectorDB API]
+  API --> Col[Collection]
+  Col --> Meta[Metadata filter]
+  Col --> Idx{Index}
+  Idx --> Flat[Flat exact]
+  Idx --> IVF[IVF approx]
+  Col --> Disk[Persistence]
+  Flat --> Hits[Top-k hits]
+  IVF --> Hits
