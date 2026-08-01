@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant R as Reader
+  participant T as AI System Design
+  participant C as Core
+  R->>T: input
+  T->>C: evaluate
+  C-->>T: score/report
+  T-->>R: actionable output
