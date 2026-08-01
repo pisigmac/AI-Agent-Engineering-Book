@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant U as User
+  participant F as langgraphx
+  participant T as Tools
+  U->>F: run
+  F->>T: optional tool calls
+  T-->>F: observations
+  F-->>U: final structured result

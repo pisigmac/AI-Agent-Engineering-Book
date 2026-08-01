@@ -1,0 +1,7 @@
+sequenceDiagram
+  participant E as Engineer
+  participant H as HybridRetriever
+  participant L as Labeled queries
+  E->>H: search modes
+  H->>L: score Recall@k MRR
+  L-->>E: compare report

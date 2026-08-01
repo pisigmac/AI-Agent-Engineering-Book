@@ -1,0 +1,8 @@
+flowchart TB
+  Q[Query] --> BM25
+  Q --> Dense
+  Q --> Sparse[Sparse TF-IDF]
+  BM25 --> Fuse[RRF / weighted]
+  Dense --> Fuse
+  Sparse --> Fuse
+  Fuse --> Hits[Top-k]
