@@ -117,7 +117,7 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 
 ## Visual diagrams
 
-![Lifecycle](../diagrams/png/chapter-038/lifecycle.png)
+![Overview](../diagrams/png/chapter-038/overview.png)
 
 
 ## Chapter Deliverables
