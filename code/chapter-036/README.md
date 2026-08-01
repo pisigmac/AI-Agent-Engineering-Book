@@ -1,0 +1,1 @@
+# Chapter 036 — Workflow Orchestration\n```bash\ncd code/chapter-036 && pytest -q\n```\n

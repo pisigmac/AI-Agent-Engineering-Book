@@ -1,0 +1,1 @@
+# Chapter 032 — Planning\n```bash\ncd code/chapter-032 && pytest -q\n```\n

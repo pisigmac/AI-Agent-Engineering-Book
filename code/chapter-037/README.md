@@ -1,0 +1,1 @@
+# Chapter 037 — Multi-Agent Systems\n```bash\ncd code/chapter-037 && pytest -q\n```\n

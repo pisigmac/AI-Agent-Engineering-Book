@@ -1,0 +1,1 @@
+# Chapter 033 — Memory Systems\n```bash\ncd code/chapter-033 && pytest -q\n```\n

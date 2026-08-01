@@ -1,0 +1,19 @@
+"""Architecture ports for agent skeleton components."""
+from __future__ import annotations
+from typing import Any, Protocol
+
+class PlannerPort(Protocol):
+    def plan(self, goal: str) -> list[str]: ...
+
+class MemoryPort(Protocol):
+    def add(self, role: str, content: str) -> None: ...
+    def context(self) -> str: ...
+
+class ToolPort(Protocol):
+    def call(self, name: str, args: dict[str, Any]) -> dict[str, Any]: ...
+
+class SkillPort(Protocol):
+    def run(self, input: str) -> str: ...
+
+class ExecutorPort(Protocol):
+    def execute(self, step: str, tools: ToolPort) -> str: ...

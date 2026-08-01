@@ -1,0 +1,1 @@
+# Chapter 031 — Tool Calling\n```bash\ncd code/chapter-031 && pytest -q\n```\n

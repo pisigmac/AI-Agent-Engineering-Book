@@ -1,0 +1,1 @@
+# Chapter 038 — MCP\n```bash\ncd code/chapter-038 && pytest -q\n```\n

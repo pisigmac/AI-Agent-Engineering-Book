@@ -1,0 +1,1 @@
+# Chapter 028 — Agent Architecture\n```bash\ncd code/chapter-028 && pytest -q && python3 main.py "weather"\n```\n

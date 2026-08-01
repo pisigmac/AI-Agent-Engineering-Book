@@ -1,0 +1,1 @@
+# Chapter 030 — Agent Skills\n```bash\ncd code/chapter-030 && pytest -q\n```\n

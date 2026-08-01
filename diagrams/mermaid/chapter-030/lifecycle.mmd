@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant U as User
+  participant A as skillreg
+  participant T as Tools/Env
+  U->>A: request
+  A->>T: act
+  T-->>A: observe
+  A-->>U: result

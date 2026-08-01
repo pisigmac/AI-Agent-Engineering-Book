@@ -1,0 +1,1 @@
+# Chapter 029 — Execution Loops\n```bash\ncd code/chapter-029 && pytest -q\n```\n
