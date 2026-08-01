@@ -2,21 +2,143 @@
 
 ## Chapter Overview
 
-Part VIII framework module **Scheduler** in `fwsched`.
+Part VIII — **Build Your Own Framework** — implements **Scheduler** as package `fwsched`.
+
+Agent platforms need deferred work: digests, reindex, eval suites. A priority heap + virtual clock makes scheduling testable.
+
+Earlier parts taught agents, retrieval, APIs, and production concerns using ad-hoc modules. Part VIII **owns the seams**: LLM I/O, prompts, tools, skills, planning, loops, memory, workflows, graphs, reflection, scheduling, harness, evaluation, and plugins. Chapter 77 focuses on **Scheduler** so you can replace vendor frameworks without losing control of behavior, tests, or safety.
+
+**Code:** `code/chapter-077/fwsched/` (offline-testable). **Diagrams:** lifecycle and overview under `diagrams/png/chapter-077/`.
+
+---
 
 ## Learning Objectives
 
-- Implement/use `fwsched`
-- Test offline
-- Compose with adjacent modules
+After completing this chapter, you can:
+
+- Explain why **Scheduler** is a first-class framework boundary
+- Use and extend the `fwsched` package offline
+- Wire scheduler into adjacent Part VIII modules
+- Apply production concerns: failure modes, budgets, observability
+- Compare this design to popular frameworks without vendor lock-in
+- Debug common integration failures with structured traces
+- Describe security defaults (deny-by-default, validation, isolation)
+- Complete the mini project and exercises with tests green
+
+---
 
 ## Prerequisites
 
-Earlier Part VIII chapters.
+- Parts I–VII (platform, agents, systems, APIs, production engineering)
+- Earlier Part VIII chapters when `n > 67` (especially client, tools, and loop concepts)
+- Comfort with Python protocols, dataclasses, and pytest
+
+---
+
+## Motivation
+
+Nightly index rebuilds and polling tasks are `while True: sleep` threads without priority or testable time.
+
+Shipping “just call the SDK” works in a demo and collapses under multi-provider needs, CI, multi-tenant safety, and incident response. Framework modules exist so **product teams share one correct implementation** of retries, registries, budgets, and gates—then compose them into agents (Part IX).
+
+---
+
+## First Principles
+
+### 1. Virtual now
+
+Tests advance `tick(dt)` without wall clock.
+
+### 2. Priority queue
+
+Lower priority number runs first among ready jobs.
+
+### 3. Intervals reschedule
+
+interval_s > 0 pushes next_run.
+
+### 4. History log
+
+What ran, in order.
+
+### 5. Jobs are callables
+
+Keep side effects inside job fn.
+
+---
+
+## Mental Model
+
+Scheduler = calendar + priority inbox — jobs run at time with priority, optionally recurring.
+
+```mermaid
+flowchart LR
+  Caller[Caller / Agent] --> Mod[Scheduler]
+  Mod --> Dep[Dependencies / Mocks]
+  Mod --> Out[Structured Result]
+  Mod --> Obs[Logs / Trace]
+```
+
+| Piece | Responsibility |
+|---|---|
+| Public API | Stable types other chapters import |
+| Policy | Retries, permissions, budgets, gates |
+| Adapters | Mocks in CI; real backends in prod |
+| Observability | Attempts, steps, scores, plugin names |
+
+---
+
+## Core Theory
+
+### ScheduledJob
+
+Ordered by `(priority, seq)` in a heap; carries `next_run`, `interval_s`, `fn`.
+
+### tick(dt)
+
+Advance `now`; pop ready jobs (`next_run <= now`); sort by priority; run; reschedule intervals.
+
+Production: use real cron (Kubernetes CronJob, Celery beat, cloud schedulers) but keep the same job naming and idempotency discipline.
+
+### Failure cases
+
+Expect partial failure as normal: timeouts, forbidden tools, max steps, failed gates. Prefer structured outcomes over ambient exceptions across agent boundaries.
+
+### Performance implications
+
+Every extra LLM hop multiplies latency and cost. Framework defaults should make budgets obvious (`max_retries`, `max_steps`, `gate`).
+
+### Security implications
+
+Side effects and extensibility are the danger zones (tools, plugins, memory). Validate inputs; allowlist capabilities; never execute model-authored code.
+
+---
 
 ## Architecture
 
-`code/chapter-077/fwsched/`
+```text
+code/chapter-077/
+  fwsched/           # framework module
+  tests/           # offline unit tests
+  main.py          # demo entrypoint
+  pyproject.toml
+  README.md
+```
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant M as fwsched
+  participant B as Backend/Mock
+  C->>M: API call
+  M->>B: delegated work
+  B-->>M: result / error
+  M-->>C: structured outcome
+```
+
+Folder and lifecycle diagrams also render as PNGs in **Visual diagrams**.
+
+---
 
 ## Internal Implementation
 
@@ -24,9 +146,107 @@ Earlier Part VIII chapters.
 cd code/chapter-077 && pytest -q && python3 main.py
 ```
 
+Schedule two jobs with different priorities and delays; tick; assert order.
+
+Read the package source; prefer extending via new registrations and injected callables rather than editing core conditionals for each product.
+
+---
+
+## Production Implementation
+
+- **Scaling:** Stateless module instances behind request workers; shared stores for memory/schedules
+- **Caching:** Prompt renders, embeddings, and idempotent tool results where safe
+- **Monitoring:** Counters for retries, forbidden tools, max_steps, eval pass rate
+- **Configuration:** max_retries, max_steps, gates, allowlists via env/config
+- **Retries:** Transient-only at LLM and HTTP edges
+- **Security:** Tenant isolation, secret redaction, plugin allowlists
+- **Cost:** Token accounting from client usage fields; budget middleware
+- **Concurrency:** Safe registries (locks) if hot-reloading plugins
+
+---
+
+## Framework Implementation
+
+Celery, RQ, APScheduler, cloud scheduler + queue. Teaching scheduler proves priority + interval logic offline.
+
+Do not treat any single framework as universally best. Own interfaces; adopt vendor runtimes when they reduce undifferentiated heavy lifting.
+
+---
+
+## Trade-offs
+
+| Option A | Option B / notes |
+|---|---|
+| In-process vs distributed | In-process dies with process; distributed needs locks/idempotency. |
+| Priority vs fair FIFO | Priority can starve low jobs—add aging in prod. |
+
+---
+
+## Debugging
+
+Common issues:
+
+- Job never runs → next_run in future / tick too small
+- Starvation → always high priority flood
+- Double run → missing idempotency key
+
+**Workflow:** reproduce offline with mocks → assert structured fields → add one log line per policy decision → fix at the boundary (schema, allowlist, budget) not with prompt superstition.
+
+---
+
+## Performance
+
+Heap ops are log n. Avoid tiny intervals that hot-loop. Batch eval jobs.
+
+Track p95 latency and cost per successful task, not only happy-path demos.
+
+---
+
+## Security
+
+Do not allow user-defined callables without sandbox. Authz on who can schedule what.
+
+Threat model always includes prompt injection driving tool/plugin misuse. Defense is registry policy + harness isolation + eval gates—not model promises.
+
+---
+
+## Best Practices
+
+1. Keep `fwsched` interfaces stable; swap internals freely
+2. Test offline with mocks at every I/O boundary
+3. Log structured events (step, tool, plan version)
+4. Budget steps, tokens, and wall time
+5. Default deny on tools, plugins, and memory tenants
+6. Gate releases with evaluators before promoting prompts
+
+---
+
+## Anti-Patterns
+
+- **God module** — One file owns client, tools, memory, and HTTP
+- **Hidden retries** — Call sites each invent backoff
+- **Stringly tools** — Model output executed without registry
+- **Unversioned prompts** — No rollback when quality drops
+- **Infinite loops** — No max_steps / max_replans
+- **Trustful plugins** — Load arbitrary code from disk/URL
+
+---
+
+## Hands-on Exercise
+
+1. Open `code/chapter-077/` and run `pytest -q`.
+2. Modify one policy knob (retry, permission, max_steps, gate, allowlist—whichever fits this module).
+3. Add or adjust a unit test that fails before the change and passes after.
+4. Run `python3 main.py` and note the structured JSON/fields in output.
+5. Write three bullets: what would break in multi-tenant production if this module vanished.
+
+---
+
 ## Mini Project
 
-Scheduler module.
+Ship a small demo that composes **Scheduler** with at least one adjacent concept (client, tools, loop, or eval). Keep it offline-testable. Document the composition in five lines in your notes.
+
+---
 
 ## Visual diagrams
 
@@ -34,6 +254,7 @@ Scheduler module.
 
 ![Overview](../diagrams/png/chapter-077/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -41,11 +262,50 @@ Scheduler module.
 |---|---|
 | Manuscript | `book/chapter-077.md` |
 | Package | `code/chapter-077/fwsched/` |
+| Tests | `code/chapter-077/tests/` |
+| Diagrams | `diagrams/mermaid/chapter-077/` |
+
+---
+
+## Interview Questions
+
+1. How do you test time-based jobs deterministically?
+2. What makes a scheduled agent job idempotent?
+
+---
+
+## Quiz
+
+1. tick(dt) advances:
+   A) GPU clock only B) virtual now C) DNS TTL only D) Git
+   **Answer:** B
+
+2. interval_s > 0 means:
+   A) Run once B) Reschedule after run C) Delete job D) Raise
+   **Answer:** B
+
+---
+
+## Cheat Sheet
+
+- `schedule(name, fn, priority, interval_s, delay_s)`
+- `tick(dt)` runs ready jobs
+- Prefer idempotent job bodies
+
+---
+
+## Curated Free Resources
+
+- [Kubernetes CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
+
+---
 
 ## Chapter Summary
 
-Scheduler as a framework building block.
+**Scheduler** (`fwsched`) is a Part VIII framework building block: explicit interfaces, offline tests, and production policy hooks. Master it in isolation, then compose with the rest of the harness to build replaceable agent platforms.
+
+---
 
 ## What's Next
 
-**Chapter 78** continues Part VIII.
+**Chapter 78: Agent Harness.** Chapter 78 harnesses agent lifecycle hooks—schedulers often trigger harness runs.

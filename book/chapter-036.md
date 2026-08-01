@@ -2,118 +2,233 @@
 
 ## Chapter Overview
 
-Sequential/parallel steps with retry policies.
+Part IV — Agent Engineering — **Workflow Orchestration** — package `workflow`.
 
-This chapter is part of **Part IV — Agent Engineering**. It extends the evolving agent platform with production-minded interfaces and offline-testable implementations.
+`Workflow` runs `Step` objects sequentially or as parallel batches (`add_parallel`), with per-step `retries` and merged context.
+
+Parts I–III built models, context, retrieval, and hybrid search. Part IV implements **Workflow Orchestration** as `workflow` — an offline-testable building block toward harnesses (Part V) and your own framework (Part VIII).
+
+**Code:** `code/chapter-036/workflow/`. **Continuity:** Chapter 25 advanced RAG; Chapter 26 hybrid eval; Part IV agents from Chapter 27 onward.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Workflows vs free-form agents
-- Parallel stages
-- Retry policies
-- Run the chapter project and interpret its structured output
-- Place the component in the larger agent runtime
+- Explain **Workflow Orchestration** in a production agent architecture
+- Run and extend `workflow` offline with pytest
+- Describe failure modes, budgets, and structured traces
+- Connect this module to adjacent chapters in Part IV/V
+- Compare the approach to common frameworks without losing your domain model
+- Apply security defaults (validation, permissions, isolation)
+- Complete exercises and mini project with tests passing
+
+---
 
 ## Prerequisites
 
-- Chapters 1–26 foundations (especially tools, structured outputs, RAG where relevant)
-- Prior Part IV chapters through 35
+- Chapters 1–26 (LLM platform, RAG, hybrid search)
+- Prior Part IV chapters when `n > 27` (through Chapter 35)
+- Python dataclasses, typing, pytest
+
+---
 
 ## Motivation
 
-Agents fail in production when autonomy is unbounded, tools are ungoverned, or state is implicit. This chapter makes **workflow orchestration** an explicit, testable subsystem.
+Agents need parallel safety checks, retry flaky retrieval, and stop the line when a step fails — not a single-threaded for-loop.
+
+---
 
 ## First Principles
 
-### 1. Workflows vs free-form agents
+### 1. Steps mutate shared context
 
-### 2. Parallel stages
+Return partial dict merged into ctx.
 
-### 3. Retry policies
+### 2. Parallel steps merge outputs
 
+ThreadPoolExecutor with per-step trace.
+
+### 3. Fail fast on required steps
+
+Return failed step name when retries exhausted.
+
+### 4. Retries are step-local
+
+Do not retry entire workflow blindly.
+
+---
 
 ## Mental Model
 
-See Visual diagrams for the component flow.
+Workflow = kitchen line — sequential courses, parallel sides, and remakes (retries) when a plate drops.
+
+```mermaid
+flowchart LR
+  Caller[Caller / Harness] --> Mod[Workflow Orchestration]
+  Mod --> Dep[Mocks / Backends]
+  Mod --> Out[Structured Result]
+  Mod --> Trace[Trace / Logs]
+```
+
+| Piece | Responsibility |
+|---|---|
+| Public API | Stable entry types importers rely on |
+| Policy | Budgets, permissions, retries, gates |
+| State | Memory, graph, or workflow context |
+| Observability | Traces you can assert in tests |
+
+---
 
 ## Core Theory
 
-The implementation encodes the theory as typed interfaces and a CLI-runnable project. Prefer explicit state transitions, budgets, and structured results over free-text control flow.
+### Step execution
+
+`_run_step` loops `attempts <= step.retries`, try/except around `step.fn(ctx)`.
+
+### Demo workflow
+
+`demo_workflow()` — classify → retrieve (retries=1) → parallel safety+tone → answer.
+
+Parallel block stores `{step_name: result}` under `ctx['parallel']`.
+
+Use this layer when graph topology is fixed but ops needs retries/concurrency.
+
+### Failure cases
+
+Treat timeouts, permission denials, max steps, and failed observations as **normal** paths with structured errors — not surprise exceptions across agent boundaries.
+
+### Performance implications
+
+LLM calls dominate latency; keep planning, validation, and registry work cheap. Parallelize only independent steps.
+
+### Security implications
+
+Side effects flow through tools, MCP, and workflows — validate names and args; default deny; never execute model-produced code.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-036/workflow/
+code/chapter-036/
+  workflow/
   tests/
   main.py
+  pyproject.toml
 ```
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant M as workflow
+  participant B as Backend
+  C->>M: invoke
+  M->>B: optional I/O
+  B-->>M: data / error
+  M-->>C: structured outcome
+```
+
+---
 
 ## Internal Implementation
 
-Run the package CLI/tests under `code/chapter-036/`. Key entrypoints live in the `workflow` package.
+```bash
+cd code/chapter-036 && pytest -q && python3 main.py
+```
+
+Make retrieve fail twice then succeed; assert attempts in trace.
+
+---
 
 ## Production Implementation
 
-- Replace offline policies/mocks with real model calls behind the same interfaces
-- Add authz, audit logs, and metrics around every side effect
-- Persist state where the component owns long-lived data
-- Enforce step/time/cost budgets at the harness boundary
+- Swap mocks for LLM providers, vector DBs, and MCP stdio transports behind the same types
+- Add authz, audit logs, and metrics on every side effect
+- Persist episodic memory and checkpoints when required
+- Enforce tenant isolation on memory, tools, and resources
+- Wire retrieval (Part III) as governed tools, not prompt paste
+
+---
 
 ## Framework Implementation
 
-LangGraph, CrewAI, AutoGen, and SDKs should map onto these ports—not replace your domain model.
+Temporal, Prefect, and Airflow orchestrate at datacenter scale — same semantics at agent layer.
+
+Map vendor frameworks onto these ports; do not let SDK types leak into domain models.
+
+---
 
 ## Trade-offs
 
-| Approach | Pros | Cons |
-|---|---|---|
-| Explicit component | Testable, swappable | More boilerplate |
-| Framework magic | Fast demos | Hidden control flow |
+| Option A | Option B / notes |
+|---|---|
+| Thread pool parallel | Simple; watch shared context races. |
+| Async gather | Scales I/O; harder debugging. |
+| Monolithic script | No retry granularity. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Non-termination | Missing terminate condition / max steps |
-| Silent tool failure | Validation and error mapping |
-| Bad multi-step quality | Memory and observation formatting |
+- Parallel merge missing keys → step fn returned empty output
+- Failed workflow → check trace[-1] failed step
+- Retries exhausted → exception not caught inside fn
+
+**Workflow:** reproduce with offline mocks → inspect trace/history → add one log field per policy decision → fix at validation/budget boundaries.
+
+---
 
 ## Performance
 
-Bound steps, cache pure tools, parallelize only independent work.
+Parallelize only independent steps; cap pool workers; short-circuit on classify.
+
+---
 
 ## Security
 
-Least-privilege tools, sandbox high-risk actions, treat observations as untrusted.
+Run safety_check before answer generation; never skip parallel gates for speed.
+
+---
 
 ## Best Practices
 
-1. Typed inputs/outputs
-2. Budgets on loops
-3. Structured traces
-4. Tests without network
-5. Clear ownership of state
+1. Keep `workflow` public APIs small and stable
+2. Prefer structured `{ok, ...}` results over bare exceptions at boundaries
+3. Log traces (steps, roles, nodes) suitable for JSON export
+4. Enforce budgets: steps, retries, graph nodes, workflow failures
+5. Validate and authorize before side effects
+6. Run `pytest -q` in CI without network keys
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Unbounded autonomy | Cost and safety incidents |
-| Stringly-typed tools | Runtime chaos |
-| No traces | Un-debuggable agents |
+- **Unbounded loops** — Runaway cost and stuck sessions
+- **Stringly-typed tools** — Model hallucinates names that still execute
+- **Implicit memory** — Context leaks across tenants and tasks
+- **Monolith agent** — Cannot test planner or tools in isolation
+- **Skipping reflection on high-stakes answers** — Hallucinations reach users
+- **Opaque framework defaults** — Hidden control flow you cannot trace
+
+---
 
 ## Hands-on Exercise
 
-1. Run the chapter tests.
-2. Execute the CLI demo.
-3. Modify one policy/handler and re-test.
-4. Note how the component would plug into Chapter 28’s skeleton / later harnesses.
+1. `cd code/chapter-036 && pytest -q`
+2. Change one policy (budget, permission, router, retry, confidence threshold)
+3. Add a test that fails before the change and passes after
+4. Run `python3 main.py` and capture structured output
+5. Write three bullets: how this module connects to Chapter 28 skeleton or Part V harness
+
+---
 
 ## Mini Project
 
-**Workflow engine**
+Deliverable: **Workflow with sequential, parallel, and retry policies.** Extend the demo or compose with an adjacent chapter module; keep tests offline.
+
+---
 
 ## Visual diagrams
 
@@ -121,6 +236,7 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 
 ![Overview](../diagrams/png/chapter-036/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -129,32 +245,54 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 | Manuscript | `book/chapter-036.md` |
 | Package | `code/chapter-036/workflow/` |
 | Tests | `code/chapter-036/tests/` |
-| Diagrams | `diagrams/mermaid|png/chapter-036/` |
+| Diagrams | `diagrams/mermaid/chapter-036/` |
+
+---
 
 ## Interview Questions
 
-1. What problem does this component solve in an agent system?
-2. What are its inputs, outputs, and failure modes?
-3. How do budgets/permissions apply?
-4. How would you test it without live models?
-5. How does it interact with tools and memory?
+1. Workflow vs graph — division of labor?
+2. How do retries differ from agent-level max_retries?
+3. Shared context pitfalls in parallel steps?
+
+---
 
 ## Quiz
 
-1. Part IV focuses on: **agent engineering building blocks**
-2. Side effects should go through: **validated tools/executors**
-3. Loops need: **explicit termination and budgets**
+1. add_parallel runs steps:
+   A) Concurrently B) Never C) On GPU only D) Randomly unordered always
+   **Answer:** A
+
+2. Step.retries applies:
+   A) Per step B) Globally infinite C) DNS D) Never
+   **Answer:** A
+
+3. Failed required step:
+   A) Stops workflow B) Ignored always C) Deletes repo D) None
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-036 && pytest -q && python3 main.py --help || python3 main.py
-```
+- `Workflow.add(Step(...)); add_parallel([...])`
+- `run(context) -> {ok, trace, context}`
+
+---
+
+## Curated Free Resources
+
+- [Temporal docs](https://docs.temporal.io/)
+- [Prefect](https://docs.prefect.io/)
+
+---
 
 ## Chapter Summary
 
-Sequential/parallel steps with retry policies. Deliverable: **Ticket workflow result**.
+**Workflow Orchestration** (`workflow`) — Workflow with sequential, parallel, and retry policies. Explicit types, traces, and tests so agent behavior stays swappable as models and vendors change.
+
+---
 
 ## What's Next
 
-**Chapter 37** continues Part IV.
+**Chapter 37: Multi-Agent Systems.** Chapter 37 coordinates multiple role-specialized agents.

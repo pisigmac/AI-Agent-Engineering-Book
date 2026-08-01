@@ -2,118 +2,235 @@
 
 ## Chapter Overview
 
-Skill specs, registry, discovery, versioning, composition.
+Part IV — Agent Engineering — **Agent Skills** — package `skillreg`.
 
-This chapter is part of **Part IV — Agent Engineering**. It extends the evolving agent platform with production-minded interfaces and offline-testable implementations.
+`SkillRegistry` tracks `SkillSpec` metadata (name, version, tags), supports discovery by tag, and `compose(names, text)` chains skills deterministically.
+
+Parts I–III built models, context, retrieval, and hybrid search. Part IV implements **Agent Skills** as `skillreg` — an offline-testable building block toward harnesses (Part V) and your own framework (Part VIII).
+
+**Code:** `code/chapter-030/skillreg/`. **Continuity:** Chapter 25 advanced RAG; Chapter 26 hybrid eval; Part IV agents from Chapter 27 onward.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Skill as versioned capability
-- Registry discovery by tags
-- Composition pipelines
-- Run the chapter project and interpret its structured output
-- Place the component in the larger agent runtime
+- Explain **Agent Skills** in a production agent architecture
+- Run and extend `skillreg` offline with pytest
+- Describe failure modes, budgets, and structured traces
+- Connect this module to adjacent chapters in Part IV/V
+- Compare the approach to common frameworks without losing your domain model
+- Apply security defaults (validation, permissions, isolation)
+- Complete exercises and mini project with tests passing
+
+---
 
 ## Prerequisites
 
-- Chapters 1–26 foundations (especially tools, structured outputs, RAG where relevant)
-- Prior Part IV chapters through 29
+- Chapters 1–26 (LLM platform, RAG, hybrid search)
+- Prior Part IV chapters when `n > 27` (through Chapter 29)
+- Python dataclasses, typing, pytest
+
+---
 
 ## Motivation
 
-Agents fail in production when autonomy is unbounded, tools are ungoverned, or state is implicit. This chapter makes **agent skills** an explicit, testable subsystem.
+Teams register one-off functions as tools and lose discoverability, versioning, and composable text transforms.
+
+---
 
 ## First Principles
 
-### 1. Skill as versioned capability
+### 1. Skills carry metadata
 
-### 2. Registry discovery by tags
+Name, version, description, tags for discovery.
 
-### 3. Composition pipelines
+### 2. Version keys
 
+`name@version` plus latest alias on bare name.
+
+### 3. Composition is ordered
+
+`compose` pipes text through each skill sequentially.
+
+### 4. Skills ≠ tools
+
+Skills transform state; tools perform external side effects (Ch 31).
+
+---
 
 ## Mental Model
 
-See Visual diagrams for the component flow.
+Skills = npm packages for agents — named, versioned capabilities you compose in pipelines.
+
+```mermaid
+flowchart LR
+  Caller[Caller / Harness] --> Mod[Agent Skills]
+  Mod --> Dep[Mocks / Backends]
+  Mod --> Out[Structured Result]
+  Mod --> Trace[Trace / Logs]
+```
+
+| Piece | Responsibility |
+|---|---|
+| Public API | Stable entry types importers rely on |
+| Policy | Budgets, permissions, retries, gates |
+| State | Memory, graph, or workflow context |
+| Observability | Traces you can assert in tests |
+
+---
 
 ## Core Theory
 
-The implementation encodes the theory as typed interfaces and a CLI-runnable project. Prefer explicit state transitions, budgets, and structured results over free-text control flow.
+### Skill model
+
+`Skill(SkillSpec(...), handler)` — handler is a callable; `run(**kwargs)` invoked by registry.
+
+### Registry API
+
+- `register(skill)` — stores versioned and alias keys
+- `get(name, version=None)`
+- `list()` — deduplicated specs for catalog UI
+- `discover(tag)` — filter by tag
+- `compose(["normalize", "summarize"], text)`
+
+`default_registry()` registers normalize, summarize, and cite skills for pipeline demos.
+
+### Failure cases
+
+Treat timeouts, permission denials, max steps, and failed observations as **normal** paths with structured errors — not surprise exceptions across agent boundaries.
+
+### Performance implications
+
+LLM calls dominate latency; keep planning, validation, and registry work cheap. Parallelize only independent steps.
+
+### Security implications
+
+Side effects flow through tools, MCP, and workflows — validate names and args; default deny; never execute model-produced code.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-030/skillreg/
+code/chapter-030/
+  skillreg/
   tests/
   main.py
+  pyproject.toml
 ```
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant M as skillreg
+  participant B as Backend
+  C->>M: invoke
+  M->>B: optional I/O
+  B-->>M: data / error
+  M-->>C: structured outcome
+```
+
+---
 
 ## Internal Implementation
 
-Run the package CLI/tests under `code/chapter-030/`. Key entrypoints live in the `skillreg` package.
+```bash
+cd code/chapter-030 && pytest -q && python3 main.py
+```
+
+Register a `translate` skill with tag `nlp` and discover it via `discover('nlp')`.
+
+---
 
 ## Production Implementation
 
-- Replace offline policies/mocks with real model calls behind the same interfaces
-- Add authz, audit logs, and metrics around every side effect
-- Persist state where the component owns long-lived data
-- Enforce step/time/cost budgets at the harness boundary
+- Swap mocks for LLM providers, vector DBs, and MCP stdio transports behind the same types
+- Add authz, audit logs, and metrics on every side effect
+- Persist episodic memory and checkpoints when required
+- Enforce tenant isolation on memory, tools, and resources
+- Wire retrieval (Part III) as governed tools, not prompt paste
+
+---
 
 ## Framework Implementation
 
-LangGraph, CrewAI, AutoGen, and SDKs should map onto these ports—not replace your domain model.
+Claude Skills, ChatGPT GPTs, and internal 'playbooks' are productized skill catalogs — same lifecycle problems: versioning and eval.
+
+Map vendor frameworks onto these ports; do not let SDK types leak into domain models.
+
+---
 
 ## Trade-offs
 
-| Approach | Pros | Cons |
-|---|---|---|
-| Explicit component | Testable, swappable | More boilerplate |
-| Framework magic | Fast demos | Hidden control flow |
+| Option A | Option B / notes |
+|---|---|
+| In-memory registry | Great for tests; use DB for multi-team catalogs. |
+| Composition in-process | Low latency; no isolation from buggy skill code. |
+| Skills as microservices | Isolation; network overhead. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Non-termination | Missing terminate condition / max steps |
-| Silent tool failure | Validation and error mapping |
-| Bad multi-step quality | Memory and observation formatting |
+- KeyError on get → wrong version pin
+- compose order wrong → skills applied backwards
+- Duplicate list entries → alias keys iterated twice (registry dedupes in list())
+
+**Workflow:** reproduce with offline mocks → inspect trace/history → add one log field per policy decision → fix at validation/budget boundaries.
+
+---
 
 ## Performance
 
-Bound steps, cache pure tools, parallelize only independent work.
+Skills should stay CPU-light; push heavy ML to async jobs or tools.
+
+---
 
 ## Security
 
-Least-privilege tools, sandbox high-risk actions, treat observations as untrusted.
+Do not let users register arbitrary skill code without signing/review — same as plugins.
+
+---
 
 ## Best Practices
 
-1. Typed inputs/outputs
-2. Budgets on loops
-3. Structured traces
-4. Tests without network
-5. Clear ownership of state
+1. Keep `skillreg` public APIs small and stable
+2. Prefer structured `{ok, ...}` results over bare exceptions at boundaries
+3. Log traces (steps, roles, nodes) suitable for JSON export
+4. Enforce budgets: steps, retries, graph nodes, workflow failures
+5. Validate and authorize before side effects
+6. Run `pytest -q` in CI without network keys
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Unbounded autonomy | Cost and safety incidents |
-| Stringly-typed tools | Runtime chaos |
-| No traces | Un-debuggable agents |
+- **Unbounded loops** — Runaway cost and stuck sessions
+- **Stringly-typed tools** — Model hallucinates names that still execute
+- **Implicit memory** — Context leaks across tenants and tasks
+- **Monolith agent** — Cannot test planner or tools in isolation
+- **Skipping reflection on high-stakes answers** — Hallucinations reach users
+- **Opaque framework defaults** — Hidden control flow you cannot trace
+
+---
 
 ## Hands-on Exercise
 
-1. Run the chapter tests.
-2. Execute the CLI demo.
-3. Modify one policy/handler and re-test.
-4. Note how the component would plug into Chapter 28’s skeleton / later harnesses.
+1. `cd code/chapter-030 && pytest -q`
+2. Change one policy (budget, permission, router, retry, confidence threshold)
+3. Add a test that fails before the change and passes after
+4. Run `python3 main.py` and capture structured output
+5. Write three bullets: how this module connects to Chapter 28 skeleton or Part V harness
+
+---
 
 ## Mini Project
 
-**Skill registry**
+Deliverable: **Skill registry with discovery and composition.** Extend the demo or compose with an adjacent chapter module; keep tests offline.
+
+---
 
 ## Visual diagrams
 
@@ -121,6 +238,7 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 
 ![Overview](../diagrams/png/chapter-030/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -129,32 +247,54 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 | Manuscript | `book/chapter-030.md` |
 | Package | `code/chapter-030/skillreg/` |
 | Tests | `code/chapter-030/tests/` |
-| Diagrams | `diagrams/mermaid|png/chapter-030/` |
+| Diagrams | `diagrams/mermaid/chapter-030/` |
+
+---
 
 ## Interview Questions
 
-1. What problem does this component solve in an agent system?
-2. What are its inputs, outputs, and failure modes?
-3. How do budgets/permissions apply?
-4. How would you test it without live models?
-5. How does it interact with tools and memory?
+1. When is a skill better than a tool?
+2. How do tags support discovery at scale?
+3. How would you eval a new skill version?
+
+---
 
 ## Quiz
 
-1. Part IV focuses on: **agent engineering building blocks**
-2. Side effects should go through: **validated tools/executors**
-3. Loops need: **explicit termination and budgets**
+1. compose applies skills:
+   A) Random order B) Listed order C) Reverse alpha D) Never
+   **Answer:** B
+
+2. SkillSpec tags enable:
+   A) GPU sizing B) discover(tag) C) TLS D) PDF
+   **Answer:** B
+
+3. Version pin uses key:
+   A) name@version B) GPU id C) MAC address D) None
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-030 && pytest -q && python3 main.py --help || python3 main.py
-```
+- `SkillRegistry.register/get/list/discover/compose`
+- `Skill(SkillSpec(name, desc, tags=..., version=...), fn)`
+
+---
+
+## Curated Free Resources
+
+- [Semantic versioning](https://semver.org/)
+- [Anthropic skills (product pattern)](https://docs.anthropic.com/)
+
+---
 
 ## Chapter Summary
 
-Skill specs, registry, discovery, versioning, composition. Deliverable: **Composed skill output**.
+**Agent Skills** (`skillreg`) — Skill registry with discovery and composition. Explicit types, traces, and tests so agent behavior stays swappable as models and vendors change.
+
+---
 
 ## What's Next
 
-**Chapter 31** continues Part IV.
+**Chapter 31: Tool Calling.** Chapter 31 governs side-effecting tools with permissions and schemas.

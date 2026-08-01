@@ -2,118 +2,239 @@
 
 ## Chapter Overview
 
-First autonomous agent with goal-directed lifecycle.
+Part IV — Agent Engineering — **What is an AI Agent?** — package `agentkit`.
 
-This chapter is part of **Part IV — Agent Engineering**. It extends the evolving agent platform with production-minded interfaces and offline-testable implementations.
+Before architecture and frameworks, you need a crisp **autonomy contract**: goals, actions, observations, terminal states, and `AgentResult` traces you can assert in pytest.
+
+Parts I–III built models, context, retrieval, and hybrid search. Part IV implements **What is an AI Agent?** as `agentkit` — an offline-testable building block toward harnesses (Part V) and your own framework (Part VIII).
+
+**Code:** `code/chapter-027/agentkit/`. **Continuity:** Chapter 25 advanced RAG; Chapter 26 hybrid eval; Part IV agents from Chapter 27 onward.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Autonomy vs scripted automation
-- Goal, action, observation loop
-- Bounded steps and terminal states
-- Run the chapter project and interpret its structured output
-- Place the component in the larger agent runtime
+- Explain **What is an AI Agent?** in a production agent architecture
+- Run and extend `agentkit` offline with pytest
+- Describe failure modes, budgets, and structured traces
+- Connect this module to adjacent chapters in Part IV/V
+- Compare the approach to common frameworks without losing your domain model
+- Apply security defaults (validation, permissions, isolation)
+- Complete exercises and mini project with tests passing
+
+---
 
 ## Prerequisites
 
-- Chapters 1–26 foundations (especially tools, structured outputs, RAG where relevant)
-- Prior Part IV chapters through the end of Part III
+- Chapters 1–26 (LLM platform, RAG, hybrid search)
+- Prior Part IV chapters when `n > 27` (through Chapter 26)
+- Python dataclasses, typing, pytest
+
+---
 
 ## Motivation
 
-Agents fail in production when autonomy is unbounded, tools are ungoverned, or state is implicit. This chapter makes **what is an ai agent?** an explicit, testable subsystem.
+Scripts are deterministic; agents choose actions based on observations. Without explicit states, step budgets, and structured results, 'agent' becomes a marketing label on a while-loop.
+
+---
 
 ## First Principles
 
-### 1. Autonomy vs scripted automation
+### 1. Autonomy is bounded
 
-### 2. Goal, action, observation loop
+`max_steps` turns infinite loops into fail-fast incidents you can test.
 
-### 3. Bounded steps and terminal states
+### 2. Goals are typed
 
+`Goal(description=...)` separates intent from policy implementation.
+
+### 3. Policy decides; environment executes
+
+`policy.decide` returns `Action`; `env.execute` returns `Observation` — test each side.
+
+### 4. Terminal states are explicit
+
+`finish`, `fail`, and `max_steps_exceeded` must be observable in traces.
+
+---
 
 ## Mental Model
 
-See Visual diagrams for the component flow.
+An agent = employee with a goal, a budget, and a logbook — not a single prompt that hopes for the best.
+
+```mermaid
+flowchart LR
+  Caller[Caller / Harness] --> Mod[What is an AI Agent?]
+  Mod --> Dep[Mocks / Backends]
+  Mod --> Out[Structured Result]
+  Mod --> Trace[Trace / Logs]
+```
+
+| Piece | Responsibility |
+|---|---|
+| Public API | Stable entry types importers rely on |
+| Policy | Budgets, permissions, retries, gates |
+| State | Memory, graph, or workflow context |
+| Observability | Traces you can assert in tests |
+
+---
 
 ## Core Theory
 
-The implementation encodes the theory as typed interfaces and a CLI-runnable project. Prefer explicit state transitions, budgets, and structured results over free-text control flow.
+### Lifecycle
+
+`AutonomousAgent.run(goal)` transitions `AgentState`: CREATED → RUNNING → SUCCEEDED | FAILED.
+
+Each step:
+
+1. `policy.decide(goal, history)` → `Action` (`act`, `finish`, or `fail`)
+2. On `act`, `env.execute(action)` → `Observation` appended to `history`
+3. Stop on finish/fail, failed observation, or step budget
+
+### Offline policy
+
+`agentkit/policy.py` implements a **toy** rule policy: fetch weather or refund policy evidence, then `finish` with a summary. Replace with LLM policy later; keep the **same** `Action`/`Observation` types.
+
+### Types
+
+`AgentResult(ok, state, message, steps)` carries the auditable step list for harnesses (Part V).
+
+### Failure cases
+
+Treat timeouts, permission denials, max steps, and failed observations as **normal** paths with structured errors — not surprise exceptions across agent boundaries.
+
+### Performance implications
+
+LLM calls dominate latency; keep planning, validation, and registry work cheap. Parallelize only independent steps.
+
+### Security implications
+
+Side effects flow through tools, MCP, and workflows — validate names and args; default deny; never execute model-produced code.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-027/agentkit/
+code/chapter-027/
+  agentkit/
   tests/
   main.py
+  pyproject.toml
 ```
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant M as agentkit
+  participant B as Backend
+  C->>M: invoke
+  M->>B: optional I/O
+  B-->>M: data / error
+  M-->>C: structured outcome
+```
+
+---
 
 ## Internal Implementation
 
-Run the package CLI/tests under `code/chapter-027/`. Key entrypoints live in the `agentkit` package.
+```bash
+cd code/chapter-027 && pytest -q && python3 main.py
+```
+
+Inspect `AutonomousAgent` in `agentkit/agent.py` and extend `policy.decide` with a new tool branch — add a test that expects your new action kind.
+
+---
 
 ## Production Implementation
 
-- Replace offline policies/mocks with real model calls behind the same interfaces
-- Add authz, audit logs, and metrics around every side effect
-- Persist state where the component owns long-lived data
-- Enforce step/time/cost budgets at the harness boundary
+- Swap mocks for LLM providers, vector DBs, and MCP stdio transports behind the same types
+- Add authz, audit logs, and metrics on every side effect
+- Persist episodic memory and checkpoints when required
+- Enforce tenant isolation on memory, tools, and resources
+- Wire retrieval (Part III) as governed tools, not prompt paste
+
+---
 
 ## Framework Implementation
 
-LangGraph, CrewAI, AutoGen, and SDKs should map onto these ports—not replace your domain model.
+OpenAI Agents SDK, LangGraph graphs, and CrewAI crews all implement variants of goal→act→observe. Your `agentkit` types are the **ports** those frameworks should implement, not replace.
+
+Map vendor frameworks onto these ports; do not let SDK types leak into domain models.
+
+---
 
 ## Trade-offs
 
-| Approach | Pros | Cons |
-|---|---|---|
-| Explicit component | Testable, swappable | More boilerplate |
-| Framework magic | Fast demos | Hidden control flow |
+| Option A | Option B / notes |
+|---|---|
+| Rule policy (chapter) | Deterministic CI; not representative of LLM variability. |
+| LLM policy (production) | Flexible; requires eval, budgets, and tool gates. |
+| Fat agent class | Fast demo; untestable side effects. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Non-termination | Missing terminate condition / max steps |
-| Silent tool failure | Validation and error mapping |
-| Bad multi-step quality | Memory and observation formatting |
+- Immediate max_steps_exceeded → policy never emits finish
+- Empty steps → run not invoked or exception swallowed
+- Wrong city in weather → `_city` heuristic; pass city in goal text
+
+**Workflow:** reproduce with offline mocks → inspect trace/history → add one log field per policy decision → fix at validation/budget boundaries.
+
+---
 
 ## Performance
 
-Bound steps, cache pure tools, parallelize only independent work.
+Policy here is O(steps); production cost is dominated by LLM + tool I/O — still cap steps early.
+
+---
 
 ## Security
 
-Least-privilege tools, sandbox high-risk actions, treat observations as untrusted.
+Even offline env should model permission errors — agents are trust boundaries once tools are real.
+
+---
 
 ## Best Practices
 
-1. Typed inputs/outputs
-2. Budgets on loops
-3. Structured traces
-4. Tests without network
-5. Clear ownership of state
+1. Keep `agentkit` public APIs small and stable
+2. Prefer structured `{ok, ...}` results over bare exceptions at boundaries
+3. Log traces (steps, roles, nodes) suitable for JSON export
+4. Enforce budgets: steps, retries, graph nodes, workflow failures
+5. Validate and authorize before side effects
+6. Run `pytest -q` in CI without network keys
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Unbounded autonomy | Cost and safety incidents |
-| Stringly-typed tools | Runtime chaos |
-| No traces | Un-debuggable agents |
+- **Unbounded loops** — Runaway cost and stuck sessions
+- **Stringly-typed tools** — Model hallucinates names that still execute
+- **Implicit memory** — Context leaks across tenants and tasks
+- **Monolith agent** — Cannot test planner or tools in isolation
+- **Skipping reflection on high-stakes answers** — Hallucinations reach users
+- **Opaque framework defaults** — Hidden control flow you cannot trace
+
+---
 
 ## Hands-on Exercise
 
-1. Run the chapter tests.
-2. Execute the CLI demo.
-3. Modify one policy/handler and re-test.
-4. Note how the component would plug into Chapter 28’s skeleton / later harnesses.
+1. `cd code/chapter-027 && pytest -q`
+2. Change one policy (budget, permission, router, retry, confidence threshold)
+3. Add a test that fails before the change and passes after
+4. Run `python3 main.py` and capture structured output
+5. Write three bullets: how this module connects to Chapter 28 skeleton or Part V harness
+
+---
 
 ## Mini Project
 
-**First autonomous agent**
+Deliverable: **First autonomous agent with `AgentResult` lifecycle.** Extend the demo or compose with an adjacent chapter module; keep tests offline.
+
+---
 
 ## Visual diagrams
 
@@ -121,6 +242,7 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 
 ![Overview](../diagrams/png/chapter-027/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -129,32 +251,56 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 | Manuscript | `book/chapter-027.md` |
 | Package | `code/chapter-027/agentkit/` |
 | Tests | `code/chapter-027/tests/` |
-| Diagrams | `diagrams/mermaid|png/chapter-027/` |
+| Diagrams | `diagrams/mermaid/chapter-027/` |
+
+---
 
 ## Interview Questions
 
-1. What problem does this component solve in an agent system?
-2. What are its inputs, outputs, and failure modes?
-3. How do budgets/permissions apply?
-4. How would you test it without live models?
-5. How does it interact with tools and memory?
+1. Define agent vs workflow vs chain.
+2. What belongs in policy vs environment?
+3. How do you test an agent without live models?
+4. Why is max_steps a security control?
+
+---
 
 ## Quiz
 
-1. Part IV focuses on: **agent engineering building blocks**
-2. Side effects should go through: **validated tools/executors**
-3. Loops need: **explicit termination and budgets**
+1. AutonomousAgent stops when:
+   A) GPU full B) finish/fail/budget C) Random D) Never
+   **Answer:** B
+
+2. Observations live in:
+   A) history list B) GPU RAM only C) DNS D) Markdown
+   **Answer:** A
+
+3. AgentResult.steps exists for:
+   A) Auditing/traces B) Training GPUs C) CSS D) PDF
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-027 && pytest -q && python3 main.py --help || python3 main.py
-```
+- `AutonomousAgent(max_steps=6).run(goal)`
+- `Action(kind=act|finish|fail, ...)`
+- `AgentResult(ok, state, message, steps)`
+
+---
+
+## Curated Free Resources
+
+- [Russell & Norvig — agents (conceptual)](https://aima.cs.berkeley.edu/)
+- [OpenAI Agents SDK docs](https://platform.openai.com/docs/guides/agents)
+
+---
 
 ## Chapter Summary
 
-First autonomous agent with goal-directed lifecycle. Deliverable: **AgentResult lifecycle**.
+**What is an AI Agent?** (`agentkit`) — First autonomous agent with `AgentResult` lifecycle. Explicit types, traces, and tests so agent behavior stays swappable as models and vendors change.
+
+---
 
 ## What's Next
 
-**Chapter 28** continues Part IV.
+**Chapter 28: Agent Architecture.** Chapter 28 wires planner, memory, tools, skills, and executor into one skeleton.

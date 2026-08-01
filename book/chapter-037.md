@@ -2,118 +2,231 @@
 
 ## Chapter Overview
 
-Planner/researcher/writer/reviewer research assistant.
+Part IV — Agent Engineering — **Multi-Agent Systems** — package `multiagent`.
 
-This chapter is part of **Part IV — Agent Engineering**. It extends the evolving agent platform with production-minded interfaces and offline-testable implementations.
+`MultiAgentSystem` runs ordered roles (planner → researcher → writer → reviewer) with optional revision loop when `needs_revision`.
+
+Parts I–III built models, context, retrieval, and hybrid search. Part IV implements **Multi-Agent Systems** as `multiagent` — an offline-testable building block toward harnesses (Part V) and your own framework (Part VIII).
+
+**Code:** `code/chapter-037/multiagent/`. **Continuity:** Chapter 25 advanced RAG; Chapter 26 hybrid eval; Part IV agents from Chapter 27 onward.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Role specialization
-- Hand-offs and critique loops
-- Consensus/revision
-- Run the chapter project and interpret its structured output
-- Place the component in the larger agent runtime
+- Explain **Multi-Agent Systems** in a production agent architecture
+- Run and extend `multiagent` offline with pytest
+- Describe failure modes, budgets, and structured traces
+- Connect this module to adjacent chapters in Part IV/V
+- Compare the approach to common frameworks without losing your domain model
+- Apply security defaults (validation, permissions, isolation)
+- Complete exercises and mini project with tests passing
+
+---
 
 ## Prerequisites
 
-- Chapters 1–26 foundations (especially tools, structured outputs, RAG where relevant)
-- Prior Part IV chapters through 36
+- Chapters 1–26 (LLM platform, RAG, hybrid search)
+- Prior Part IV chapters when `n > 27` (through Chapter 36)
+- Python dataclasses, typing, pytest
+
+---
 
 ## Motivation
 
-Agents fail in production when autonomy is unbounded, tools are ungoverned, or state is implicit. This chapter makes **multi-agent systems** an explicit, testable subsystem.
+One agent playing every role mixes planning bias with writing voice and skips independent review.
+
+---
 
 ## First Principles
 
-### 1. Role specialization
+### 1. Roles are explicit agents
 
-### 2. Hand-offs and critique loops
+`Agent(role, run callable)`.
 
-### 3. Consensus/revision
+### 2. Shared state dict
 
+Each role reads/writes keys; trace records role outputs.
+
+### 3. Consensus via reviewer
+
+Second writer pass if reviewer rejects.
+
+### 4. Order is policy
+
+Customize order for different products.
+
+---
 
 ## Mental Model
 
-See Visual diagrams for the component flow.
+Multi-agent = film crew — planner, researcher, writer, reviewer each own a role; reshoot if reviewer rejects.
+
+```mermaid
+flowchart LR
+  Caller[Caller / Harness] --> Mod[Multi-Agent Systems]
+  Mod --> Dep[Mocks / Backends]
+  Mod --> Out[Structured Result]
+  Mod --> Trace[Trace / Logs]
+```
+
+| Piece | Responsibility |
+|---|---|
+| Public API | Stable entry types importers rely on |
+| Policy | Budgets, permissions, retries, gates |
+| State | Memory, graph, or workflow context |
+| Observability | Traces you can assert in tests |
+
+---
 
 ## Core Theory
 
-The implementation encodes the theory as typed interfaces and a CLI-runnable project. Prefer explicit state transitions, budgets, and structured results over free-text control flow.
+### research_assistant()
+
+Registers planner, researcher, writer, reviewer callables.
+
+Reviewer sets `needs_revision` when draft too short or missing facts — triggers writer+reviewer rerun.
+
+Return payload includes plan, notes, draft, review, final, trace.
+
+Debate/swarm patterns extend this with message bus — same state/trace discipline.
+
+### Failure cases
+
+Treat timeouts, permission denials, max steps, and failed observations as **normal** paths with structured errors — not surprise exceptions across agent boundaries.
+
+### Performance implications
+
+LLM calls dominate latency; keep planning, validation, and registry work cheap. Parallelize only independent steps.
+
+### Security implications
+
+Side effects flow through tools, MCP, and workflows — validate names and args; default deny; never execute model-produced code.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-037/multiagent/
+code/chapter-037/
+  multiagent/
   tests/
   main.py
+  pyproject.toml
 ```
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant M as multiagent
+  participant B as Backend
+  C->>M: invoke
+  M->>B: optional I/O
+  B-->>M: data / error
+  M-->>C: structured outcome
+```
+
+---
 
 ## Internal Implementation
 
-Run the package CLI/tests under `code/chapter-037/`. Key entrypoints live in the `multiagent` package.
+```bash
+cd code/chapter-037 && pytest -q && python3 main.py
+```
+
+Force reviewer to reject first draft; assert two writer entries in trace.
+
+---
 
 ## Production Implementation
 
-- Replace offline policies/mocks with real model calls behind the same interfaces
-- Add authz, audit logs, and metrics around every side effect
-- Persist state where the component owns long-lived data
-- Enforce step/time/cost budgets at the harness boundary
+- Swap mocks for LLM providers, vector DBs, and MCP stdio transports behind the same types
+- Add authz, audit logs, and metrics on every side effect
+- Persist episodic memory and checkpoints when required
+- Enforce tenant isolation on memory, tools, and resources
+- Wire retrieval (Part III) as governed tools, not prompt paste
+
+---
 
 ## Framework Implementation
 
-LangGraph, CrewAI, AutoGen, and SDKs should map onto these ports—not replace your domain model.
+CrewAI crews, AutoGen group chat, and OpenAI multi-agent patterns — all need **role contracts** and termination.
+
+Map vendor frameworks onto these ports; do not let SDK types leak into domain models.
+
+---
 
 ## Trade-offs
 
-| Approach | Pros | Cons |
-|---|---|---|
-| Explicit component | Testable, swappable | More boilerplate |
-| Framework magic | Fast demos | Hidden control flow |
+| Option A | Option B / notes |
+|---|---|
+| Sequential roles | Easy traces; higher latency. |
+| Parallel agents + merge | Faster; conflict resolution needed. |
+| Single mega-agent | Lower ops; weaker separation of concerns. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Non-termination | Missing terminate condition / max steps |
-| Silent tool failure | Validation and error mapping |
-| Bad multi-step quality | Memory and observation formatting |
+- Missing role skipped silently → role not in agents dict
+- No revision loop → needs_revision never true
+- Empty draft → researcher returned no notes
+
+**Workflow:** reproduce with offline mocks → inspect trace/history → add one log field per policy decision → fix at validation/budget boundaries.
+
+---
 
 ## Performance
 
-Bound steps, cache pure tools, parallelize only independent work.
+Run researcher queries in parallel; cap revision loops to 1–2.
+
+---
 
 ## Security
 
-Least-privilege tools, sandbox high-risk actions, treat observations as untrusted.
+Reviewer should red-team tool outputs; separate credentials per role in prod.
+
+---
 
 ## Best Practices
 
-1. Typed inputs/outputs
-2. Budgets on loops
-3. Structured traces
-4. Tests without network
-5. Clear ownership of state
+1. Keep `multiagent` public APIs small and stable
+2. Prefer structured `{ok, ...}` results over bare exceptions at boundaries
+3. Log traces (steps, roles, nodes) suitable for JSON export
+4. Enforce budgets: steps, retries, graph nodes, workflow failures
+5. Validate and authorize before side effects
+6. Run `pytest -q` in CI without network keys
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Unbounded autonomy | Cost and safety incidents |
-| Stringly-typed tools | Runtime chaos |
-| No traces | Un-debuggable agents |
+- **Unbounded loops** — Runaway cost and stuck sessions
+- **Stringly-typed tools** — Model hallucinates names that still execute
+- **Implicit memory** — Context leaks across tenants and tasks
+- **Monolith agent** — Cannot test planner or tools in isolation
+- **Skipping reflection on high-stakes answers** — Hallucinations reach users
+- **Opaque framework defaults** — Hidden control flow you cannot trace
+
+---
 
 ## Hands-on Exercise
 
-1. Run the chapter tests.
-2. Execute the CLI demo.
-3. Modify one policy/handler and re-test.
-4. Note how the component would plug into Chapter 28’s skeleton / later harnesses.
+1. `cd code/chapter-037 && pytest -q`
+2. Change one policy (budget, permission, router, retry, confidence threshold)
+3. Add a test that fails before the change and passes after
+4. Run `python3 main.py` and capture structured output
+5. Write three bullets: how this module connects to Chapter 28 skeleton or Part V harness
+
+---
 
 ## Mini Project
 
-**Multi-agent research assistant**
+Deliverable: **Multi-agent research crew with reviewer revision loop.** Extend the demo or compose with an adjacent chapter module; keep tests offline.
+
+---
 
 ## Visual diagrams
 
@@ -121,6 +234,7 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 
 ![Overview](../diagrams/png/chapter-037/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -129,32 +243,54 @@ Least-privilege tools, sandbox high-risk actions, treat observations as untruste
 | Manuscript | `book/chapter-037.md` |
 | Package | `code/chapter-037/multiagent/` |
 | Tests | `code/chapter-037/tests/` |
-| Diagrams | `diagrams/mermaid|png/chapter-037/` |
+| Diagrams | `diagrams/mermaid/chapter-037/` |
+
+---
 
 ## Interview Questions
 
-1. What problem does this component solve in an agent system?
-2. What are its inputs, outputs, and failure modes?
-3. How do budgets/permissions apply?
-4. How would you test it without live models?
-5. How does it interact with tools and memory?
+1. When do multi-agent systems beat one agent?
+2. How do you prevent infinite reviewer loops?
+3. What goes in shared state vs message envelopes?
+
+---
 
 ## Quiz
 
-1. Part IV focuses on: **agent engineering building blocks**
-2. Side effects should go through: **validated tools/executors**
-3. Loops need: **explicit termination and budgets**
+1. Default order includes role:
+   A) reviewer B) GPU driver C) DNS D) TLS
+   **Answer:** A
+
+2. needs_revision triggers:
+   A) Extra writer pass B) OS reboot C) Delete DB D) Never
+   **Answer:** A
+
+3. trace records:
+   A) Role outputs B) Only cookies C) GPU temp D) None
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-037 && pytest -q && python3 main.py --help || python3 main.py
-```
+- `MultiAgentSystem.add(Agent(role, run))`
+- `research_assistant()` demo pipeline
+
+---
+
+## Curated Free Resources
+
+- [CrewAI](https://docs.crewai.com/)
+- [AutoGen](https://microsoft.github.io/autogen/)
+
+---
 
 ## Chapter Summary
 
-Planner/researcher/writer/reviewer research assistant. Deliverable: **Crew trace + draft**.
+**Multi-Agent Systems** (`multiagent`) — Multi-agent research crew with reviewer revision loop. Explicit types, traces, and tests so agent behavior stays swappable as models and vendors change.
+
+---
 
 ## What's Next
 
-**Chapter 38** continues Part IV.
+**Chapter 38: Model Context Protocol (MCP).** Chapter 38 exposes tools/resources via MCP for cross-process integration.
