@@ -1,0 +1,7 @@
+flowchart TB
+  S[System policy trusted] --> P[Assembled prompt]
+  M[Bounded memory] --> P
+  E[Evidence UNTRUSTED fences] --> P
+  U[User question] --> P
+  P --> G[Generator]
+  G --> C[Answer with citation markers]

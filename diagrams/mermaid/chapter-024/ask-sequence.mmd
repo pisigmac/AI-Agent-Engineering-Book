@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant U as User
+  participant RAG as RAGSystem
+  participant Ret as Retriever
+  participant Rank as Ranker
+  participant Gen as Generator
+  participant Mem as Memory
+  U->>RAG: ask(question)
+  RAG->>Mem: add_user
+  RAG->>Ret: retrieve(k, filters)
+  Ret-->>RAG: candidates
+  RAG->>Rank: rank(query, candidates)
+  Rank-->>RAG: top final_k
+  RAG->>RAG: assemble prompt + citations
+  RAG->>Gen: generate(prompt)
+  Gen-->>RAG: answer grounded?
+  RAG->>Mem: add_assistant
+  RAG-->>U: RAGAnswer

@@ -1,0 +1,8 @@
+flowchart LR
+  Q[Question] --> R[Retriever]
+  R --> Rank[Ranker]
+  Rank --> Asm[Prompt assembly]
+  Mem[Memory] --> Asm
+  Asm --> Gen[Generator]
+  Gen --> A[Answer + citations]
+  A --> Mem

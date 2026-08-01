@@ -78,7 +78,7 @@ See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section wi
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–23** (Part I–II complete; Part III through Chroma knowledge assistant). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–24** (Part I–II complete; Part III through production RAG). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
 
 ## Philosophy
 
