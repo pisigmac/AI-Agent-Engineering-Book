@@ -1,0 +1,133 @@
+"""Illustrative embedding model catalog — pin real IDs/prices in production."""
+
+from __future__ import annotations
+
+from embbench.types import EmbeddingModelCard, ModelFamily, Provider
+
+
+def default_catalog() -> list[EmbeddingModelCard]:
+    return [
+        EmbeddingModelCard(
+            model_id="openai:text-embedding-3-small",
+            display_name="OpenAI emb-3-small",
+            provider=Provider.OPENAI,
+            family=ModelFamily.API,
+            dimensions=1536,
+            max_tokens=8191,
+            cost_per_1m_tokens=0.02,
+            multilingual=True,
+            latency_class="fast",
+            notes="Strong general default; teaching price illustrative.",
+            languages=("en", "es", "fr", "de", "ja", "zh", "many"),
+        ),
+        EmbeddingModelCard(
+            model_id="openai:text-embedding-3-large",
+            display_name="OpenAI emb-3-large",
+            provider=Provider.OPENAI,
+            family=ModelFamily.API,
+            dimensions=3072,
+            max_tokens=8191,
+            cost_per_1m_tokens=0.13,
+            multilingual=True,
+            latency_class="standard",
+            notes="Higher quality / storage; use when eval gains pay for cost.",
+            languages=("en", "es", "fr", "de", "ja", "zh", "many"),
+        ),
+        EmbeddingModelCard(
+            model_id="cohere:embed-multilingual-v3",
+            display_name="Cohere multilingual v3",
+            provider=Provider.COHERE,
+            family=ModelFamily.API,
+            dimensions=1024,
+            max_tokens=512,
+            cost_per_1m_tokens=0.10,
+            multilingual=True,
+            supports_instructions=True,
+            latency_class="standard",
+            notes="Strong multilingual; short context window relative to others.",
+            languages=("en", "es", "fr", "de", "ja", "zh", "ar", "hi", "many"),
+        ),
+        EmbeddingModelCard(
+            model_id="voyage:voyage-2",
+            display_name="Voyage 2",
+            provider=Provider.VOYAGE,
+            family=ModelFamily.API,
+            dimensions=1024,
+            max_tokens=4000,
+            cost_per_1m_tokens=0.10,
+            multilingual=True,
+            latency_class="standard",
+            notes="Retrieval-oriented commercial encoder (illustrative).",
+        ),
+        EmbeddingModelCard(
+            model_id="local:minilm-l6",
+            display_name="all-MiniLM-L6-v2 class",
+            provider=Provider.LOCAL,
+            family=ModelFamily.OPEN_WEIGHTS,
+            dimensions=384,
+            max_tokens=256,
+            cost_per_1m_tokens=0.0,
+            multilingual=False,
+            latency_class="fast",
+            notes="Typical small English sentence-transformer class; $0 API.",
+            languages=("en",),
+        ),
+        EmbeddingModelCard(
+            model_id="local:e5-multilingual-small",
+            display_name="E5 multilingual small class",
+            provider=Provider.LOCAL,
+            family=ModelFamily.OPEN_WEIGHTS,
+            dimensions=384,
+            max_tokens=512,
+            cost_per_1m_tokens=0.0,
+            multilingual=True,
+            supports_instructions=True,
+            latency_class="standard",
+            notes="Open multilingual; you pay GPU/CPU ops.",
+            languages=("en", "es", "fr", "de", "zh", "many"),
+        ),
+        # Runnable offline teaching models (actual embedders in models.py)
+        EmbeddingModelCard(
+            model_id="teaching:tfidf",
+            display_name="TF-IDF (offline teaching)",
+            provider=Provider.TEACHING,
+            family=ModelFamily.LEXICAL,
+            dimensions=0,  # fitted
+            max_tokens=100_000,
+            cost_per_1m_tokens=0.0,
+            multilingual=False,
+            latency_class="fast",
+            notes="Lexical baseline; weak paraphrase; excellent for pipelines.",
+            languages=("en",),
+        ),
+        EmbeddingModelCard(
+            model_id="teaching:hashing",
+            display_name="Feature hashing (offline)",
+            provider=Provider.TEACHING,
+            family=ModelFamily.HASHING,
+            dimensions=256,
+            max_tokens=100_000,
+            cost_per_1m_tokens=0.0,
+            multilingual=True,
+            latency_class="fast",
+            notes="Language-agnostic char/token hashes; collision noise.",
+            languages=("en", "es", "fr", "de", "ja", "zh", "any"),
+        ),
+        EmbeddingModelCard(
+            model_id="teaching:char-ngram",
+            display_name="Char n-gram hashing (offline)",
+            provider=Provider.TEACHING,
+            family=ModelFamily.HASHING,
+            dimensions=256,
+            max_tokens=100_000,
+            cost_per_1m_tokens=0.0,
+            multilingual=True,
+            latency_class="fast",
+            notes="Better morphology/multilingual surface forms than bag-of-words.",
+            languages=("en", "es", "fr", "de", "any"),
+        ),
+    ]
+
+
+def catalog_by_id() -> dict[str, EmbeddingModelCard]:
+    return {c.model_id: c for c in default_catalog()}

@@ -1,0 +1,8 @@
+flowchart LR
+  Cat[Model catalog] --> Pick[Select candidates]
+  Data[Labeled pairs + corpus] --> Bench[Retrieval bench]
+  Pick --> Bench
+  Bench --> Metrics[MRR / Recall / cost / latency]
+  Metrics --> Pin[Pin model_id + version]
+  Pin --> Reembed[Re-embed corpus]
+  Reembed --> Index[Search index]

@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant C as Catalog
+  participant E as Embedder
+  participant B as Bench
+  participant R as Report
+  C->>E: prepare model proxy
+  B->>E: embed corpus
+  loop each labeled query
+    B->>E: embed query
+    B->>B: cosine rank + metrics
+  end
+  B->>R: MRR Recall cost latency
+  R-->>C: recommend pin

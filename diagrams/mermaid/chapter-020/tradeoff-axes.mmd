@@ -1,0 +1,13 @@
+flowchart TB
+  M[Embedding model] --> Q[Quality on your eval]
+  M --> C[Cost per 1M tokens]
+  M --> L[Latency]
+  M --> D[Dimensions / storage]
+  M --> Lang[Multilingual coverage]
+  M --> P[Privacy API vs local]
+  Q --> Dec[Decision]
+  C --> Dec
+  L --> Dec
+  D --> Dec
+  Lang --> Dec
+  P --> Dec
