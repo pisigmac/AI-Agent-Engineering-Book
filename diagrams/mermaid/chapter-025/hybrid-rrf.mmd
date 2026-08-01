@@ -1,0 +1,6 @@
+flowchart TB
+  Q[Query] --> BM25[BM25 sparse ranks]
+  Q --> Dense[Dense cosine ranks]
+  BM25 --> RRF[Reciprocal Rank Fusion]
+  Dense --> RRF
+  RRF --> Out[Fused top-k]

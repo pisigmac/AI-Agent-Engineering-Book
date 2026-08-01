@@ -1,0 +1,9 @@
+sequenceDiagram
+  participant Q as Query
+  participant C as Child index
+  participant P as Parent store
+  participant O as Output
+  Q->>C: hybrid search
+  C-->>Q: child hits
+  Q->>P: expand parent_id
+  P-->>O: parent passages for LLM

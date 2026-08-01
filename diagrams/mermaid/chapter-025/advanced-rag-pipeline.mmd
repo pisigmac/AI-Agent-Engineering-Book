@@ -1,0 +1,8 @@
+flowchart LR
+  Q[Query] --> X[Expand / multi-query]
+  X --> H[Hybrid BM25+dense]
+  H --> F[RRF fuse]
+  F --> P[Parent expand]
+  P --> C[Compress]
+  C --> R[Rerank]
+  R --> Hits[Top-k evidence]
