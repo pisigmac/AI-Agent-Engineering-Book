@@ -78,7 +78,7 @@ See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section wi
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–55** continuously (Part III retrieval through Part VI frameworks). Next: Part VII production engineering (56+).
+Manuscript and code slices currently include chapters **1–66** (through Part VII Production Engineering). Next: Part VIII — Build Your Own Framework (67+).
 
 ## Philosophy
 

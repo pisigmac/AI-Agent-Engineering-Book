@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant U as Client
+  participant P as chapter-065
+  participant I as Infra
+  U->>P: request
+  P->>I: side effect
+  I-->>P: result
+  P-->>U: response
