@@ -1,0 +1,1 @@
+# Chapter 040 — Workflows vs Agents\n```bash\ncd code/chapter-040 && pytest -q\n```\n

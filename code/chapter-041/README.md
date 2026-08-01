@@ -1,0 +1,1 @@
+# Chapter 041 — State Machines\n```bash\ncd code/chapter-041 && pytest -q\n```\n

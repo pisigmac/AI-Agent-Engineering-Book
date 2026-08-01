@@ -1,0 +1,1 @@
+# Chapter 047 — Cost Optimization\n```bash\ncd code/chapter-047 && pytest -q\n```\n

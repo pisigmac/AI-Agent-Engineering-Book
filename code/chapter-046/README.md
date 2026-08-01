@@ -1,0 +1,1 @@
+# Chapter 046 — Agent Security\n```bash\ncd code/chapter-046 && pytest -q\n```\n

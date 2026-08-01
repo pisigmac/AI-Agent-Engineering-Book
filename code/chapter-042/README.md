@@ -1,0 +1,1 @@
+# Chapter 042 — Event-Driven Agents\n```bash\ncd code/chapter-042 && pytest -q\n```\n

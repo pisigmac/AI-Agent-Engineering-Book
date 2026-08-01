@@ -1,0 +1,1 @@
+# Chapter 048 — Scaling AI Agents\n```bash\ncd code/chapter-048 && pytest -q\n```\n

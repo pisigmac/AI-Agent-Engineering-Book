@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant U as User/System
+  participant P as agentsec
+  participant S as Side effects
+  U->>P: invoke
+  P->>S: gated action
+  S-->>P: result
+  P-->>U: structured status

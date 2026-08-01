@@ -78,7 +78,7 @@ See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section wi
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–25** (through advanced RAG) and Part IV **27–38** (Agent Engineering). Chapter **26** (Hybrid Search deep-dive) is next in Part III sequence if filled later. The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–25**, Part IV **27–38**, and Part V **39–48** (Agent Systems Engineering). Chapter **26** (Hybrid Search deep-dive) remains optional backfill in Part III.
 
 ## Philosophy
 
