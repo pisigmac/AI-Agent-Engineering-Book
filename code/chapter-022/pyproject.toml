@@ -1,0 +1,15 @@
+[project]
+name = "ai-agent-platform-chapter-022"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "faiss-cpu>=1.7.4; platform_system != 'Darwin' or platform_machine != 'arm64'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

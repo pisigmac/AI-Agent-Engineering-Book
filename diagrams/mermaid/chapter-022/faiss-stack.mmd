@@ -1,0 +1,9 @@
+flowchart LR
+  PDF[PDF files] --> Ext[Extract text]
+  Ext --> Ch[Chunk + page meta]
+  Ch --> Emb[Embed]
+  Emb --> F[FAISS index]
+  Meta[Sidecar store] --> Svc[FaissIndexService]
+  F --> Svc
+  Q[Query] --> Svc
+  Svc --> Hits[Hits + page + source]

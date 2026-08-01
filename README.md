@@ -78,7 +78,7 @@ See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section wi
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–21** (Part I–II complete; Part III through vector databases). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
+Manuscript and code slices currently include chapters **1–22** (Part I–II complete; Part III through FAISS / PDF search). The full curriculum is 94 chapters per `BOOK_SPECIFICATION.md` and `scripts/data/curriculum.yaml`.
 
 ## Philosophy
 

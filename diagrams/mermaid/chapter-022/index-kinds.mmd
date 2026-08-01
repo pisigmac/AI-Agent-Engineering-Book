@@ -1,0 +1,9 @@
+flowchart TB
+  V[Vectors] --> K{Index kind}
+  K --> Flat[Flat exact IP/L2]
+  K --> IVF[IVF train + nprobe]
+  K --> HNSW[HNSW graph efSearch]
+  Flat --> R[Top-k ids + scores]
+  IVF --> R
+  HNSW --> R
+  R --> S[Sidecar join metadata]

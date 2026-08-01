@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant U as User
+  participant P as PdfSearchEngine
+  participant X as PDF extract
+  participant F as FAISS
+  U->>P: from_pdfs(paths)
+  P->>X: extract pages
+  X-->>P: text pages
+  P->>P: chunk with page meta
+  P->>F: add vectors + ids
+  U->>P: search(query)
+  P->>F: ANN search
+  F-->>P: ids + scores
+  P-->>U: hits with source and page
