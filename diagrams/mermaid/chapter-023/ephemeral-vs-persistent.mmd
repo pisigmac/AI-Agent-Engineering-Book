@@ -1,0 +1,6 @@
+flowchart LR
+  App[Application] --> Choice{Client type}
+  Choice -->|tests / demos| Eph[EphemeralClient]
+  Choice -->|local prod| Per[PersistentClient path]
+  Eph --> Mem[In-memory segments]
+  Per --> Disk[On-disk collection data]

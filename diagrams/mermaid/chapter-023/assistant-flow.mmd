@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant U as User
+  participant A as KnowledgeAssistant
+  participant S as ChromaStore
+  participant C as Chroma collection
+  U->>A: ask(question)
+  A->>S: query(question, where?)
+  S->>C: query_texts + filter
+  C-->>S: ids, documents, distances
+  S-->>A: QueryHits
+  A->>A: extractive grounded answer
+  A-->>U: answer + citations

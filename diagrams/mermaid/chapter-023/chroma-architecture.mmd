@@ -1,0 +1,10 @@
+flowchart TB
+  Docs[Documents + metadata] --> Upsert[collection.upsert]
+  EF[Embedding function] --> Upsert
+  Upsert --> Col[Chroma collection]
+  Q[User question] --> Query[collection.query]
+  EF --> Query
+  Query --> Hits[Top-k docs + distances]
+  Hits --> Asst[Knowledge assistant]
+  Asst --> Ans[Cited answer]
+  Col --> Disk[Persistent path]
