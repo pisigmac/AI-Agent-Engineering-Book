@@ -1,0 +1,108 @@
+What is ML lifecycle?|Problem → data → train → evaluate → deploy → monitor → retrain loop.
+What is data versioning (DVC idea)?|Track datasets like code—reproducible training runs.
+What is model registry?|Central store of approved model versions with metadata.
+What is feature store offline/online?|Same feature definitions for training and serving—avoid skew.
+What is training-serving skew?|Feature computation differs live vs batch—silent accuracy drop.
+What is batch prediction job?|Nightly scores written to warehouse—marketing use cases.
+What is online prediction service?|Real-time endpoint—low latency SLAs.
+What is model server TensorFlow Serving?|Serves exported models with versioning and batching.
+What is TorchServe?|PyTorch model serving with REST—similar role.
+What is Triton inference server?|Multi-framework GPU inference—throughput optimization.
+What is model warm-up?|First request slow—warm caches and GPU kernels on deploy.
+What is GPU memory for inference?|Model weights + activations + KV cache for LLMs—size limits batch.
+What is dynamic batching inference?|Wait briefly to batch requests—increase throughput, add latency.
+What is A/B test for models?|Route traffic fractions; compare business metrics with stats rigor.
+What is multi-armed bandit (intro)?|Adaptive traffic allocation to better model—explore/exploit.
+What is shadow model?|Run candidate on copies of prod traffic—compare outputs safely.
+What is canary model rollout?|Small % traffic to new model—increase on green metrics.
+What is rollback model version?|Keep N-1 artifact and flag—one command revert.
+What is data validation gate?|Check schema, ranges, null rates before training pipeline runs.
+What is Great Expectations (idea)?|Declarative data tests in pipelines.
+What is labeling interface?|Human annotators with guidelines—inter-annotator agreement metrics.
+What is inter-annotator agreement?|Cohen's kappa etc.—measure label quality.
+What is weak label denoising?|Clean heuristic labels before training.
+What is active learning loop?|Model picks uncertain samples for human label.
+What is human review queue?|Low-confidence predictions to humans—HITL for agents too.
+What is model performance dashboard?|Track accuracy, latency, drift over time.
+What is population stability index PSI?|Detect feature distribution shift.
+What is alert on metric drop?|Page when precision or CSAT falls below threshold.
+What is log model inputs/outputs carefully?|Privacy and retention policies—redact PII in logs.
+What is PII in ML logs?|Tokenize or hash identifiers—compliance requirement.
+What is differential privacy training (intro)?|Noise in gradients—research for sensitive data.
+What is federated learning (intro)?|Train without centralizing raw user data.
+What is edge inference?|Run small models on device—latency and privacy benefits.
+What is model compression?|Distillation, pruning, quantization—cheaper deploy.
+What is knowledge distillation?|Small student mimics large teacher—speed up inference.
+What is pruning neural networks?|Remove low-impact weights—smaller faster model.
+What is quantization INT8?|Lower precision weights—hardware support on many CPUs/GPUs.
+What is LLM quantization GPTQ/AWQ (intro)?|Post-training quant for large models—VRAM savings.
+What is LoRA serving?|Load small adapters per tenant—multi-tenant fine-tunes.
+What is adapter hot-swapping?|Switch LoRA weights per request—routing layer needed.
+What is prompt template management?|Version prompts in git—tie to eval suites.
+What is prompt registry?|Central store of approved prompts—like model registry.
+What is LLM gateway?|Single internal API to vendors—keys, routing, logging.
+What is token usage accounting?|Billback per team—cost attribution.
+What is budget alerts on tokens?|Stop runaway agent loops financially.
+What is content moderation API?|Filter toxic I/O—safety layer for user chat.
+What is PII detection service?|Block or redact before model sees text.
+What is evaluation dataset golden set?|Curated Q&A with expected properties—regression gate.
+What is LLM-as-judge eval?|Model scores answers—watch bias; use rubrics.
+What is human eval rubric?|Graders score helpfulness/harmlessness—gold standard sample.
+What is regression test on prompt change?|CI fails if golden set score drops.
+What is offline vs online metrics?|Offline proxy metrics; online business KPIs—align both.
+What is CSAT for AI features?|User satisfaction survey after chat—product metric.
+What is task success rate?|Did agent complete user goal—agent-specific KPI.
+What is tool call success rate?|Fraction of tool executions without error.
+What is mean time to recovery MTTR?|Ops metric for incidents—including model outages.
+What is SLA for inference?|Contract on availability/latency—error budgets apply.
+What is runbook for model rollback?|Steps to revert model version and purge bad cache.
+What is dependency pinning ML stack?|torch/transformers versions—repro builds.
+What is container image for ML service?|Immutable deploy unit—scan for CVEs.
+What is CI GPU runners?|Optional expensive CI—smoke tests on CPU mocks often enough.
+What is integration test with mock LLM?|Deterministic CI—this book's pattern.
+What is load test LLM endpoint?|Measure tokens/sec and queue buildup.
+What is autoscaling on queue depth?|Scale workers when backlog grows—agent platforms.
+What is blue-green for ML?|Switch traffic between model deployments.
+What is feature flag for model path?|Instant disable new model route.
+What is data pipeline orchestration?|Airflow/Prefect schedule ingest and retrain.
+What is scheduled retrain?|Weekly/monthly with gates—avoid uncontrolled drift fixes.
+What is manual approval gate?|Human approves promote to prod—regulated industries.
+What is model card documentation?|Document intended use, limits, eval results—transparency.
+What is datasheet for datasets?|Document collection method and biases.
+What is bias audit checklist?|Test performance across demographic slices where applicable.
+What is explainability for tabular?|SHAP/permutation importance for regulated decisions.
+What is monitoring embedding drift?|Track retrieval embedding distribution shift in RAG.
+What is RAG index rebuild job?|Re-embed corpus on schedule or on document change.
+What is incremental indexing?|Update only changed docs—lower cost.
+What is hybrid retrieval production?|BM25 + vector + reranker—quality vs latency trade.
+What is reranker model?|Cross-encoder scores top-k passages—better precision.
+What is cache frequent RAG queries?|Same FAQ questions hit cache—save tokens.
+What is inference caching (prompt cache)?|Vendor caches prefix—cost savings for long system prompts.
+What is batch ETL for embeddings?|Offline embed corpus—online only query embedding.
+What is vector DB maintenance?|Compaction, HNSW params tuning, backup snapshots.
+What is multi-tenant vector isolation?|Filter by tenant_id every query—security must.
+What is secrets in ML pipelines?|Never in git—use secret manager injection.
+What is IAM least privilege for buckets?|Training jobs write only needed prefixes.
+What is audit log for model promotions?|Who approved which version when—compliance.
+What is SOC2 relevance (intro)?|Controls for security/availability—enterprise sales.
+What is GDPR data deletion?|Remove user data from indexes and logs—agent memory erasure.
+What is retention policy logs?|TTL on conversation logs—legal and cost.
+What is synthetic monitoring?|Probe endpoints with canary requests—detect outages early.
+What is anomaly detection on metrics?|Auto-alert unusual error spikes.
+What is OpenTelemetry for ML?|Trace retrieve→LLM→tool spans—debug latency.
+What is structured logging trace_id?|Correlate logs across microservices and agents.
+What is cost per successful task?|Unit economics—compare model upgrades.
+What is FinOps for AI?|Tag resources; review token spend weekly.
+What is spot instances for training?|Cheaper GPU—checkpoint often for preemption.
+What is checkpointing training?|Save weights periodically—resume long runs.
+What is distributed data parallel?|Split batch across GPUs—scale training.
+What is ML metadata store?|Track experiments hyperparams metrics—search past runs.
+What is feature pipeline CI?|Test feature code like app code.
+What is data contract between teams?|Schema agreed between producers and ML consumers.
+What is SLI for retrieval latency?|p95 retrieve time in RAG—SLO component.
+What is error taxonomy for agents?|Classify tool timeout vs model refusal vs validation.
+What is graceful degradation?|Fallback to cached answer or human when LLM down.
+What is multi-model routing?|Cheap model for easy queries—expensive for hard.
+What is cascade models?|Small model first, large if uncertain—cost optimization.
+What is ensemble LLM votes?|Multiple samples + vote—quality at cost.
+What is guardrail service?|Policy layer before/after LLM—central enforcement.

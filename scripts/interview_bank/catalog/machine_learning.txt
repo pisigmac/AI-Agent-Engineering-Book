@@ -1,0 +1,110 @@
+What is linear regression?|Predicts continuous target as weighted sum of features plus bias; minimize MSE.
+What is logistic regression?|Linear model + sigmoid for classification; outputs probabilities.
+What is decision tree?|Splits features by thresholds; interpretable but can overfit without pruning.
+What is random forest?|Ensemble of trees on bootstrapped data—reduces variance.
+What is gradient boosting?|Adds trees correcting prior errors—often strong on tabular data.
+What is k-means clustering?|Partitions points into k clusters by minimizing within-cluster variance.
+What is kNN classifier?|Classifies by majority vote of k nearest training points—simple baseline.
+What is naive Bayes?|Assumes feature independence; fast text classification baseline.
+What is SVM intuition?|Finds margin-maximizing boundary; kernels map to higher dimensions.
+What is PCA?|Linear dimensionality reduction preserving variance—visualize and denoise features.
+What is train/validation split?|Hold out validation for model selection; never tune on test set.
+What is stratified split?|Preserves class ratios in splits—important for imbalance.
+What is one-vs-rest multiclass?|Train one classifier per class vs all others.
+What is softmax multiclass?|Outputs class probabilities summing to 1 in neural classifiers.
+What is cross-entropy loss?|Classification loss comparing predicted distribution to true label.
+What is MSE loss?|Average squared error—common for regression.
+What is MAE loss?|Average absolute error—robust to outliers vs MSE.
+What is L1 regularization?|Adds sum of absolute weights—encourages sparsity.
+What is L2 regularization?|Adds sum of squared weights—weight decay in neural nets.
+What is dropout?|Randomly zero activations during training—reduces co-adaptation overfitting.
+What is batch normalization?|Normalizes layer inputs—stabilizes deep network training.
+What is learning rate schedule?|Decays LR over time—fine-tune convergence.
+What is Adam optimizer?|Adaptive learning rates per parameter—default choice for many deep models.
+What is SGD with momentum?|Classic optimizer—momentum smooths noisy gradients.
+What is epoch?|One full pass over training dataset.
+What is mini-batch?|Subset per gradient step—balances noise and speed.
+What is weight initialization?|Start weights smartly—bad init slows or breaks training.
+What is vanishing gradients?|Gradients shrink in deep nets—ReLU/residual connections help.
+What is exploding gradients?|Gradients grow huge—gradient clipping mitigates.
+What is ReLU activation?|max(0,x)—simple, effective default nonlinearity.
+What is sigmoid activation?|Squashes to (0,1)—used in gates and binary outputs.
+What is tanh activation?|Zero-centered squash—sometimes better than sigmoid in hidden layers.
+What is softmax activation?|Normalizes vector to probabilities—multi-class output layer.
+What is attention (ML context)?|Weighted mix of inputs—precursor to transformers in seq models.
+What is transformer (ML overview)?|Attention-based architecture dominating NLP and beyond.
+What is CNN intuition?|Local filters detect patterns—dominant in vision before ViT.
+What is RNN intuition?|Sequential hidden state—largely replaced by transformers for long seq.
+What is LSTM?|Gated RNN reducing vanishing memory—historical seq modeling.
+What is GRU?|Simpler gated RNN—fewer params than LSTM.
+What is word2vec idea?|Predict context words—learns word embeddings.
+What is TF-IDF?|Lexical weighting for text—baseline before dense embeddings.
+What is bag of words?|Counts word frequencies—simple text features.
+What is feature scaling (standardization)?|Zero mean unit variance—helps distance-based models.
+What is min-max scaling?|Scales to fixed range—sensitive to outliers.
+What is label encoding vs one-hot?|Label encoding ordinals risky; one-hot for nominal categories.
+What is target leakage?|Feature encodes future info—fix by time-safe feature engineering.
+What is imbalanced dataset handling?|Class weights, oversampling (SMOTE), or different metrics.
+What is ROC curve?|TPR vs FPR across thresholds—visualize trade-offs.
+What is AUC score?|Area under ROC—threshold-independent ranking metric.
+What is precision@k?|Precision among top k predictions—common in recommender eval.
+What is recall@k?|Fraction of relevant items found in top k.
+What is confusion matrix interpretation?|See TP/FP/FN/TN—derive metrics per class.
+What is macro vs micro F1?|Macro averages classes equally; micro aggregates counts globally.
+What is calibration plot?|Predicted prob vs observed frequency—important for decision thresholds.
+What is Brier score?|Measures prob accuracy—lower is better.
+What is ML pipeline (sklearn)?|Chains preprocessing + model—prevents leakage in CV.
+What is ColumnTransformer?|Applies different preprocessors per column type.
+What is GridSearchCV?|Exhaustive hyperparam search with cross-validation.
+What is RandomizedSearchCV?|Samples hyperparams—faster exploration.
+What is early stopping on validation?|Stop when val metric worsens—save best checkpoint.
+What is model serialization joblib?|Dump sklearn/pytorch sklearn models to disk.
+What is ONNX export idea?|Run same model in multiple runtimes.
+What is batch inference?|Score many rows together—throughput optimization.
+What is real-time inference?|Low latency single request—agent chat path.
+What is feature importance (tree)?|Split gain or impurity decrease—interpret tabular models.
+What is SHAP intuition?|Assigns each feature contribution to prediction—explainability.
+What is data drift?|Input distribution changes—monitor in production.
+What is concept drift?|Relationship X→y changes—needs retrain or refresh.
+What is active learning?|Label most informative points—reduce labeling cost.
+What is weak supervision?|Noisy heuristics generate labels—scale labeling carefully.
+What is semi-supervised learning?|Uses small labeled + large unlabeled data.
+What is self-supervised learning?|Pretext tasks from unlabeled data—foundation models.
+What is transfer learning?|Start from pretrained weights—fine-tune on downstream task.
+What is domain adaptation?|Model trained on source domain applied to shifted target domain.
+What is ensemble averaging?|Average predictions of multiple models—often improves stability.
+What is stacking?|Meta-model learns from base model outputs.
+What is bagging?|Bootstrap aggregating—decorrelate models like random forest.
+What is boosting iteration?|Each model focuses on previous mistakes.
+What is hyperparameter?|Config set before training—trees depth, learning rate, etc.
+What is bias in datasets?|Skewed sampling causes unfair outcomes—audit and mitigate.
+What is fairness metric?|Compare performance across groups—demographic parity, equalized odds debates.
+What is differential privacy (intro)?|Adds noise to protect individuals in aggregate training—research area.
+What is federated learning (intro)?|Train across devices without centralizing raw data.
+What is GPU training?|Parallel matrix ops accelerate deep learning.
+What is mixed precision training?|FP16/BF16 speeds training with loss scaling.
+What is distributed training?|Data/model parallel across many GPUs—large model scale.
+What is experiment tracking?|Log params, metrics, artifacts—MLflow, W&B, etc.
+What is reproducibility seed?|Fix random seeds—still not full determinism on GPU.
+What is train-serving skew?|Training features differ from live features—breaks prod accuracy.
+What is point-in-time features?|Features only use past data—critical for temporal tabular ML.
+What is cold start problem?|New users/items lack history—content features or defaults help.
+What is recommendation matrix factorization?|Learns latent factors for users and items.
+What is collaborative filtering?|Recommend from similar users' behavior.
+What is content-based filtering?|Recommend from item attributes similarity.
+What is  NLP tokenization?|Split text to tokens—model-specific tokenizers differ.
+What is sequence padding?|Make batches equal length—pad and mask in transformers.
+What is attention mask?|Tells model which tokens are real vs pad.
+What is perplexity (LM metric)?|Lower is better language modeling—compare generative models.
+What is BLEU score?|N-gram overlap for translation—imperfect but classic.
+What is human eval for ML?|Gold standard for open-ended generation quality.
+What is supervised vs unsupervised?|Supervised uses labels; unsupervised finds structure without labels.
+Why hold out a test set?|Unbiased final estimate after all tuning decisions.
+What breaks with high cardinality categoricals?|Huge one-hot space—use embeddings or target encoding carefully.
+When is accuracy misleading?|Imbalanced classes—majority classifier looks good.
+What is the curse of dimensionality?|Distance metrics degrade in very high dimensions—needs more data or reduction.
+What is a validation curve?|Plots metric vs hyperparam—spot under/overfitting region.
+What is a learning curve?|Metric vs training set size—see if more data helps.
+What is data augmentation?|Transform images/text to multiply training diversity.
+What is label noise?|Wrong labels hurt training—cleaning and robust losses help.
+What is model capacity?|Ability to fit complex patterns—too high overfits.

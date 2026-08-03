@@ -1,6 +1,6 @@
 meta:
   title: "AI Agent Engineering Bootcamp (2026 Edition)"
-  total_chapters: 94
+  total_chapters: 95
   version: "1.0"
   source: "BOOK_SPECIFICATION.md"
 
@@ -484,3 +484,18 @@ chapters:
     title: "Career Roadmap & Startup Guide"
     part: "Part X — Career"
     phase: "Career Preparation"
+  - number: 95
+    title: "Comprehensive Interview Question Bank"
+    part: "Part X — Career"
+    phase: "Career Preparation"
+    topics:
+      - "python interview"
+      - "machine learning"
+      - "system design"
+      - "generative AI"
+      - "agentic AI"
+      - "behavioral"
+    objectives:
+      - "Study 150+ beginner-friendly interview Q&A pairs offline"
+      - "Search and filter the bank by category from CLI"
+      - "Connect answers to projects across the book"

@@ -72,7 +72,7 @@ System policy (safety, persona, non-negotiables) should change slowly. Task inst
 
 Few-shots teach style *and* failure modes. Curate them like fixtures.
 
-### 5. Reasoning scaffolds are tools, not magic
+### 5. Reasoning scaffolds are tools, not a black box
 
 They can help multi-step tasks and can also burn tokens or leak chain-of-thought to users if mis-shipped.
 

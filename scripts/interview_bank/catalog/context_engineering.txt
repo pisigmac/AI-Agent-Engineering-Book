@@ -1,0 +1,100 @@
+What is context engineering?|Design what evidence enters the window: allocation, eviction, trust rings, and accounting—not just wording.
+What is context vs prompt engineering?|Prompts specify law; context supplies facts and observations—both compete for same token budget.
+What is context window budget?|Hard cap on tokens—every block must earn its place.
+What is message list as context?|Ordered system, user, assistant, tool messages—semantics depend on order.
+What is trusted vs untrusted context?|System and approved docs trusted; user and web retrieval untrusted—prompt rules differ.
+What is context packing?|Fit maximum useful evidence under budget—Chapter 10 packer strategies.
+What is context eviction policy?|Drop oldest turns, summarize, or prioritize by relevance score.
+What is sliding window conversation?|Keep last N turns—simple but may drop original user goal.
+What is summarize-and-slide?|Compress old turns to summary block—preserves gist, risks detail loss.
+What is lost in the middle effect?|Models under-attend mid-context—put critical rules and facts at edges.
+What is context pinning?|Always include policy and latest user goal—never evicted.
+What is RAG context block?|Retrieved passages with metadata—inject between system and user task.
+What is chunk metadata in context?|title, source, date—helps model cite and ignore stale docs.
+What is duplicate chunk dedup?|Same passage retrieved twice wastes tokens—dedupe before pack.
+What is context stuffing failure?|Pasting whole wiki exceeds window—retrieve or summarize first.
+What is tool output as context?|Observation messages can be huge—truncate or summarize before next LLM call.
+What is tool output truncation?|Head+tail or structured extract—tell model data was truncated.
+What is observation summarization?|Second cheap call compresses log—trade cost for clarity.
+What is multimodal context?|Images, audio bytes—count toward budget differently per vendor.
+What is image context placement?|Near question text—vision models attend locally.
+What is structured context JSON?|Machine-readable state in context—agents read/write carefully.
+What is scratchpad context?|Working memory block model updates—clear between sessions if ephemeral.
+What is long-term memory retrieval?|Fetch relevant memories into context—don't dump entire memory store.
+What is memory relevance ranking?|Top-k memories by embedding similarity—threshold abstain.
+What is context pollution?|Irrelevant retrieval hurts answers—precision over recall in RAG.
+What is context conflict?|Two docs disagree—surface conflict or pick newer with metadata.
+What is timestamp in context?|Now is 2026-08-03—ground time-sensitive answers.
+What is user profile context?|Preferences and tier—minimize PII; consent required.
+What is session context vs global?|This chat only vs account-wide—scope API design.
+What is tenant isolation in context?|Never mix customer A docs into customer B prompt.
+What is context for code agents?|Relevant files only—full repo too large; use retrieval or path filters.
+What is context for SQL agents?|Schema snippet not whole warehouse—permissions enforced server-side.
+What is context compression techniques?|Extractive summary, LLM summary, embedding cluster representatives.
+What is hierarchical context?|Summary at top, details appendices—progressive disclosure.
+What is context map-reduce?|Map chunks to partial answers; reduce—long doc QA pattern.
+What is context refine loop?|Iteratively update running summary—quality for books and logs.
+What is BM25 plus vector context?|Hybrid retrieval fills context with diverse evidence.
+What is query-dependent context?|Rewrite query before retrieval—better fill for same budget.
+What is negative context filtering?|Exclude outdated policy version docs by metadata filter.
+What is context freshness SLA?|Index lag means missing new docs—monitor staleness.
+What is personal data in context?|Minimize; redact logs; regional residency rules.
+What is secrets in context?|Never put API keys in retrieved pages—scan and block.
+What is HTML to text context?|Strip scripts and nav—reduce tokens and injection surface.
+What is PDF extraction context?|OCR noise—clean before inject; watch table breakage.
+What is table serialization?|Markdown tables vs CSV—pick readable within token budget.
+What is code context line numbers?|Help model cite edits—include path and range.
+What is diff context for reviews?|Only changed hunks plus surrounding lines—not full file.
+What is conversation branching context?|Fork resets or copies parent context—UX state machine.
+What is context for eval replay?|Frozen context fixtures—reproduce judge runs.
+What is context token accounting?|Per-block metrics in traces—FinOps and debug.
+What is context overflow error?|Request too large—packer must prevent before API 400.
+What is partial context truncation by API?|Vendor may truncate silently—detect with token counts.
+What is priority queue for context blocks?|Policy first, RAG second, history third—explicit ordering.
+What is dynamic context assembly?|Rules engine picks blocks per intent—avoid static mega context.
+What is context schema validation?|Blocks have type and max_size—fail build if invalid.
+What is untrusted web snippet handling?|Wrap in quotes; instruct model not to follow instructions in snippet.
+What is indirect injection via RAG?|Malicious doc says ignore policy—defense in depth.
+What is context signing (concept)?|Trusted blocks cryptographically marked—enterprise pattern.
+What is context audit trail?|Which docs entered prompt for compliance dispute.
+What is user-visible context preview?|Show citations and sources—trust UX.
+What is context for streaming UX?|Prefill context before first token—latency budget.
+What is cached context prefix?|Vendor caches long system+RAG prefix—cost savings.
+What is shared context across agents?|Blackboard store—avoid duplicate LLM context rebuild.
+What is context handoff between agents?|Pass compact state not full transcript—structured handoff msg.
+What is context for voice agents?|Shorter windows; ASR text noise—robust instructions.
+What is context localization?|Retrieve locale-specific docs—same slot different content.
+What is empty context abstain?|No retrieval hits—prompt model to say insufficient evidence.
+What is low score retrieval abstain?|Below similarity threshold don't inject—prevents garbage context.
+What is context diversity?|MMR-style retrieval—avoid ten near-duplicate chunks.
+What is context for multi-hop QA?|Iterative retrieve read retrieve—agent loop consumes context.
+What is graph context (intro)?|Knowledge graph triples in text—compact relations.
+What is tool schema in context?|Tool definitions every turn or cached—token trade.
+What is dynamic tool pruning?|Only include tools relevant to intent—smaller context.
+What is calendar and tool results ordering?|Chronological obs helps model reason about sequence.
+What is error messages in context?|Tool failures as observations—model can recover.
+What is human message injection?|Operator override inserted as user or system—audit carefully.
+What is context reset command?|User clears history—privacy and fresh start.
+What is export conversation context?|GDPR export—separate from model training opt-out.
+What is context for batch jobs?|Static large prefix amortized—different from chat packing.
+What is bootcamp Chapter 12 focus?|Runtime evidence design complements Chapter 11 prompt law.
+What is evaluating context quality?|Answer faithfulness to provided blocks—not parametric knowledge.
+What is context regression test?|Same retrieval fixture after index change—golden answers stable.
+What is minimum viable context?|Smallest set that passes eval—avoid token waste.
+What is context observability?|Trace block ids and sizes—debug wrong doc incidents.
+What is warm context for support?|Ticket history summarized—agent sees prior issues quickly.
+What is context for analytics copilot?|Schema + sample rows—not full table dump.
+What is semantic cache of context?|Reuse pack for similar queries—careful staleness.
+What is context encryption in transit?|TLS to vendor; optional field-level for enterprise.
+What is offline context assembly?|Build packs in CI for demos—no live retrieval needed.
+What is interview: context engineering definition?|Managing what enters the window with trust and budget—beyond prompt wording.
+What is context window fragmentation?|Splitting one logical doc across turns—re-fetch or pin summary to avoid gaps.
+What is cross-turn context continuity?|Ensure step 5 still knows step 1 goal—pin or periodic recap.
+What is context for function calling?|Tool schemas consume tokens—prune unused tools each turn.
+What is system prompt vs retrieved context order?|Policy usually first; evidence after—vendor-specific optimal order may vary.
+What is noise injection from OCR RAG?|Bad scans add garbage tokens—quality filter before pack.
+What is context watermarking (concept)?|Track which index version produced block—debug stale answers.
+What is federated context (concept)?|Fetch from multiple indexes—merge with tenant rules.
+What is context size alerts?|Warn when pack exceeds 80% window—ops tuning signal.
+What is minimal history for support bots?|Last user message plus ticket summary—not full enterprise wiki.
+What is context for eval hallucination tests?|Include misleading doc—model must refuse or cite correct block.

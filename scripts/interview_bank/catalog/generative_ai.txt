@@ -1,0 +1,106 @@
+Explain autoregressive language model in beginner-friendly terms.|Predicts next token left-to-right—GPT-style generation.
+Explain masked language model in beginner-friendly terms.|Predicts masked tokens—BERT-style understanding.
+Explain encoder-decoder model in beginner-friendly terms.|Encoder reads input; decoder generates output—translation summarization.
+Explain T5 model family in beginner-friendly terms.|Text-to-text framework—unifies tasks as strings.
+Explain BPE tokenization in beginner-friendly terms.|Subword splits—handles rare words.
+Explain SentencePiece in beginner-friendly terms.|Language-agnostic subword tokenizer—used in many LLMs.
+Explain byte-level BPE in beginner-friendly terms.|Operates on bytes—robust to typos.
+Explain context length limit in beginner-friendly terms.|Max tokens per request—plan trimming and RAG.
+Explain position encoding in beginner-friendly terms.|Tells model token order—sinusoidal or rotary RoPE.
+Explain RoPE rotary embeddings in beginner-friendly terms.|Relative position encoding used in many modern LLMs.
+Explain KV cache in beginner-friendly terms.|Stores key/value tensors during generation—speeds autoregressive decode.
+Explain prefill vs decode phase in beginner-friendly terms.|Prefill processes prompt; decode generates one token at a time.
+Explain speculative decoding in beginner-friendly terms.|Draft model proposes tokens; target verifies—speedup.
+Explain prompt template variables in beginner-friendly terms.|Placeholders {user_input}—keep templates in version control.
+Explain system message in beginner-friendly terms.|Sets behavior rules—separate from user content for safety.
+Explain instruction tuning in beginner-friendly terms.|Fine-tune on instruction-response pairs—better following.
+Explain chat template in beginner-friendly terms.|Formats roles for tokenizer—models expect specific markers.
+Explain alignment tuning in beginner-friendly terms.|Make model helpful and safe—RLHF/DPO etc.
+Explain DPO direct preference optimization in beginner-friendly terms.|Train from preference pairs without explicit reward model.
+Explain RLHF reward model in beginner-friendly terms.|Scores outputs—used in PPO fine-tuning pipelines.
+Explain PPO in RLHF in beginner-friendly terms.|Policy optimization to maximize reward with KL penalty to base model.
+Explain SFT supervised fine-tuning in beginner-friendly terms.|Train on demonstration conversations before RLHF.
+Explain base model vs chat model in beginner-friendly terms.|Base completes text; chat follows instructions—use chat for products.
+Explain temperature 0 in beginner-friendly terms.|Greedy/near-deterministic—good for extraction and tools.
+Explain max_tokens parameter in beginner-friendly terms.|Caps generation length—prevent runaway cost.
+Explain stop sequences in beginner-friendly terms.|Strings that halt generation—control output boundaries.
+Explain logit bias in beginner-friendly terms.|Adjust token probabilities—discourage specific tokens.
+Explain frequency penalty in beginner-friendly terms.|Reduces repetition of tokens—improves variety.
+Explain presence penalty in beginner-friendly terms.|Encourages new topics—similar repetition control.
+Explain seed parameter in beginner-friendly terms.|Partial reproducibility—vendor-dependent.
+Explain logprobs in beginner-friendly terms.|Token log probabilities—confidence analysis and eval.
+Explain function calling schema in beginner-friendly terms.|JSON schema tools exposed to model—structured args.
+Explain parallel tool calls in beginner-friendly terms.|Model requests multiple tools at once—runtime executes all.
+Explain tool choice auto/none/required in beginner-friendly terms.|API flags forcing tool use or forbidding.
+Explain JSON mode in beginner-friendly terms.|Constrains output to valid JSON—validate before use.
+Explain structured outputs API in beginner-friendly terms.|Vendor guarantees schema—reduces parse errors.
+Explain response format markdown vs json in beginner-friendly terms.|Pick per downstream consumer.
+Explain multimodal input image in beginner-friendly terms.|Vision models accept images + text—document QA.
+Explain OCR pipeline in beginner-friendly terms.|Extract text from images before or inside VLM.
+Explain audio input Whisper in beginner-friendly terms.|Speech-to-text front-end for voice agents.
+Explain text-to-speech in beginner-friendly terms.|Voice output layer—accessibility and phone agents.
+Explain embedding model choice in beginner-friendly terms.|Pick model matching domain—code vs general text.
+Explain cosine similarity in beginner-friendly terms.|Common metric for embedding nearest neighbor.
+Explain dot product vs cosine in beginner-friendly terms.|Dot product needs normalized vectors for fair comparison.
+Explain HNSW index in beginner-friendly terms.|Approximate nearest neighbor graph—fast vector search.
+Explain IVF index in beginner-friendly terms.|Clusters vectors for search—speed/recall trade.
+Explain flat exact vector search in beginner-friendly terms.|Brute force—fine for small corpora offline.
+Explain reranking with cross-encoder in beginner-friendly terms.|Score query-passage pairs—improves top results.
+Explain chunk size 512 tokens in beginner-friendly terms.|Rule of thumb starting point—tune with eval.
+Explain chunk overlap in beginner-friendly terms.|Repeat boundary text—reduces cut mid-sentence.
+Explain parent-child chunking in beginner-friendly terms.|Small chunks retrieve; large parent provides context.
+Explain metadata filtering RAG in beginner-friendly terms.|Filter by tenant/product/date before vector search.
+Explain hybrid alpha weight in beginner-friendly terms.|Blend BM25 and vector scores—tune on dev set.
+Explain query rewriting in beginner-friendly terms.|LLM rephrases user query—better retrieval recall.
+Explain HyDE hypothetical document in beginner-friendly terms.|Generate fake answer embed it—niche retrieval trick.
+Explain Multi-query retrieval in beginner-friendly terms.|Multiple query variants retrieve more docs.
+Explain context stuffing in beginner-friendly terms.|Put all docs in prompt—fails beyond context window.
+Explain lost in the middle in beginner-friendly terms.|Models ignore middle context—put key info at edges.
+Explain citation grounding in beginner-friendly terms.|Require [doc-id] references—user trust.
+Explain abstain when unsure in beginner-friendly terms.|Model says I don't know—better than hallucination.
+Explain confidence threshold in beginner-friendly terms.|Low retrieval score triggers abstain or escalate.
+Explain faithfulness metric in beginner-friendly terms.|Answer supported by context—auto eval with NLI models.
+Explain answer relevance metric in beginner-friendly terms.|Answer addresses question—LLM judge or rubric.
+Explain toxicity classifier in beginner-friendly terms.|Block harmful outputs—safety layer.
+Explain jailbreak prompt defense in beginner-friendly terms.|Layered filters + tool restrictions + monitoring.
+Explain system prompt leak in beginner-friendly terms.|User tries to extract secrets—never put secrets in prompt.
+Explain data exfiltration via tools in beginner-friendly terms.|Malicious prompt triggers email tool—allowlist destinations.
+Explain PII in prompts in beginner-friendly terms.|Redact before sending to vendor—GDPR.
+Explain regional data residency in beginner-friendly terms.|Some vendors offer EU-only—enterprise requirement.
+Explain model routing gpt-4 vs mini in beginner-friendly terms.|Route hard tasks to big model—cost control.
+Explain cached system prompt in beginner-friendly terms.|Vendor prompt caching—save money on long policies.
+Explain batch API for offline jobs in beginner-friendly terms.|Cheaper non-real-time embedding/summary jobs.
+Explain fine-tune on JSON tasks in beginner-friendly terms.|Improve structured extraction reliability.
+Explain continued pretraining in beginner-friendly terms.|Train on domain corpus before SFT—domain adaptation.
+Explain parameter-efficient fine-tuning in beginner-friendly terms.|LoRA/adapters—cheaper than full weights.
+Explain full fine-tune risks in beginner-friendly terms.|Catastrophic forgetting—expensive GPU.
+Explain eval harness HELM idea in beginner-friendly terms.|Broad benchmark suites—reference for capability claims.
+Explain MMLU benchmark in beginner-friendly terms.|Multi-subject knowledge—common leaderboard metric.
+Explain HumanEval coding benchmark in beginner-friendly terms.|Function completion tests—for coding models.
+Explain custom golden set in beginner-friendly terms.|Your product Q&A—most important eval for you.
+Explain regression on system prompt edit in beginner-friendly terms.|Any prompt change runs CI eval.
+Explain A/B prompt test in beginner-friendly terms.|Compare two prompts on live traffic—watch metrics.
+Explain token cost estimation in beginner-friendly terms.|tokens * price per 1M—budget features.
+Explain prompt compression in beginner-friendly terms.|Summarize long policy—trade clarity for cost.
+Explain summarization map-reduce in beginner-friendly terms.|Chunk long doc summarize pieces then merge.
+Explain refine summarization in beginner-friendly terms.|Iteratively update summary—quality for long input.
+Explain extractive vs abstractive summary in beginner-friendly terms.|Extract sentences vs generate new wording.
+Explain translation with LLM in beginner-friendly terms.|Prompt for target language—verify with back-translation sample.
+Explain code generation with LLM in beginner-friendly terms.|Provide signatures tests—run tests in sandbox.
+Explain infilling code model in beginner-friendly terms.|Fill middle of code—IDE features.
+Explain markdown output for UIs in beginner-friendly terms.|Render safely—sanitize HTML XSS.
+Explain streaming UX partial tokens in beginner-friendly terms.|Show typing indicator—cancel button saves cost.
+Explain cancel inflight generation in beginner-friendly terms.|Abort HTTP stream—stop billing if supported.
+Explain watermarking AI text (intro) in beginner-friendly terms.|Detect synthetic text—research/policy area.
+Explain model deprecation notice in beginner-friendly terms.|Vendor retires model—migration planning.
+Explain fallback model list in beginner-friendly terms.|Try secondary vendor on primary outage.
+Explain latency first token TTFB in beginner-friendly terms.|Time to first token—UX metric for chat.
+Explain tokens per second in beginner-friendly terms.|Generation throughput—hardware/model dependent.
+Explain quantization quality trade in beginner-friendly terms.|4-bit may harm reasoning—eval after quant.
+Explain GGUF local models in beginner-friendly terms.|Run quantized weights on laptop—offline demos.
+Explain ollama local runtime in beginner-friendly terms.|Easy local model pull—dev prototyping.
+Explain vLLM serving in beginner-friendly terms.|High-throughput LLM server—PagedAttention.
+Explain continuous batching vLLM in beginner-friendly terms.|Batch decode requests dynamically.
+Explain open vs closed weights in beginner-friendly terms.|Open weights self-host; closed API only—business trade.
+Explain license for model weights in beginner-friendly terms.|Check commercial use—Llama license etc.
+Explain prompt library anti-pattern in beginner-friendly terms.|Copy random prompts—maintain your own tested set.

@@ -16,7 +16,7 @@ llm:
 
 book:
   title: "AI Agent Engineering Bootcamp (2026 Edition)"
-  total_chapters: 94
+  total_chapters: 95
   default_author: "AI Agent Engineering Bootcamp"
 
 dry_run: false

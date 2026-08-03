@@ -1,0 +1,115 @@
+Explain horizontal scaling in beginner-friendly terms.|Add more machines behind load balancer instead of bigger single machine.
+Explain vertical scaling in beginner-friendly terms.|Upgrade CPU/RAM of one machine—simple until limits hit.
+Explain stateless service in beginner-friendly terms.|Any instance can handle any request—store session externally.
+Explain sticky session in beginner-friendly terms.|Same client to same server—avoid unless necessary.
+Explain reverse proxy in beginner-friendly terms.|Sits in front of servers—TLS termination, routing, caching.
+Explain forward proxy in beginner-friendly terms.|Client-side intermediary—corporate egress, not origin serving.
+Explain DNS load balancing in beginner-friendly terms.|Return multiple A records—clients pick; watch TTL and health.
+Explain anycast in beginner-friendly terms.|Same IP routed to nearest PoP—used by CDNs and some DNS.
+Explain active-active deployment in beginner-friendly terms.|Multiple sites serve traffic simultaneously—needs conflict handling.
+Explain active-passive DR in beginner-friendly terms.|Standby site takes over on failure—lower cost, higher RTO.
+Explain RPO in beginner-friendly terms.|Recovery Point Objective—max acceptable data loss window.
+Explain RTO in beginner-friendly terms.|Recovery Time Objective—max acceptable downtime.
+Explain database indexing in beginner-friendly terms.|Speeds reads, slows writes—index columns used in WHERE/JOIN.
+Explain B-tree index in beginner-friendly terms.|Common balanced tree index in SQL databases.
+Explain composite index in beginner-friendly terms.|Index on multiple columns—order matters for queries.
+Explain covering index in beginner-friendly terms.|Index includes all columns query needs—avoids table lookup.
+Explain database normalization in beginner-friendly terms.|Reduce redundancy—3NF common; denormalize for read perf carefully.
+Explain denormalization in beginner-friendly terms.|Duplicate data for faster reads—accept update complexity.
+Explain primary key in beginner-friendly terms.|Unique row identifier—clustered index in many engines.
+Explain foreign key in beginner-friendly terms.|Referential integrity between tables.
+Explain ACID transactions in beginner-friendly terms.|Atomicity, Consistency, Isolation, Durability—relational guarantee.
+Explain BASE (NoSQL) in beginner-friendly terms.|Basically Available Soft state Eventual consistency—NoSQL trade space.
+Explain eventual consistency in beginner-friendly terms.|Replicas converge later—tune read-your-writes if needed.
+Explain read replica in beginner-friendly terms.|Serves read traffic—replication lag matters.
+Explain write-through cache in beginner-friendly terms.|Write to cache and DB together—consistent but slower writes.
+Explain write-back cache in beginner-friendly terms.|Write cache first, flush later—fast but risk on crash.
+Explain cache aside pattern in beginner-friendly terms.|App loads cache on miss from DB—common pattern.
+Explain cache stampede in beginner-friendly terms.|Many requests miss hot key—use locking or singleflight.
+Explain TTL on cache keys in beginner-friendly terms.|Expire entries—balance freshness vs load.
+Explain Redis use cases in beginner-friendly terms.|Cache, session store, rate limit counters, pub/sub.
+Explain Memcached vs Redis in beginner-friendly terms.|Memcached simple cache; Redis richer data structures.
+Explain pub/sub messaging in beginner-friendly terms.|Fire-and-forget fanout—subscribers consume topics.
+Explain Kafka log in beginner-friendly terms.|Durable ordered log—replay and stream processing.
+Explain consumer group in beginner-friendly terms.|Partitions work among consumers—scale consumption.
+Explain dead letter queue in beginner-friendly terms.|Failed messages routed for inspection and retry policy.
+Explain at-least-once delivery in beginner-friendly terms.|Duplicates possible—consumers must be idempotent.
+Explain exactly-once (practical) in beginner-friendly terms.|Hard end-to-end—often at-least-once + idempotent writes.
+Explain two-phase commit in beginner-friendly terms.|Coordinator commit protocol—strong but complex/latency.
+Explain Saga pattern in beginner-friendly terms.|Sequence of local transactions with compensations—microservices workflows.
+Explain API versioning in beginner-friendly terms.|/v1 paths or headers—never break clients silently.
+Explain pagination in beginner-friendly terms.|limit/offset or cursor—cursor stable under inserts.
+Explain cursor-based pagination in beginner-friendly terms.|Uses opaque cursor—better than offset for large tables.
+Explain rate limit token bucket in beginner-friendly terms.|Tokens refill over time—smooth burst control.
+Explain rate limit leaky bucket in beginner-friendly terms.|Fixed outflow rate—smooths bursts differently.
+Explain OAuth2 overview in beginner-friendly terms.|Delegated authorization—access tokens for APIs.
+Explain JWT access token in beginner-friendly terms.|Self-contained signed claims—validate signature and expiry.
+Explain mTLS in beginner-friendly terms.|Mutual TLS—both client and server present certificates.
+Explain service mesh in beginner-friendly terms.|Sidecar proxies handle retries, mTLS, metrics—Istio/Linkerd.
+Explain sidecar pattern in beginner-friendly terms.|Helper container alongside app pod—logging, proxy.
+Explain blue-green deploy in beginner-friendly terms.|Switch traffic between two identical envs—instant rollback.
+Explain canary deploy in beginner-friendly terms.|Gradual traffic shift—watch metrics.
+Explain feature flag in beginner-friendly terms.|Toggle features without redeploy—kill switch for agents.
+Explain chaos engineering in beginner-friendly terms.|Inject failures to test resilience—carefully in prod.
+Explain bulkhead pattern in beginner-friendly terms.|Isolate resources so one failure does not sink all.
+Explain timeout setting in beginner-friendly terms.|Always set client/server timeouts—prevent hung agent tool calls.
+Explain retry with jitter in beginner-friendly terms.|Randomize backoff—avoid thundering herd.
+Explain idempotent POST in beginner-friendly terms.|Use idempotency keys for create operations—safe retries.
+Explain consistent hashing in beginner-friendly terms.|Distributes keys across nodes—minimal remapping on add/remove.
+Explain database sharding key in beginner-friendly terms.|Choose high cardinality key—avoid hotspots.
+Explain hot partition problem in beginner-friendly terms.|One shard gets disproportionate traffic—reshard or salting.
+Explain globally unique ID in beginner-friendly terms.|Snowflake/UUID—generate without central DB sequence bottleneck.
+Explain UUID v4 in beginner-friendly terms.|Random IDs—no ordering; index fragmentation trade-offs.
+Explain snowflake ID in beginner-friendly terms.|Time-ordered unique IDs—good for indexed inserts.
+Explain blob storage S3 in beginner-friendly terms.|Durable object store—agent PDFs, artifacts, logs.
+Explain CDN edge cache in beginner-friendly terms.|Serve static assets close to users.
+Explain WebSocket in beginner-friendly terms.|Full-duplex persistent connection—live chat UIs.
+Explain SSE server-sent events in beginner-friendly terms.|Server push over HTTP—one-way streaming common for LLM tokens.
+Explain long polling in beginner-friendly terms.|Client polls holding connection—fallback when WebSocket blocked.
+Explain gRPC in beginner-friendly terms.|HTTP/2 binary RPC—efficient internal microservice calls.
+Explain REST vs GraphQL in beginner-friendly terms.|REST multiple endpoints; GraphQL client picks fields—complexity trade.
+Explain GraphQL N+1 problem in beginner-friendly terms.|Resolver fanout—use dataloaders batching.
+Explain Elasticsearch inverted index in beginner-friendly terms.|Full-text search—complement vector DB in hybrid RAG.
+Explain OLTP vs OLAP in beginner-friendly terms.|Transactional vs analytics workloads—different DB designs.
+Explain data warehouse in beginner-friendly terms.|Columnar analytics store—BigQuery, Snowflake.
+Explain ETL pipeline in beginner-friendly terms.|Extract Transform Load—batch analytics path.
+Explain ELT pipeline in beginner-friendly terms.|Load raw then transform in warehouse—modern variant.
+Explain change data capture in beginner-friendly terms.|Stream DB changes to consumers—sync search indexes.
+Explain cron scheduler in beginner-friendly terms.|Time-based jobs—backup, reports.
+Explain workflow orchestrator in beginner-friendly terms.|Airflow/Temporal—durable multi-step jobs for agents.
+Explain Temporal (idea) in beginner-friendly terms.|Durable execution with retries—long-running agent workflows.
+Explain Kubernetes pod in beginner-friendly terms.|Smallest deploy unit—containers share network namespace.
+Explain Kubernetes deployment in beginner-friendly terms.|Manages replica sets and rollouts.
+Explain HPA horizontal pod autoscaler in beginner-friendly terms.|Scales pods on CPU/custom metrics—LLM queue depth metric.
+Explain liveness vs readiness probe in beginner-friendly terms.|Liveness restart unhealthy; readiness remove from service.
+Explain ConfigMap vs Secret in beginner-friendly terms.|Non-sensitive vs sensitive K8s config—still encrypt secrets at rest.
+Explain IAM role for service in beginner-friendly terms.|Cloud identity for pods—no long-lived keys in images.
+Explain VPC private subnet in beginner-friendly terms.|No direct internet—DB and internal services.
+Explain NAT gateway in beginner-friendly terms.|Outbound internet from private subnets.
+Explain DDoS protection in beginner-friendly terms.|Rate limits, WAF, scrubbing centers at edge.
+Explain WAF web application firewall in beginner-friendly terms.|Blocks common HTTP attacks—SQLi, XSS patterns.
+Explain SQL injection defense in beginner-friendly terms.|Parameterized queries—never string-concat SQL.
+Explain XSS defense in beginner-friendly terms.|Escape output, CSP headers—web agent UIs.
+Explain CSRF token in beginner-friendly terms.|Protects state-changing browser requests.
+Explain secrets manager in beginner-friendly terms.|Vault/AWS Secrets Manager—inject at runtime.
+Explain observability three pillars in beginner-friendly terms.|Metrics, logs, traces—mandatory for agent systems.
+Explain RED method in beginner-friendly terms.|Rate Errors Duration—for request services.
+Explain USE method in beginner-friendly terms.|Utilization Saturation Errors—for resources.
+Explain percentile latency p99 in beginner-friendly terms.|Tail latency matters for user experience—watch p99 not just avg.
+Explain error budget in beginner-friendly terms.|Allowed unreliability from SLO—balance velocity vs stability.
+Explain on-call rotation in beginner-friendly terms.|Engineers respond to pages—runbooks reduce MTTR.
+Explain runbook in beginner-friendly terms.|Step-by-step incident response—include rollback for model deploy.
+Explain postmortem blameless in beginner-friendly terms.|Document incident and fixes—share learning.
+Explain capacity planning in beginner-friendly terms.|Forecast QPS/storage from growth—use load tests.
+Explain load testing in beginner-friendly terms.|Simulate peak traffic—find bottlenecks before launch.
+Explain thundering herd in beginner-friendly terms.|Many clients retry together—use jitter and backoff.
+Explain single point of failure in beginner-friendly terms.|Eliminate with redundancy and failover.
+Explain split brain in beginner-friendly terms.|Partitions cause dual masters—use quorum systems.
+Explain quorum in beginner-friendly terms.|Majority vote for decisions—Raft/Paxos consensus.
+Explain leader election in beginner-friendly terms.|One active writer—ZooKeeper/etcd assist.
+Explain multi-region active in beginner-friendly terms.|Users routed to nearest region—data replication complexity.
+Explain conflict resolution CRDT in beginner-friendly terms.|Data structures merge without conflicts—collaborative edits niche.
+How do you scale a read-heavy API?|Add caching, read replicas, CDN for static, horizontal app scaling.
+How do you scale writes?|Shard database, async queues for heavy work, optimize indexes.
+Design notification system (sketch)?|Event producer → queue → workers → email/push/SMS providers with retries.
+Design rate limiter?|Token bucket in Redis keyed by user_id; return 429 with Retry-After header.

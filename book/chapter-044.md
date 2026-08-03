@@ -2,116 +2,209 @@
 
 ## Chapter Overview
 
-Regression suite for task success, tool usage, and expected answer content.
+Part V — Agent Systems Engineering — **Agent Evaluation** — package `ageval`.
 
-This chapter is part of **Part V — Agent Systems Engineering**: operating, evaluating, securing, and scaling agents as production systems.
+`evaluate(agent, cases)` checks ok flag, substring expectations, and tools_used against `Case` records; includes `DEFAULT_CASES` and `demo_agent`.
+
+Part IV gave you agent building blocks; Part V makes them **operable**: harnesses, mode choice, FSMs, events, HITL, eval, observability, security, cost, and scale. Chapter 44 implements **Agent Evaluation** as `ageval`.
+
+**Code:** `code/chapter-044/ageval/`.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Eval is a product gate
-- Tool correctness matters
-- Regression prevents silent breaks
-- Run the chapter package tests and CLI
-- Integrate the component into a harnessed agent platform
+- Explain **Agent Evaluation** in a production agent platform
+- Run and extend `ageval` offline with pytest
+- Connect this module to Part IV building blocks and Part V operations
+- Compare trade-offs and failure modes with structured traces
+- Apply security, cost, and scaling concerns where relevant
+- Complete exercises with tests passing
+
+---
 
 ## Prerequisites
 
-- Part IV agent building blocks (chapters 27–38)
-- Prior Part V chapters through 43
+- Part IV (Chapters 27–38): agents, tools, memory, graphs, MCP
+- Prior Part V chapters when `n > 39` (through Chapter 43)
+- pytest and structured logging comfort
+
+---
 
 ## Motivation
 
-Demo agents break under real traffic: no budgets, no approvals, no metrics, no security boundary, no scale plan. This chapter makes **Agent Evaluation** an operable subsystem.
+Demo prompts look fine; regressions ship when models or prompts change.
+
+---
 
 ## First Principles
 
-### 1. Eval is a product gate
+### 1. Cases are data
 
-### 2. Tool correctness matters
+id, goal, expect_ok, expect_contains, expect_tools
 
-### 3. Regression prevents silent breaks
+### 2. Report pass_rate
 
+Track over time in CI
+
+### 3. Separate agent fn from harness
+
+Test agent logic in isolation first
+
+### 4. Substring checks are brittle — use carefully
+
+Prefer structured fields in prod evaluators
+
+---
 
 ## Mental Model
 
-See Visual diagrams.
+Eval = unit tests for stochastic employees — golden tasks with expected tools and phrases.
+
+```mermaid
+flowchart LR
+  User[User / Job] --> Mod[Agent Evaluation]
+  Mod --> Dep[Stores / Queues / SDK]
+  Mod --> Out[Structured Outcome]
+  Mod --> Trace[Logs / Eval / Spans]
+```
+
+---
 
 ## Core Theory
 
-Encode control as data: budgets, states, events, approvals, metrics, and policies. Prefer fail-closed defaults for cost and security.
+### Case checks
+
+```python
+checks = {
+  "ok_match": ok == case.expect_ok,
+  "contains": all(s in text for s in case.expect_contains),
+  "tools": all(t in tools for t in case.expect_tools),
+}
+```
+
+Returns `{n, pass_rate, passed, rows}` with per-case diagnostics.
+
+### Failure cases
+
+Design for partial failure: budget exceeded, rejected approvals, eval failures, handler exceptions on the event bus, and tool authorization denials.
+
+### Performance implications
+
+Measure p95 end-to-end latency and cost per successful task; optimize cache hits and worker concurrency before bigger models.
+
+### Security implications
+
+Combine guards, HITL, least-privilege tools, and redaction — models are not security boundaries.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-044/ageval/
+code/chapter-044/
+  ageval/
   tests/
   main.py
+  pyproject.toml
 ```
+
+---
 
 ## Internal Implementation
 
-See `code/chapter-044/` for the `ageval` package, CLI, and tests.
+```bash
+cd code/chapter-044 && pytest -q && python3 main.py
+```
+
+Add failing case; watch pass_rate drop; fix agent or case intentionally.
+
+---
 
 ## Production Implementation
 
-- Wire real backends (queues, OTEL, policy engines) behind the same interfaces
-- Persist audit trails for approvals, security decisions, and eval runs
-- Alert on budget burn, error rates, and eval regressions
+- Replace in-memory buses, telemetry, and pools with managed services (Kafka, OTel, Celery/K8s)
+- Persist sessions, approvals, and checkpoints durably
+- Wire real SDK clients in Part VI chapters while keeping adapter tests from this repo
+- Connect observability export to your metrics backend
+- Enforce org policy on mode selection and cost routing tables
+
+---
 
 ## Framework Implementation
 
-Platform features should wrap frameworks—not disappear inside them.
+LangSmith, RAGAS, OpenAI evals, Braintrust — hosted suites with same Case mindset.
+
+---
 
 ## Trade-offs
 
-| Choice | Pros | Cons |
-|---|---|---|
-| More control plane | Safer ops | More moving parts |
-| Auto-approve low risk | UX speed | Mis-tiered risk |
+| Option A | Option B / notes |
+|---|---|
+| Substring asserts | Easy; flaky on wording. |
+| LLM judge | Flexible; costly. |
+| Human eval | Gold standard; slow. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Hang / runaway cost | Harness budgets |
-| Silent policy break | Eval suite |
-| Missing trace | Observability hooks |
+- False negative contains → case sensitivity (lower() used)
+- tools check fails → agent omitted tools_used list
+
+---
 
 ## Performance
 
-Parallelize independent work; cache pure steps; bound fan-out.
+Run eval parallel; shard cases by suite.
+
+---
 
 ## Security
 
-Least privilege, sandbox, redact, and treat all external text as untrusted.
+Eval datasets must not contain production secrets.
+
+---
 
 ## Best Practices
 
-1. Budgets everywhere
-2. Explicit states/events
-3. Human gates on high risk
-4. Continuous eval
-5. Full telemetry
+1. Keep `ageval` interfaces stable for tests and adapters
+2. Emit structured traces (steps, spans, approvals, eval rows)
+3. Enforce budgets before work starts, not after bills arrive
+4. Default deny on risky tools and unapproved actions
+5. Run regression eval suites on every prompt/model change
+6. Map framework demos to your Part IV ports explicitly
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Infinite agent loops | Bill shock |
-| No HITL for money moves | Fraud/loss |
-| Metrics without traces | Slow RCAs |
+- **Agent without harness** — No budgets, recovery, or eval hooks
+- **Observability as printf** — Cannot slice latency or token metrics
+- **Skipping HITL on financial actions** — Compliance and trust failures
+- **Eval-free releases** — Silent regressions on model swaps
+- **Framework-first design** — Vendor types leak into domain core
+- **Opaque framework defaults** — Hidden control flow and untraceable tool calls
+
+---
 
 ## Hands-on Exercise
 
-1. `pytest -q` in the chapter folder
-2. Run `python3 main.py`
-3. Tighten one policy/budget and re-test
+1. `cd code/chapter-044 && pytest -q`
+2. Change one policy knob (budget, guard, mode rule, eval case, worker count)
+3. Add/adjust a test proving the behavior
+4. Run `python3 main.py` and inspect structured output
+5. Document which Part IV module this replaces or wraps
+
+---
 
 ## Mini Project
 
-**Agent eval harness**
+**Regression eval harness with pass rate.** Extend the demo or integrate with a Part IV package in notes (offline).
+
+---
 
 ## Visual diagrams
 
@@ -119,6 +212,7 @@ Least privilege, sandbox, redact, and treat all external text as untrusted.
 
 ![Overview](../diagrams/png/chapter-044/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -128,30 +222,52 @@ Least privilege, sandbox, redact, and treat all external text as untrusted.
 | Package | `code/chapter-044/ageval/` |
 | Tests | `code/chapter-044/tests/` |
 
+---
+
 ## Interview Questions
 
-1. Why does this belong in systems engineering rather than model prompting?
-2. What fails open vs fail closed?
-3. How do you test it in CI?
-4. What signals would you alert on?
-5. How does it interact with the harness?
+1. CI gate on pass_rate threshold?
+2. Eval unit vs integration vs prod shadow?
+3. Prevent eval overfitting to substrings?
+
+---
 
 ## Quiz
 
-1. Part V emphasizes: **operability of agents**
-2. High-risk actions need: **human approval**
-3. Scale uses: **queues and workers**
+1. Case expect_tools checks:
+   A) tools_used list B) GPU C) DNS D) RAM
+   **Answer:** A
+
+2. pass_rate is:
+   A) passed/n B) n only C) random D) GPU
+   **Answer:** A
+
+3. demo_agent handles:
+   A) weather/refund goals B) only DNS C) nothing D) GPU
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-044 && pytest -q && python3 main.py
-```
+- `evaluate(agent, cases)`
+- `Case(id, goal, expect_ok, expect_contains, expect_tools)`
+
+---
+
+## Curated Free Resources
+
+- [RAGAS](https://docs.ragas.io/)
+- [OpenAI evals guide](https://platform.openai.com/docs/guides/evals)
+
+---
 
 ## Chapter Summary
 
-Regression suite for task success, tool usage, and expected answer content.
+**Agent Evaluation** (`ageval`) — Regression eval harness with pass rate. Treat it as production infrastructure, not demo glue.
+
+---
 
 ## What's Next
 
-**Chapter 45** continues Part V.
+**Chapter 45: Observability.** Chapter 45 exports logs, metrics, and traces.

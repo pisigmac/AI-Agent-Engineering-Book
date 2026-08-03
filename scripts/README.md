@@ -31,7 +31,7 @@ scripts/
 ├── release.py               # Plan/package v0.1 … v1.0 releases
 ├── config.example.yaml
 ├── requirements.txt
-├── data/curriculum.yaml     # All 94 chapters catalog
+├── data/curriculum.yaml     # All 95 chapters catalog
 └── lib/                     # Shared production library
 ```
 
@@ -163,7 +163,7 @@ Presets from the project manager prompt:
 | v0.1 | First 10 Chapters | 1–10 |
 | v0.5 | Half Complete | 1–47 |
 | v0.9 | Technical Review | 1–90 |
-| v1.0 | First Edition | 1–94 |
+| v1.0 | First Edition | 1–95 |
 
 ```bash
 python scripts/release.py list-presets
@@ -177,7 +177,10 @@ python scripts/release.py package --version v0.1 --require-ready
 - **Idempotent writes**: existing artifacts are skipped unless `--force`.
 - **Exit codes**: consistency checks return non-zero for automation/CI gates.
 - **Provider-agnostic LLM**: OpenAI, OpenAI-compatible base URLs, and Anthropic.
-- **Curriculum catalog**: `scripts/data/curriculum.yaml` lists all 94 chapters with parts/phases.
+- **Curriculum catalog**: `scripts/data/curriculum.yaml` lists all 95 chapters with parts/phases.
+- **Interview bank (Ch 95)**: canonical `scripts/data/interview_bank.yaml`; rebuild with `python3 scripts/interview_bank/build_catalog.py` then `python3 scripts/_gen_ch95_interview_bank.py`.
+- **External advanced bank (500_AI_QA)**: `INTERVIEW_500_AI_QA_PATH=... python3 scripts/interview_bank/import_500_ai_qa.py` → `scripts/data/interview_bank_500_ai_qa.yaml`.
+- **Export bootcamp → 500_AI_QA**: `INTERVIEW_500_AI_QA_PATH=... python3 scripts/interview_bank/export_to_500_ai_qa.py` writes `bootcamp_interview_bank.yaml` + `.py` (IDs 9001+) into that folder.
 
 ## Safety
 

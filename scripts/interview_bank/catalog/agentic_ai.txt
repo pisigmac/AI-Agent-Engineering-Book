@@ -1,0 +1,110 @@
+Explain agent loop in beginner-friendly terms.|Repeat observe-think-act until goal or max steps.
+Explain tool schema JSON in beginner-friendly terms.|Name, description, parameters—model generates matching calls.
+Explain tool runtime validator in beginner-friendly terms.|Validate args against schema before execution.
+Explain argument hallucination in beginner-friendly terms.|Model invents invalid args—validate and retry with error msg.
+Explain tool error feedback to model in beginner-friendly terms.|Return error string so model can correct—ReAct pattern.
+Explain parallel tool execution in beginner-friendly terms.|Independent tools run concurrently—reduce latency.
+Explain sequential tool dependency in beginner-friendly terms.|Second tool needs first output—order explicitly.
+Explain agent memory scratchpad in beginner-friendly terms.|Working notes in prompt—cleared each session or persisted.
+Explain episodic memory in beginner-friendly terms.|Store past conversation summaries—retrieve relevant episodes.
+Explain semantic memory store in beginner-friendly terms.|Vector DB of facts learned—long-term personalization.
+Explain memory write policy in beginner-friendly terms.|Not everything stored—PII and noise filtered.
+Explain memory eviction TTL in beginner-friendly terms.|Forget stale facts—privacy and accuracy.
+Explain user confirmation tool in beginner-friendly terms.|Human approves before irreversible action.
+Explain approval timeout in beginner-friendly terms.|Pending action expires—avoid stale approvals.
+Explain agent persona system prompt in beginner-friendly terms.|Role and tone—keep separate from untrusted user text.
+Explain delegation to sub-agent in beginner-friendly terms.|Orchestrator spawns specialist—hierarchical agents.
+Explain supervisor pattern in beginner-friendly terms.|Supervisor assigns tasks to workers—LangGraph style.
+Explain handoff message in beginner-friendly terms.|Pass structured state between agents—bus or shared store.
+Explain shared blackboard state in beginner-friendly terms.|Global state agents read/write—coordinate carefully.
+Explain conflict resolution multi-agent in beginner-friendly terms.|Merge policies when agents disagree—supervisor decides.
+Explain agent skill tags in beginner-friendly terms.|Route tasks by capability—Ch 90 router.
+Explain dynamic tool registration in beginner-friendly terms.|Load tools at runtime—plugin pattern Ch 79.
+Explain tool rate limits in beginner-friendly terms.|Per-tool caps—prevent email spam loops.
+Explain tool budget per run in beginner-friendly terms.|Max 5 tool calls—cost control.
+Explain wall clock timeout per run in beginner-friendly terms.|Kill run after 60s—prevent hangs.
+Explain cancellation token in beginner-friendly terms.|User stop button sets flag—check between steps.
+Explain checkpoint agent state in beginner-friendly terms.|Persist mid-run for durable workflows—Temporal.
+Explain resume from checkpoint in beginner-friendly terms.|Continue after crash—idempotent steps required.
+Explain deterministic replay in beginner-friendly terms.|Log prompts and tool results—replay for debug.
+Explain record-replay testing in beginner-friendly terms.|Mock tools from recorded session—regression tests.
+Explain simulation environment in beginner-friendly terms.|Fake APIs for agent training—safe exploration.
+Explain web agent DOM snapshot in beginner-friendly terms.|Accessibility tree input—smaller than full HTML.
+Explain web agent click by ref in beginner-friendly terms.|Stable element refs vs brittle selectors.
+Explain playwright tool in beginner-friendly terms.|Real browser automation—headless in CI with mocks.
+Explain allowlist URL domains in beginner-friendly terms.|Block internal metadata URLs—SSRF prevention.
+Explain SSRF in agents in beginner-friendly terms.|Model requests internal IPs—network policy block.
+Explain shell tool danger in beginner-friendly terms.|Arbitrary command execution forbidden—fixed allowlist commands.
+Explain read-only file tool in beginner-friendly terms.|Agent reads workspace—writes go through review.
+Explain git tool for coding agent in beginner-friendly terms.|Commit only after tests pass—CI gate.
+Explain unit test gate in beginner-friendly terms.|Coding agent must green tests—Ch 89.
+Explain static analysis gate in beginner-friendly terms.|Linter must pass before merge.
+Explain dependency audit in beginner-friendly terms.|Block installing unknown packages in agent sandbox.
+Explain container network off in beginner-friendly terms.|Sandbox has no egress—except allowlisted proxy.
+Explain secrets injection env in beginner-friendly terms.|Tools read secrets from env—not from prompt.
+Explain prompt injection via tool output in beginner-friendly terms.|Untrusted webpage text in obs—sanitize and instruct model.
+Explain indirect prompt injection in beginner-friendly terms.|Malicious content in retrieved doc—RAG risk.
+Explain tool output max length in beginner-friendly terms.|Truncate huge HTML—fit context window.
+Explain observation summarization in beginner-friendly terms.|Compress long tool output before next LLM call.
+Explain plan-and-execute in beginner-friendly terms.|Plan all steps then execute—less adaptive but stable.
+Explain ReAct vs plan-execute in beginner-friendly terms.|ReAct adapts each step; plan-execute cheaper when plan stable.
+Explain reflexion agent in beginner-friendly terms.|Agent critiques own output and retries—improves quality.
+Explain self-consistency in beginner-friendly terms.|Sample multiple reasoning paths vote—accuracy up, cost up.
+Explain tree of thoughts in beginner-friendly terms.|Explore branching reasoning—researchy, expensive.
+Explain LangGraph state machine in beginner-friendly terms.|Explicit nodes and edges—debuggable flows.
+Explain LangChain LCEL in beginner-friendly terms.|Composable Runnable chains—glue prompts and parsers.
+Explain CrewAI roles in beginner-friendly terms.|Role-playing agents—watch for runaway loops.
+Explain AutoGen conversable agents in beginner-friendly terms.|Multi-agent chat—needs termination conditions.
+Explain OpenAI Assistants API in beginner-friendly terms.|Hosted threads and tools—vendor lock-in trade.
+Explain threads and runs API in beginner-friendly terms.|Stateful conversations—compare to stateless chat completions.
+Explain MCP server in beginner-friendly terms.|Expose tools/resources standard way—client connects agents.
+Explain MCP resources vs tools in beginner-friendly terms.|Resources read-only context; tools mutate external systems.
+Explain agent eval trajectory in beginner-friendly terms.|Expected sequence of tools—compare to actual.
+Explain tool precision recall eval in beginner-friendly terms.|Did agent call correct tool at step—agent metrics.
+Explain user simulation eval in beginner-friendly terms.|Synthetic user messages test policies.
+Explain red team agent prompts in beginner-friendly terms.|Adversarial tests for safety before launch.
+Explain blue team monitoring in beginner-friendly terms.|Detect abuse patterns live—rate limits alerts.
+Explain agent audit log in beginner-friendly terms.|Immutable log of decisions—compliance.
+Explain explain agent action to user in beginner-friendly terms.|Show which tools ran—transparency UX.
+Explain progress UI for long runs in beginner-friendly terms.|Step list with statuses—reduces perceived latency.
+Explain queued agent jobs in beginner-friendly terms.|Return job id poll status—async UX.
+Explain webhook on agent complete in beginner-friendly terms.|Notify downstream system—automations.
+Explain human takeover in beginner-friendly terms.|Operator replaces agent mid-session—support desks.
+Explain escalation policy in beginner-friendly terms.|Keywords or low confidence route to human—Ch 88.
+Explain multi-tenant agent isolation in beginner-friendly terms.|Separate memory tools data per tenant.
+Explain per-tenant model config in beginner-friendly terms.|Different prompts models limits per customer.
+Explain usage metering agent in beginner-friendly terms.|Bill per tokens tools storage—SaaS.
+Explain SLA per tenant tier in beginner-friendly terms.|Premium gets faster models more tools.
+Explain agent versioning in beginner-friendly terms.|Pin agent graph version per deployment—rollback.
+Explain feature flag agent path in beginner-friendly terms.|Try new planner on 5% traffic.
+Explain shadow agent in beginner-friendly terms.|New agent runs silently compare outputs.
+Explain cost attribution tags in beginner-friendly terms.|Tag runs with team_id—FinOps.
+Explain minimize tool set in beginner-friendly terms.|Fewer tools clearer choice—reduce errors.
+Explain tool description quality in beginner-friendly terms.|Good descriptions improve call accuracy—maintain docs.
+Explain negative examples in tool desc in beginner-friendly terms.|Say when NOT to use tool—reduces misuse.
+Explain structured final answer in beginner-friendly terms.|Force JSON schema for UI—parser validation.
+Explain guardrails on output in beginner-friendly terms.|Regex or classifier block forbidden content.
+Explain input moderation in beginner-friendly terms.|Block toxic user input early.
+Explain output moderation in beginner-friendly terms.|Block toxic model output before user sees.
+Explain PII redaction tool in beginner-friendly terms.|Strip emails phones from logs automatically.
+Explain consent for memory in beginner-friendly terms.|User opts in to long-term memory—GDPR.
+Explain delete user agent memory in beginner-friendly terms.|Erasure API—right to be forgotten.
+Explain agent on mobile in beginner-friendly terms.|Voice + push—latency and offline constraints.
+Explain edge agent (tiny model) in beginner-friendly terms.|On-device planner cloud heavy tools—hybrid.
+Explain compliance logging retention in beginner-friendly terms.|Legal hold vs TTL—enterprise sales.
+Explain SOC2 agent controls in beginner-friendly terms.|Access control change management—org process.
+Explain agent incident response in beginner-friendly terms.|Disable tool globally on exploit—kill switch.
+Explain postmortem agent failure in beginner-friendly terms.|Root cause model tool policy—blameless doc.
+Explain benchmark SWE-bench in beginner-friendly terms.|Real GitHub issues—coding agent leaderboard.
+Explain benchmark WebArena in beginner-friendly terms.|Web navigation tasks—browser agent research.
+Explain benchmark AgentBench in beginner-friendly terms.|Multi-environment agent eval—research suite.
+Explain custom agent eval CI in beginner-friendly terms.|Your product scenarios in pytest—most valuable.
+Explain synthetic data for agents in beginner-friendly terms.|Generate tool scenarios—expand test coverage.
+Explain curriculum training agents in beginner-friendly terms.|Research area—train on easier tasks first.
+Explain reward hacking in agents in beginner-friendly terms.|Agent games metric—align reward with true goal.
+Explain specification gaming in beginner-friendly terms.|Follow letter not intent—eval must capture intent.
+Explain human preference data in beginner-friendly terms.|Rank agent traces—improve policies.
+Explain inverse reinforcement learning (intro) in beginner-friendly terms.|Infer reward from demos—advanced research.
+Explain when workflows beat agents in beginner-friendly terms.|Fixed steps known—use workflow not open loop.
+Explain when agents beat workflows in beginner-friendly terms.|User intent varies steps unknown—agent flexibility.
+Explain agent + workflow hybrid in beginner-friendly terms.|Workflow skeleton with agent decisions at nodes—practical sweet spot.

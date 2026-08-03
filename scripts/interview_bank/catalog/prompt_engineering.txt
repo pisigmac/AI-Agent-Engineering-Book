@@ -1,0 +1,108 @@
+Explain production prompt engineering in beginner-friendly terms.|Versioned templates, variables, tests, and review—prompts as code not chat folklore.
+Explain system message in chat APIs in beginner-friendly terms.|Slow-changing policy: safety, persona, non-negotiable rules separate from user task text.
+Explain user message responsibility in beginner-friendly terms.|Concrete task, user data, and clarifications—never mix untrusted content into system policy.
+Explain developer message role in beginner-friendly terms.|Optional product rules hidden from end users—some APIs expose this as a distinct role.
+Explain zero-shot prompting in beginner-friendly terms.|Instructions only, no examples—good when task is well defined and model already capable.
+Explain one-shot prompting in beginner-friendly terms.|Single demonstration pair—cheap way to show output format.
+Explain few-shot prompting in beginner-friendly terms.|Multiple examples teach style and format—curate like test fixtures; bad examples teach bad habits.
+Explain few-shot example leakage in beginner-friendly terms.|Examples that include fake IDs teach the model to invent IDs—use realistic but clearly fake placeholders.
+Explain role prompting in beginner-friendly terms.|You are a senior analyst—sets tone; keep consistent with actual capabilities and tools.
+Explain constraint-first prompting in beginner-friendly terms.|Hard rules beat vibes: Never invent order IDs beats please be careful.
+Explain output contract in beginner-friendly terms.|Explicit format: JSON schema, markdown sections, or refusal rules the parser expects.
+Explain delimiters in prompts in beginner-friendly terms.|XML tags or ### sections separate policy, context, and task—helps models and humans.
+Explain prompt variables in beginner-friendly terms.|Placeholders like {user_query} filled at render time—never f-string secrets into logs.
+Explain prompt template versioning in beginner-friendly terms.|Semver or git tags on templates—incidents need to know which version ran.
+Explain prompt registry in beginner-friendly terms.|Central catalog of named prompts with owners and deprecation dates.
+Explain prompt unit tests in beginner-friendly terms.|Assert required sections, max tokens, and golden outputs on fixed model stub.
+Explain prompt regression CI in beginner-friendly terms.|Any template change runs eval suite before merge—like code coverage for instructions.
+Explain chain-of-thought prompting in beginner-friendly terms.|Ask model to reason stepwise—can improve hard tasks; costs tokens.
+Explain chain-of-thought visibility in beginner-friendly terms.|Decide whether users see reasoning—often hide internal scratchpad in production.
+Explain self-consistency prompting in beginner-friendly terms.|Sample multiple answers and vote—accuracy up, cost up.
+Explain tree-of-thoughts (intro) in beginner-friendly terms.|Explore branches of reasoning—research pattern, expensive for prod.
+Explain ReAct-style prompt instructions in beginner-friendly terms.|Tell model to alternate Thought, Action, Observation—pairs with tool loops.
+Explain meta-prompting in beginner-friendly terms.|Use a model to draft or critique prompts—human still reviews and tests.
+Explain prompt compression in beginner-friendly terms.|Summarize long policy for cost—re-run eval after compression.
+Explain mega-prompt anti-pattern in beginner-friendly terms.|400-line system prompt nobody owns—split into modules and registry entries.
+Explain conflicting rules in one prompt in beginner-friendly terms.|Two policies contradict—models pick randomly; resolve in design review.
+Explain prompt injection defense in instructions in beginner-friendly terms.|Tell model to ignore overrides in user content—layer with filters and tool policy.
+Explain jailbreak resistance in system prompt in beginner-friendly terms.|Helpful baseline only—never sole defense; use moderation and tool allowlists.
+Explain refusal instructions in beginner-friendly terms.|When to say I don't know or cannot—reduces harmful hallucinated compliance.
+Explain grounding instructions in beginner-friendly terms.|Answer only from provided context; cite sources—RAG companion policy.
+Explain tone and verbosity controls in beginner-friendly terms.|Be concise, bullet points—saves tokens and improves UX.
+Explain audience adaptation in beginner-friendly terms.|Same task different prompts for expert vs beginner users.
+Explain multilingual prompt design in beginner-friendly terms.|Specify output language; watch tokenization cost per language.
+Explain prompt for JSON extraction in beginner-friendly terms.|Show schema and null rules—validate with parser after generation.
+Explain prompt for classification in beginner-friendly terms.|Label set closed world—include other or abstain bucket.
+Explain prompt for summarization in beginner-friendly terms.|Length target, focus entities, no new facts—faithfulness rules.
+Explain prompt for translation in beginner-friendly terms.|Preserve meaning, glossary terms, formality level.
+Explain prompt for code generation in beginner-friendly terms.|Signature, types, tests to pass—run tests in sandbox.
+Explain prompt for tool routing in beginner-friendly terms.|When to call which tool—overlaps agent design; keep in sync with tool descriptions.
+Explain negative instructions in beginner-friendly terms.|Do not do X lists—pair with positive what to do instead.
+Explain priority ordering in prompts in beginner-friendly terms.|Put safety and output format near top—models weight early text.
+Explain prompt layering in beginner-friendly terms.|System policy + developer product rules + user task—clear separation.
+Explain dynamic prompt assembly in beginner-friendly terms.|Build message list from registry pieces—avoid copy-paste drift.
+Explain conditional prompt sections in beginner-friendly terms.|Include refund policy block only if intent is billing—feature flags for text.
+Explain prompt A/B testing in beginner-friendly terms.|Compare two templates on traffic—watch quality and cost metrics.
+Explain prompt canary in beginner-friendly terms.|5% traffic on new system prompt—rollback on eval regression.
+Explain prompt rollback in beginner-friendly terms.|Pin previous registry version—fast incident mitigation.
+Explain prompt ownership in beginner-friendly terms.|Named engineer or team for each template—on-call knows who to page.
+Explain prompt review checklist in beginner-friendly terms.|Safety, PII, tool alignment, eval evidence, token budget.
+Explain token budget per prompt section in beginner-friendly terms.|Cap system vs RAG vs user—Chapter 10 packer enforces.
+Explain counting tokens before send in beginner-friendly terms.|Estimate with same tokenizer as model—avoid surprise truncation.
+Explain truncation strategy in prompts in beginner-friendly terms.|If context too long, drop oldest tool obs or summarize—document order.
+Explain stop sequences in prompts in beginner-friendly terms.|Define end markers for structured sections—API stop param too.
+Explain temperature choice per prompt type in beginner-friendly terms.|Low for extraction and tools; higher for creative drafts if allowed.
+Explain top_p and prompt design in beginner-friendly terms.|Nucleus sampling—interacts with how strict your output contract is.
+Explain seed for reproducibility in beginner-friendly terms.|Debugging prompts—vendor-dependent; don't rely for compliance.
+Explain model-specific prompt tuning in beginner-friendly terms.|GPT vs Claude vs open weights—retest when switching vendor.
+Explain chat template awareness in beginner-friendly terms.|Tokenizer wraps roles—raw string prompts wrong for chat models.
+Explain instruction following eval in beginner-friendly terms.|Did model obey format and constraints—automated rubric or LLM judge.
+Explain prompt drift over time in beginner-friendly terms.|Model updates change behavior—re-run golden set quarterly.
+Explain documenting prompt rationale in beginner-friendly terms.|Why this rule exists—helps future editors avoid breaking fixes.
+Explain prompt anti-pattern: untested lore in beginner-friendly terms.|Copied from blog without eval—delete or prove with tests.
+Explain prompt anti-pattern: secrets in system in beginner-friendly terms.|API keys in prompt leak via injection—use env and tools.
+Explain prompt anti-pattern: stale tool docs in beginner-friendly terms.|Prompt says call foo but schema is bar—sync with OpenAPI.
+Explain calibration prompts in beginner-friendly terms.|Ask model to rate confidence—gate escalations.
+Explain scratchpad instructions in beginner-friendly terms.|Internal notes not shown to user—separate channel or tags.
+Explain citation format in prompts in beginner-friendly terms.|Require [doc-id] inline—downstream UI parses citations.
+Explain markdown vs plain output contract in beginner-friendly terms.|Pick one; tell model; validate parse.
+Explain XML output for legacy parsers in beginner-friendly terms.|Some enterprises want tagged fields—validate with schema.
+Explain prompt for multi-turn clarification in beginner-friendly terms.|Ask one question at a time—reduces user confusion.
+Explain prompt for disambiguation in beginner-friendly terms.|List options when intent unclear—don't guess account.
+Explain prompt chaining in beginner-friendly terms.|Output of prompt A feeds prompt B—log intermediate for debug.
+Explain prompt pipeline idempotency in beginner-friendly terms.|Same input should produce same structured output at temperature 0.
+Explain human-in-the-loop prompt in beginner-friendly terms.|Draft for human approval—wording matters for compliance.
+Explain prompt localization in beginner-friendly terms.|Translate templates not just user msg—legal review per locale.
+Explain accessibility in prompt outputs in beginner-friendly terms.|Plain language, structured headings—for screen readers.
+Explain prompt for red teaming in beginner-friendly terms.|Adversarial user sim—find policy holes before launch.
+Explain prompt diff in code review in beginner-friendly terms.|Show template git diff like application code.
+Explain semantic versioning for prompts in beginner-friendly terms.|Breaking output schema = major bump—consumers pin version.
+Explain deprecation notice in registry in beginner-friendly terms.|Sunset date for old prompt—force migration.
+Explain prompt metadata tags in beginner-friendly terms.|team, product, risk_tier—search and govern at scale.
+Explain aligning prompt with eval rubric in beginner-friendly terms.|Rubric criteria mirrored in instructions—easier to grade.
+Explain cost-aware prompt design in beginner-friendly terms.|Shorter instructions, fewer shots, cheaper model when sufficient.
+Explain latency-aware prompt design in beginner-friendly terms.|Skip CoT when classifier path enough—measure p95.
+Explain prompt for structured refusal in beginner-friendly terms.|JSON with reason code—UI handles cannot_help uniformly.
+Explain prompt for PII handling in beginner-friendly terms.|Redact or refuse to repeat sensitive fields—privacy policy alignment.
+Explain prompt for math word problems in beginner-friendly terms.|Ask for final answer in boxed format—separate reasoning if needed.
+Explain prompt for datetime reasoning in beginner-friendly terms.|Provide reference today in prompt—models lack real clock.
+Explain prompt for tabular data in beginner-friendly terms.|Paste CSV or markdown table—watch row limits.
+Explain prompt for long document QA in beginner-friendly terms.|Point to section titles—combine with RAG not full paste.
+Explain system prompt staleness in beginner-friendly terms.|Policy changed but prompt didn't—version linked to policy doc.
+Explain developer prompt for eval harness in beginner-friendly terms.|Judge prompts separate from user-facing—don't contaminate.
+Explain prompt linting in beginner-friendly terms.|Static checks: banned phrases, max length, required headers.
+Explain prompt snapshot in traces in beginner-friendly terms.|Log rendered template id and hash—not always full text if PII.
+Explain user prompt templates in beginner-friendly terms.|End users fill forms that render safe user message—no raw injection.
+Explain sanitizing user input before render in beginner-friendly terms.|Strip control chars; length cap—before LLM call.
+Explain prompt engineering vs fine-tuning in beginner-friendly terms.|Prompt first; fine-tune when prompt+eval plateau—cost trade.
+Explain prompt engineering vs RAG in beginner-friendly terms.|RAG supplies facts; prompt supplies law and format—both needed.
+Explain bootcamp Chapter 11 prompt library in beginner-friendly terms.|Registry, patterns, tests—foundation for agents later.
+Explain pattern: role task format in beginner-friendly terms.|Three-part structure beginners can reuse in interviews.
+Explain pattern: critique and revise in beginner-friendly terms.|Model improves draft—two-call pattern with rubric in middle.
+Explain pattern: extract then act in beginner-friendly terms.|First call JSON extract; second call tools—cleaner than one mega prompt.
+Explain pattern: verify step in beginner-friendly terms.|Ask model to check prior answer against rules—cheap guardrail.
+Explain interview tip: explain prompt versioning in beginner-friendly terms.|Shows production maturity beyond playground tinkering.
+What is the difference between system and user prompts?|System sets global rules; user carries the task and untrusted input—never swap roles.
+When should you avoid few-shot examples?|When examples are stale, biased, or teach leakage—or when zero-shot plus clear schema suffices.
+How do you test a prompt without calling a live LLM?|Stub LLM in pytest; assert rendered messages contain sections and respect token ceiling.
+Why treat prompts as versioned code?|Incidents, regressions, and compliance need reproducibility and review like any config.

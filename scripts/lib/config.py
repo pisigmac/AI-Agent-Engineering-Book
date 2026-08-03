@@ -27,7 +27,7 @@ class LLMConfig:
 @dataclass
 class BookConfig:
     title: str = "AI Agent Engineering Bootcamp (2026 Edition)"
-    total_chapters: int = 94
+    total_chapters: int = 95
     default_author: str = "AI Agent Engineering Bootcamp"
 
 
@@ -109,7 +109,7 @@ def load_config(
         ),
         book=BookConfig(
             title=str(book_raw.get("title", "AI Agent Engineering Bootcamp (2026 Edition)")),
-            total_chapters=int(book_raw.get("total_chapters", 94)),
+            total_chapters=int(book_raw.get("total_chapters", 95)),
             default_author=str(book_raw.get("default_author", "AI Agent Engineering Bootcamp")),
         ),
         dry_run=bool(raw.get("dry_run", False)),

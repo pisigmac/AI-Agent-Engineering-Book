@@ -13,7 +13,7 @@ You will learn the pieces that dominate real systems work:
 - the decoder-only pattern used by most chat/code models
 - inference as repeated forward passes + decoding
 
-You will implement a **tiny, readable transformer lab** (toy sizes, pure Python) so attention, masks, and greedy generation stop feeling magical. This is not a production model. It is a flight simulator for intuition—so when Chapter 10 discusses context windows and cost, you know *what* grows with sequence length.
+You will implement a **tiny, readable transformer lab** (toy sizes, pure Python) so attention, masks, and greedy generation stop feeling opaque. This is not a production model. It is a flight simulator for intuition—so when Chapter 10 discusses context windows and cost, you know *what* grows with sequence length.
 
 **Continuity:** Chapter 8’s pipeline becomes named components. Later chapters (tokens/cost, prompting, tools) attach to this mental model.
 

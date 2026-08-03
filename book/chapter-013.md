@@ -378,7 +378,7 @@ If first-try accept rate is low, invest in schema simplicity and few-shot extrac
 
 1. One Pydantic model per decision boundary  
 2. Enums for actions and categories  
-3. Explicit nullability instead of magic strings  
+3. Explicit nullability instead of undocumented string sentinels  
 4. Central `complete_structured`  
 5. Bound repairs  
 6. Log schema + attempts  

@@ -4,7 +4,7 @@
 
 By Chapter 20 you can choose an embedding model; by Chapters 18–19 you can chunk and search in memory. Production systems need a **vector database** (or vector index service): durable storage for vectors + metadata, filtered nearest-neighbor query, operational controls for scale, and clear trade-offs between **exact** and **approximate** indexes.
 
-A vector DB is not “magic AI storage.” It is a specialized database for the access pattern:
+A vector DB is not “opaque AI storage.” It is a specialized database for the access pattern:
 
 ```text
 upsert(id, vector, metadata) → query(vector, k, filters) → ranked hits

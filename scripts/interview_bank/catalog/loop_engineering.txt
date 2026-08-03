@@ -1,0 +1,101 @@
+Explain loop engineering for AI agents in beginner-friendly terms.|Design observe-think-act cycles with caps, termination, checkpoints, and recovery—not unbounded while True.
+Explain agent control loop in beginner-friendly terms.|Repeat: read state, call LLM, execute tools, update state until done or limit.
+Explain max steps guard in beginner-friendly terms.|Hard cap on iterations—primary runaway cost and safety control.
+Explain max tool calls per run in beginner-friendly terms.|Separate cap from LLM turns—email loops need low tool budget.
+Explain termination condition in beginner-friendly terms.|Explicit done flag, goal met predicate, or user cancel—not hope model stops.
+Explain natural language stop in beginner-friendly terms.|Model emits FINAL ANSWER token—fragile alone; combine with parser and caps.
+Explain infinite agent loop in beginner-friendly terms.|Retry without progress—detect with same-tool-same-args or stagnation detector.
+Explain stagnation detection in beginner-friendly terms.|No state change for K steps—exit with partial result or escalate.
+Explain progress metric per loop in beginner-friendly terms.|Track files changed, tickets updated—abort if zero progress.
+Explain ReAct loop in beginner-friendly terms.|Reason, act with tool, read observation, repeat—classic agent pattern.
+Explain plan-and-execute loop in beginner-friendly terms.|Plan once, execute steps with smaller loops—less replanning cost.
+Explain replanner loop in beginner-friendly terms.|Replan when step fails—hybrid flexibility.
+Explain reflection loop in beginner-friendly terms.|Critique output and retry—quality up, latency up.
+Explain human-in-the-loop breakpoint in beginner-friendly terms.|Pause before irreversible tool—approval queue.
+Explain async event loop vs agent loop in beginner-friendly terms.|asyncio schedules coroutines; agent loop is application logic—often implemented inside async.
+Explain synchronous agent loop for tests in beginner-friendly terms.|while step < max: deterministic mock LLM—pytest friendly.
+Explain state machine agent in beginner-friendly terms.|Nodes are steps; edges are conditions—LangGraph style clarity.
+Explain explicit loop state object in beginner-friendly terms.|Dataclass: messages, step, flags—easier replay than scattered vars.
+Explain idempotent loop steps in beginner-friendly terms.|Retry safe tool calls—required for crash recovery.
+Explain non-idempotent guard in beginner-friendly terms.|Confirm before charge, delete, send—human or idempotency keys.
+Explain loop checkpointing in beginner-friendly terms.|Persist state every N steps—resume after worker crash.
+Explain deterministic replay from log in beginner-friendly terms.|Recorded prompts and tool IO—debug without live APIs.
+Explain cancellation token in loop in beginner-friendly terms.|User stop sets flag checked each iteration.
+Explain wall-clock timeout in beginner-friendly terms.|Kill run after 60s regardless of step count—UX SLA.
+Explain per-step timeout in beginner-friendly terms.|Single tool or LLM call limit—prevent one hung call blocking all.
+Explain exponential backoff in loop in beginner-friendly terms.|Retry transient errors—not for logic errors model should fix.
+Explain error as observation in beginner-friendly terms.|Return tool error string to model—ReAct recovery path.
+Explain break on repeated error in beginner-friendly terms.|Same exception three times—escalate don't spin.
+Explain loop instrumentation in beginner-friendly terms.|Span per step with step index—trace waterfall.
+Explain loop metrics in beginner-friendly terms.|steps_taken, tools_called, tokens_used—dashboards and alerts.
+Explain cost budget per loop in beginner-friendly terms.|Dollar cap triggers graceful stop—FinOps guardrail.
+Explain token budget per loop in beginner-friendly terms.|Cumulative tokens across turns—pre-call estimate.
+Explain parallel branches in loop in beginner-friendly terms.|Fan-out tools then merge—don't parallelize dependent steps.
+Explain sequential dependency chain in beginner-friendly terms.|Step B needs A output—enforce ordering in code not hope.
+Explain loop unrolling for workflows in beginner-friendly terms.|Known fixed steps—use workflow engine not open agent loop.
+Explain when to avoid agent loops in beginner-friendly terms.|Deterministic ETL with fixed steps—workflow cheaper and safer.
+Explain when agent loops shine in beginner-friendly terms.|Unknown tool sequence, exploratory debugging, variable user goals.
+Explain hybrid workflow-agent loop in beginner-friendly terms.|Skeleton workflow with agent decision at branch nodes.
+Explain supervisor worker loop in beginner-friendly terms.|Supervisor assigns subtasks until backlog empty—multi-agent.
+Explain debate loop multi-agent in beginner-friendly terms.|Agents critique each other—needs round cap.
+Explain conversation loop two agents in beginner-friendly terms.|Ping-pong until consensus or max rounds—AutoGen pattern.
+Explain tool choice loop in beginner-friendly terms.|Model may call zero tools—valid termination path.
+Explain forced tool loop in beginner-friendly terms.|Pipeline requires tool every turn—rare; mostly anti-pattern.
+Explain empty action handling in beginner-friendly terms.|Model returns no tool and no answer—reprompt with nudge once.
+Explain parser loop for structured output in beginner-friendly terms.|Retry generation until JSON validates—max attempts.
+Explain validation feedback loop in beginner-friendly terms.|Schema errors fed back to model—cheap self-correction.
+Explain eval loop offline in beginner-friendly terms.|Run agent on golden scenarios in CI—no production loop.
+Explain shadow loop in beginner-friendly terms.|New loop logic runs parallel compare outputs—no user impact.
+Explain canary loop policy in beginner-friendly terms.|5% traffic new termination rules—watch step histogram.
+Explain loop regression in beginner-friendly terms.|Step count increased after prompt change—investigate.
+Explain fairness queue for loops in beginner-friendly terms.|Long runs don't starve short jobs—queue per tenant.
+Explain priority preemption in beginner-friendly terms.|Cancel low priority loops under load—SRE policy.
+Explain loop depth limit nested agents in beginner-friendly terms.|Sub-agent calls capped—prevent fractal cost explosion.
+Explain breadth-first tool exploration in beginner-friendly terms.|Research agents—still cap frontier size.
+Explain loop seed for testing in beginner-friendly terms.|Fixed mock responses—reproducible trajectories.
+Explain property test on loop in beginner-friendly terms.|For all scenarios, steps <= max_steps—invariant.
+Explain formal verification (intro) in beginner-friendly terms.|Model check small state machines—niche but interview differentiator.
+Explain loop break glass in beginner-friendly terms.|Ops kill switch disables agent runtime globally—incident response.
+Explain partial result on abort in beginner-friendly terms.|Return what we have plus reason—better than silent fail.
+Explain user message mid-loop in beginner-friendly terms.|New user input cancels or redirects—concurrency design.
+Explain queue user messages during run in beginner-friendly terms.|Serialize or merge—avoid race on shared state.
+Explain loop with streaming in beginner-friendly terms.|Emit progress events each step—SSE or websocket.
+Explain step UI checklist in beginner-friendly terms.|Show planned vs done steps—transparency.
+Explain loop for coding agent in beginner-friendly terms.|edit, run tests, read output, repeat until green or cap.
+Explain loop for web agent in beginner-friendly terms.|observe DOM, act click, observe—browser automation cycle.
+Explain loop for research agent in beginner-friendly terms.|search, read, note, search again—cite sources at end.
+Explain inner monologue loop in beginner-friendly terms.|Hidden reasoning turns—don't expose all to user.
+Explain outer user-facing loop in beginner-friendly terms.|Only final summaries shown—layer separation.
+Explain sleep in loop anti-pattern in beginner-friendly terms.|Busy wait for human—use event-driven resume webhook.
+Explain polling loop anti-pattern in beginner-friendly terms.|Poll API every second—use webhooks or long poll with backoff.
+Explain recursive agent calls in beginner-friendly terms.|Agent invokes agent—depth limit and budget inheritance.
+Explain loop closure variables in beginner-friendly terms.|Capture config in loop factory—avoid global mutable state.
+Explain thread-safe agent loop in beginner-friendly terms.|One loop per request—don't share mutable state across threads.
+Explain multiprocess agent workers in beginner-friendly terms.|Isolated loops per job—scale horizontally.
+Explain durable execution loop in beginner-friendly terms.|Temporal or similar—loop survives process restart.
+Explain  saga pattern in loops in beginner-friendly terms.|Compensating transactions on failure—undo partial tool effects.
+Explain compensation ordering in beginner-friendly terms.|Reverse order undo—like transaction rollback.
+Explain loop testing with mock LLM in beginner-friendly terms.|Scripted tool call sequence—assert final state.
+Explain loop testing with mock tools in beginner-friendly terms.|LLM real or stub; tools fake—integration focus.
+Explain record-replay loop tests in beginner-friendly terms.|VCR style—stable CI without network.
+Explain flaky loop tests in beginner-friendly terms.|Non-deterministic model—assert structure not exact wording.
+Explain LLM-as-judge in loop eval in beginner-friendly terms.|Grade trajectory rubric—expensive nightly job.
+Explain step-level assertions in beginner-friendly terms.|Step 2 must call search_tool—contract tests.
+Explain forbidden action in loop in beginner-friendly terms.|Never call delete_prod—static deny list enforced in runtime.
+Explain allowlist tool loop in beginner-friendly terms.|Only three tools enabled—reduces branch factor.
+Explain dynamic tool load mid-loop in beginner-friendly terms.|Plugins register at step 0—no mid-run surprise tools without audit.
+Explain loop versioning in beginner-friendly terms.|Agent graph v3 pinned in prod—rollback path.
+Explain feature flag loop branch in beginner-friendly terms.|Try new replanner on subset—experiment safely.
+Explain bootcamp Chapter 29 agent engine in beginner-friendly terms.|Minimal loop harness—foundation before frameworks.
+Explain LangGraph cyclic edges in beginner-friendly terms.|Explicit cycles with conditions—visualize loops.
+Explain LangChain AgentExecutor loop in beginner-friendly terms.|Legacy executor—know max_iterations parameter.
+Explain OpenAI Assistants run loop in beginner-friendly terms.|Poll run status until completed—hosted loop.
+Explain MCP client tool loop in beginner-friendly terms.|Same observe-act with standardized tool transport.
+Explain graceful degradation on cap in beginner-friendly terms.|When max steps hit, return summary of work done and open items.
+Explain loop audit for compliance in beginner-friendly terms.|Immutable log of each iteration decision—who ran what tool.
+Explain compare step traces across versions in beginner-friendly terms.|Diff tool sequences after deploy—catch behavior drift.
+Explain single-threaded loop default in beginner-friendly terms.|Avoid concurrent tool side effects unless explicitly designed.
+Explain optimistic concurrency in loops in beginner-friendly terms.|Version field on state—retry if stale write.
+How do you stop a runaway agent loop?|max steps, token/cost budgets, stagnation detection, kill switch, and human approval gates.
+How does ReAct differ from plan-and-execute loops?|ReAct replans every step; plan-and-execute runs a fixed plan with fewer planner calls.
+How do you test an agent loop offline?|Mock LLM and tools, golden trajectories, and record-replay without live APIs.

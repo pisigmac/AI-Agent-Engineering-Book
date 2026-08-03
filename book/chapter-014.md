@@ -130,7 +130,7 @@ The model receives tool definitions and a user goal. It outputs either:
 1. **Tool call** — name + arguments  
 2. **Final response** — structured or text answer for the user  
 
-Selection quality depends on descriptions, enums, and few-shot tool patterns (Ch 11)—not on magic.
+Selection quality depends on descriptions, enums, and few-shot tool patterns (Ch 11)—not on luck.
 
 ### Execution
 

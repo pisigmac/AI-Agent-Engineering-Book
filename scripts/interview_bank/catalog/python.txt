@@ -1,0 +1,136 @@
+What is list?|An ordered, mutable collection written with square brackets; use it for sequences that change.
+What is tuple?|An ordered, immutable collection; good for fixed records and dict keys.
+What is dict?|A mapping from hashable keys to values; fast lookup by key.
+What is set?|Unordered collection of unique items; useful for membership and deduplication.
+What is frozenset?|Immutable set; can be used as a dict key or set element.
+What is list.append?|Adds one element to the end of a list in amortized O(1) time.
+What is list.extend?|Adds all elements from another iterable—prefer extend over repeated append for performance.
+What is list comprehension?|Compact syntax to build lists: [f(x) for x in items if cond(x)].
+What is dict comprehension?|Builds dicts: {k: v for k, v in pairs}—keep expressions readable.
+What is set comprehension?|Builds sets with unique elements from an iterable comprehension.
+What is slice operator?|Extracts sub-sequences: s[start:stop:step]; stop is exclusive.
+What is negative indexing?|s[-1] is the last item; useful but keep readability in mind.
+What is string formatting with f-strings?|f"hello {name}" embeds expressions—preferred over % or .format for clarity.
+What is strip method?|Removes leading/trailing whitespace from strings—common when parsing user input.
+What is split and join?|split breaks strings into lists; join merges strings with a separator.
+What is regular expressions?|Pattern matching for text; compile patterns once for reuse in log parsing.
+What is os module?|Operating system interfaces—paths, env vars; prefer pathlib for paths in new code.
+What is pathlib.Path?|Object-oriented paths: join with /, read_text, exists—cleaner than os.path strings.
+What is pickle?|Serializes Python objects to bytes—never unpickle untrusted data (security risk).
+What is json module?|Standard JSON encode/decode for APIs and agent tool payloads.
+What is csv module?|Reads/writes tabular text files—good for simple data import without pandas.
+What is datetime module?|Represents dates/times; use timezone-aware objects in production logs.
+What is collections.defaultdict?|Dict that auto-creates missing keys—handy for grouping counts.
+What is collections.Counter?|Counts hashable items—quick frequency summaries.
+What is collections.deque?|Double-ended queue with fast append/pop on both ends—useful for BFS buffers.
+What is itertools?|Iterator utilities (chain, islice, product)—memory-efficient loops.
+What is functools.lru_cache?|Memoizes function results—speeds pure functions with repeated args.
+What is functools.partial?|Fixes some arguments of a callable—creates specialized callbacks.
+What is operator module?|Function versions of operators—occasionally used in functional-style code.
+What is typing.Optional?|Means value or None—documents nullable parameters for readers and tools.
+What is typing.Union?|One of several types; in 3.10+ prefer X | Y syntax.
+What is typing.Protocol?|Structural typing—duck typing with type checker support.
+What is Abstract Base Classes?|Define interfaces subclasses must implement—useful for plugin seams.
+What is property decorator?|Exposes method as attribute with optional getter/setter logic.
+What is staticmethod?|Method on class without self/cls—namespace convenience.
+What is classmethod?|Receives cls—common for alternate constructors.
+What is magic method __repr__?|Developer-friendly string for debugging; aim for unambiguous output.
+What is magic method __str__?|User-facing string; can defer to __repr__ if similar.
+What is magic method __len__?|Enables len(obj)—implement for custom collections.
+What is magic method __enter__/__exit__?|Enables with-statement context management.
+What is an iterator protocol?|Objects with __iter__ and __next__; StopIteration ends iteration.
+What is a generator function?|Uses yield to produce lazy sequences—memory friendly.
+What is yield from?|Delegates to sub-generator—flattens nested iteration cleanly.
+What is coroutine?|Async function consumed by await—foundation of asyncio.
+What is await keyword?|Pauses coroutine until awaited task completes—does not block the event loop.
+What is asyncio.create_task?|Schedules coroutine concurrently—remember to await or gather.
+What is asyncio.gather?|Runs multiple awaitables concurrently and collects results.
+What is a threading.Lock?|Mutex for shared mutable state between threads—keep critical sections tiny.
+What is multiprocessing?|Separate processes bypass GIL for CPU-bound parallelism—higher startup cost.
+What is concurrent.futures?|High-level thread/process pools—map/submit patterns for parallel I/O or CPU work.
+What is subprocess module?|Spawn shell commands—validate args; avoid shell=True with user input.
+What is argparse?|CLI argument parsing—standard for chapter main.py scripts.
+What is logging levels?|DEBUG/INFO/WARNING/ERROR/CRITICAL filter verbosity—use INFO in prod defaults.
+What is structlog or extra dict logging?|Structured fields help log aggregators correlate agent traces.
+What is unittest vs pytest?|unittest is stdlib; pytest simpler asserts and fixtures—this book uses pytest.
+What is pytest fixture?|Reusable setup injected by name—share clients, temp dirs, mock LLMs.
+What is pytest parametrize?|Runs same test with multiple inputs—table-driven tests.
+What is mock from unittest.mock?|Patch dependencies—essential for offline agent tests.
+What is MagicMock?|Auto-creates attributes on access—use spec=RealClass to catch typos.
+What is tempfile module?|Secure temporary files/dirs for tests without collisions.
+What is venv module?|Creates virtual environments—python -m venv .venv.
+What is pip freeze?|Lists installed packages—pin versions for reproducible environments.
+What is requirements.txt vs pyproject?|requirements pins env; pyproject declares project metadata—prefer pyproject for libraries.
+What is __slots__?|Restricts instance attributes—saves memory for many small objects.
+What is dataclass field?|Correct pattern for mutable defaults in dataclasses.
+What is Enum?|Named constants—clearer than raw strings for statuses and categories.
+What is NamedTuple?|Immutable lightweight records—alternative to dataclass when tuple-like.
+What is TypedDict?|Dict with typed keys—common for JSON-shaped message dicts.
+What is Protocol for LLM client?|Define complete(messages)->str interface; swap mock and real implementations.
+What is Recursion?|Function calls itself—always define base case; watch stack depth.
+What is Big-O intuition for list append?|Amortized O(1) append; O(n) insert at front due to shifting.
+What is hashability?|Immutable objects often hashable—dict keys must be hashable.
+What is shallow vs deep copy?|copy.copy vs copy.deepcopy—choose deep when nested mutability matters.
+What is assert statement?|Development checks—disable with -O; use pytest asserts in tests instead in libraries.
+What is if __name__ == '__main__'?|Guard script entrypoint so imports stay side-effect free.
+What is package __init__.py?|Marks package; can re-export public API.
+What is relative imports?|from .module import x—use within package hierarchy.
+What is NameError vs AttributeError?|NameError: variable missing; AttributeError: object lacks attribute.
+What is KeyError vs IndexError?|KeyError: missing dict key; IndexError: sequence out of range.
+What is ValueError vs TypeError?|ValueError: right type wrong value; TypeError: wrong type altogether.
+What is EAFP vs LBYL?|Python prefers try/except (EAFP) over look-before-you-leap for race-prone checks.
+What is contextlib.suppress?|Context manager to ignore specific exceptions cleanly.
+What is contextlib.contextmanager?|Build context managers from generator functions with yield.
+What is walrus operator :=?|Assigns in expression—use sparingly for readability.
+What is match/case?|Structural pattern matching—alternative to long if/elif chains.
+What is typing.Generic?|Generic classes List[T], Dict[K,V]—document container element types.
+What is bytes vs str?|bytes for raw binary; str for text—encode/decode explicitly at boundaries.
+What is unicode normalization?|Different Unicode forms can look identical—normalize when comparing user strings.
+What is time.sleep vs asyncio.sleep?|time.sleep blocks thread; asyncio.sleep yields to event loop.
+What is queue.Queue?|Thread-safe FIFO—producer/consumer between threads.
+What is asyncio.Queue?|Async queue for coroutines—common in agent worker pools.
+What is heapq module?|Min-heap for priority queues—scheduling tasks by priority.
+What is bisect module?|Binary search on sorted lists—insert while keeping order.
+What is math vs numpy?|math for scalars; numpy for vectorized arrays—AI code uses numpy heavily.
+What is sys.path manipulation?|Insert project root for scripts—pyproject/pythonpath preferred in tests.
+What is importlib?|Dynamic imports—plugin loaders use importlib.import_module.
+What is zipfile module?|Read/write zip archives—packaging datasets or bundles.
+What is tarfile module?|Archive utility—common in Linux deploy artifacts.
+What is hashlib?|Cryptographic hashes SHA256—checksum files, not for passwords alone.
+What is secrets module?|Secure random tokens—use for API keys in scripts, not random module.
+What is hmac?|Message authentication with secret key—verify webhook signatures.
+What is base64 encoding?|Text-safe encoding of bytes—not encryption.
+What is urllib.parse?|Split/join URLs—validate redirects in web agents.
+What is http.client vs requests?|stdlib low-level; requests third-party ergonomic—agents often use httpx/requests.
+What is socket basics?|Endpoints for network—understand TCP connection before debugging APIs.
+What is SSL/TLS context?|Encrypted HTTP—certificates required for HTTPS clients.
+What is doctest?|Tests in docstrings—lightweight examples; pytest usually primary.
+What is pdb debugger?|Interactive debugger—breakpoints via breakpoint() in 3.7+.
+What is breakpoint?|Enters debugger at line—remove before production deploys.
+What is memoryview?|Zero-copy slices of bytes buffers—advanced binary protocols.
+What is weakref?|References that do not prevent garbage collection—caches without leaks.
+What is gc module?|Garbage collector interface—debug circular references rarely needed.
+What is sys.getsizeof?|Shallow size of object—profiling memory starts here.
+What is cProfile?|Profiles CPU time per function—find hot loops before optimizing.
+What is timeit module?|Micro-benchmark snippets—compare small code variants.
+What is Sphinx or MkDocs?|Documentation generators—turn docstrings into sites for portfolio repos.
+How do you reverse a list in place?|list.reverse() reverses in place; reversed(list) returns iterator without mutating.
+Difference between copy and deepcopy?|copy shares nested objects; deepcopy duplicates entire tree.
+How to merge two dicts?|In 3.9+ use d1 | d2; earlier {**d1, **d2}—later keys win on collision.
+What does enumerate give you?|Index and value pairs—avoid manual counter variables.
+Why use with open(...)?|Guarantees file close even on exceptions.
+How to handle JSON from API?|response.json() if using requests; json.loads on text with try/except.
+What is a lambda?|Anonymous one-expression function—use def when logic grows.
+List vs generator for large files?|Generator reads line by line—constant memory.
+How to sort a list of dicts?|sorted(items, key=lambda x: x['name'])—stable sort in Python.
+What is None?|Singleton meaning no value—check with `is None`, not == None.
+How do * and ** work in function calls?|* unpacks iterable args; ** unpacks keyword dict.
+What is __init__?|Constructor hook—initialize instance state; call super() in subclasses.
+How does inheritance work?|Subclass gets attributes/methods; override methods; super() calls parent.
+What is MRO?|Method Resolution Order—C3 linearization determines lookup chain.
+What is a namespace?|Mapping names to objects—modules, classes, functions each have namespaces.
+How to install a package editable?|pip install -e . from directory with pyproject/setup—dev changes apply immediately.
+What is PYTHONPATH?|Env var adding dirs to import search path—prefer venv and proper packaging.
+How to read env vars?|os.environ.get('KEY', default)—load .env only in dev.
+What is a bytes literal?|b'abc' denotes bytes—encode strings before sending on binary protocols.
+How to time code quickly?|time.perf_counter() around block; for micro-bench use timeit.

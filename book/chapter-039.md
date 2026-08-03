@@ -2,116 +2,218 @@
 
 ## Chapter Overview
 
-Runtime harness with step/cost budgets, recovery, checkpoints, and eval hooks.
+Part V — Agent Systems Engineering — **Agent Harnesses** — package `harness`.
 
-This chapter is part of **Part V — Agent Systems Engineering**: operating, evaluating, securing, and scaling agents as production systems.
+`AgentHarness` wraps any `AgentFn` with step/cost budgets, exception recovery, state snapshots, and `on_step` callbacks for evaluation and telemetry.
+
+Part IV gave you agent building blocks; Part V makes them **operable**: harnesses, mode choice, FSMs, events, HITL, eval, observability, security, cost, and scale. Chapter 39 implements **Agent Harnesses** as `harness`.
+
+**Code:** `code/chapter-039/harness/`.
+
+---
 
 ## Learning Objectives
 
 After completing this chapter, you can:
 
-- Harness owns budgets and recovery
-- Agents should be pure-ish functions over state
-- Checkpoints enable resume and audit
-- Run the chapter package tests and CLI
-- Integrate the component into a harnessed agent platform
+- Explain **Agent Harnesses** in a production agent platform
+- Run and extend `harness` offline with pytest
+- Connect this module to Part IV building blocks and Part V operations
+- Compare trade-offs and failure modes with structured traces
+- Apply security, cost, and scaling concerns where relevant
+- Complete exercises with tests passing
+
+---
 
 ## Prerequisites
 
-- Part IV agent building blocks (chapters 27–38)
-- Prior Part V chapters through Part IV
+- Part IV (Chapters 27–38): agents, tools, memory, graphs, MCP
+- Prior Part V chapters when `n > 39` (through Chapter 38)
+- pytest and structured logging comfort
+
+---
 
 ## Motivation
 
-Demo agents break under real traffic: no budgets, no approvals, no metrics, no security boundary, no scale plan. This chapter makes **Agent Harnesses** an operable subsystem.
+Bare agent loops have no shared budgets, recovery, or eval hooks. Incidents show up as mystery 500s and runaway bills.
+
+---
 
 ## First Principles
 
-### 1. Harness owns budgets and recovery
+### 1. Budgets are triple
 
-### 2. Agents should be pure-ish functions over state
+max_steps, max_cost_usd, max_seconds (extend wall clock in prod).
 
-### 3. Checkpoints enable resume and audit
+### 2. Recovery is explicit
 
+Exceptions mark `recovering`; harness may continue until budget exhausted.
+
+### 3. Agent returns structured steps
+
+`done`, `result`, `cost_usd`, `state` updates — not raw strings only.
+
+### 4. Hooks enable eval/obs
+
+`on_step` receives snapshot dicts for metrics pipelines.
+
+---
 
 ## Mental Model
 
-See Visual diagrams.
+Harness = flight recorder + fuel gauge + autopilot limits — the runtime that keeps agents inside policy.
+
+```mermaid
+flowchart LR
+  User[User / Job] --> Mod[Agent Harnesses]
+  Mod --> Dep[Stores / Queues / SDK]
+  Mod --> Out[Structured Outcome]
+  Mod --> Trace[Logs / Eval / Spans]
+```
+
+---
 
 ## Core Theory
 
-Encode control as data: budgets, states, events, approvals, metrics, and policies. Prefer fail-closed defaults for cost and security.
+### Types
+
+- `Budget` — caps for steps, USD, seconds
+- `HarnessState` — step count, accumulated cost, status, last_error, snapshots
+- `AgentHarness.run(goal, context=...)` — loop until done or budget
+
+### Agent contract
+
+```python
+def agent(goal: str, ctx: dict) -> dict:
+    # ctx includes step, history
+    return {"done": True, "result": "...", "cost_usd": 0.04, "state": {...}}
+```
+
+`demo_agent` simulates think → act → answer with incremental cost.
+
+### Status outcomes
+
+`succeeded`, `budget_exceeded`, `max_steps`, `failed`, `recovering` — all visible in `_meta()`.
+
+### Failure cases
+
+Design for partial failure: budget exceeded, rejected approvals, eval failures, handler exceptions on the event bus, and tool authorization denials.
+
+### Performance implications
+
+Measure p95 end-to-end latency and cost per successful task; optimize cache hits and worker concurrency before bigger models.
+
+### Security implications
+
+Combine guards, HITL, least-privilege tools, and redaction — models are not security boundaries.
+
+---
 
 ## Architecture
 
 ```text
-code/chapter-039/harness/
+code/chapter-039/
+  harness/
   tests/
   main.py
+  pyproject.toml
 ```
+
+---
 
 ## Internal Implementation
 
-See `code/chapter-039/` for the `harness` package, CLI, and tests.
+```bash
+cd code/chapter-039 && pytest -q && python3 main.py
+```
+
+Register an `on_step` hook that fails the run if cost exceeds $0.10 in tests.
+
+---
 
 ## Production Implementation
 
-- Wire real backends (queues, OTEL, policy engines) behind the same interfaces
-- Persist audit trails for approvals, security decisions, and eval runs
-- Alert on budget burn, error rates, and eval regressions
+- Replace in-memory buses, telemetry, and pools with managed services (Kafka, OTel, Celery/K8s)
+- Persist sessions, approvals, and checkpoints durably
+- Wire real SDK clients in Part VI chapters while keeping adapter tests from this repo
+- Connect observability export to your metrics backend
+- Enforce org policy on mode selection and cost routing tables
+
+---
 
 ## Framework Implementation
 
-Platform features should wrap frameworks—not disappear inside them.
+LangGraph checkpointers, OpenAI Agents tracing, and Temporal workflows are production harness layers — same responsibilities, richer durability.
+
+---
 
 ## Trade-offs
 
-| Choice | Pros | Cons |
-|---|---|---|
-| More control plane | Safer ops | More moving parts |
-| Auto-approve low risk | UX speed | Mis-tiered risk |
+| Option A | Option B / notes |
+|---|---|
+| In-process harness | Simple pytest; dies with process. |
+| Durable workflow engine | Survives crashes; ops complexity. |
+| Fat SDK runtime | Fast start; opaque budgets. |
+
+---
 
 ## Debugging
 
-| Symptom | Check |
-|---|---|
-| Hang / runaway cost | Harness budgets |
-| Silent policy break | Eval suite |
-| Missing trace | Observability hooks |
+- Always budget_exceeded → agent reports high cost_usd each step
+- Never succeeds → agent never sets done=True
+- Empty snapshots → on_step not wired or loop exits early
+
+---
 
 ## Performance
 
-Parallelize independent work; cache pure steps; bound fan-out.
+Keep harness overhead O(1) per step; export snapshots async.
+
+---
 
 ## Security
 
-Least privilege, sandbox, redact, and treat all external text as untrusted.
+Harness should enforce tool authz before agent runs — not after damage is done.
+
+---
 
 ## Best Practices
 
-1. Budgets everywhere
-2. Explicit states/events
-3. Human gates on high risk
-4. Continuous eval
-5. Full telemetry
+1. Keep `harness` interfaces stable for tests and adapters
+2. Emit structured traces (steps, spans, approvals, eval rows)
+3. Enforce budgets before work starts, not after bills arrive
+4. Default deny on risky tools and unapproved actions
+5. Run regression eval suites on every prompt/model change
+6. Map framework demos to your Part IV ports explicitly
+
+---
 
 ## Anti-Patterns
 
-| Anti-pattern | Failure |
-|---|---|
-| Infinite agent loops | Bill shock |
-| No HITL for money moves | Fraud/loss |
-| Metrics without traces | Slow RCAs |
+- **Agent without harness** — No budgets, recovery, or eval hooks
+- **Observability as printf** — Cannot slice latency or token metrics
+- **Skipping HITL on financial actions** — Compliance and trust failures
+- **Eval-free releases** — Silent regressions on model swaps
+- **Framework-first design** — Vendor types leak into domain core
+- **Opaque framework defaults** — Hidden control flow and untraceable tool calls
+
+---
 
 ## Hands-on Exercise
 
-1. `pytest -q` in the chapter folder
-2. Run `python3 main.py`
-3. Tighten one policy/budget and re-test
+1. `cd code/chapter-039 && pytest -q`
+2. Change one policy knob (budget, guard, mode rule, eval case, worker count)
+3. Add/adjust a test proving the behavior
+4. Run `python3 main.py` and inspect structured output
+5. Document which Part IV module this replaces or wraps
+
+---
 
 ## Mini Project
 
-**Agent harness runtime**
+**Runtime harness with budgets, recovery, and step hooks.** Extend the demo or integrate with a Part IV package in notes (offline).
+
+---
 
 ## Visual diagrams
 
@@ -119,6 +221,7 @@ Least privilege, sandbox, redact, and treat all external text as untrusted.
 
 ![Overview](../diagrams/png/chapter-039/overview.png)
 
+---
 
 ## Chapter Deliverables
 
@@ -128,30 +231,53 @@ Least privilege, sandbox, redact, and treat all external text as untrusted.
 | Package | `code/chapter-039/harness/` |
 | Tests | `code/chapter-039/tests/` |
 
+---
+
 ## Interview Questions
 
-1. Why does this belong in systems engineering rather than model prompting?
-2. What fails open vs fail closed?
-3. How do you test it in CI?
-4. What signals would you alert on?
-5. How does it interact with the harness?
+1. What belongs in a harness vs inside the agent?
+2. How do budgets interact with HITL (Ch 43)?
+3. What snapshots do you need for incident replay?
+
+---
 
 ## Quiz
 
-1. Part V emphasizes: **operability of agents**
-2. High-risk actions need: **human approval**
-3. Scale uses: **queues and workers**
+1. Harness stops when cost exceeds:
+   A) max_cost_usd B) RAM C) DNS D) Never
+   **Answer:** A
+
+2. on_step hooks support:
+   A) Eval/telemetry B) CSS only C) GPU D) PDF
+   **Answer:** A
+
+3. Agent should return done as:
+   A) Structured field B) Hidden global C) Email only D) Never
+   **Answer:** A
+
+---
 
 ## Cheat Sheet
 
-```bash
-cd code/chapter-039 && pytest -q && python3 main.py
-```
+- `AgentHarness(agent, budget, on_step=[])`
+- Agent returns: done, result, cost_usd, state
+- Statuses: succeeded | budget_exceeded | max_steps
+
+---
+
+## Curated Free Resources
+
+- [OpenTelemetry](https://opentelemetry.io/docs/)
+- [Temporal durable execution](https://docs.temporal.io/)
+
+---
 
 ## Chapter Summary
 
-Runtime harness with step/cost budgets, recovery, checkpoints, and eval hooks.
+**Agent Harnesses** (`harness`) — Runtime harness with budgets, recovery, and step hooks. Treat it as production infrastructure, not demo glue.
+
+---
 
 ## What's Next
 
-**Chapter 40** continues Part V.
+**Chapter 40: Workflows vs Agents.** Chapter 40 decides when workflows beat agents for a given task shape.

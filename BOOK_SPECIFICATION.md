@@ -2697,8 +2697,7 @@ CAREER
 92. Technical Interviews
 93. Portfolio & Open Source
 94. Career Roadmap & Startup Guide
-
-Readers should leave with:
+95. Comprehensive Interview Question Bank
 
 • A polished GitHub portfolio
 • Production-ready projects

@@ -78,7 +78,7 @@ See `diagrams/README.md`. Each chapter also has a **Visual diagrams** section wi
 
 ## Chapters present
 
-Manuscript and code slices currently include chapters **1–94** (full curriculum: Parts I–X complete).
+Manuscript and code slices currently include chapters **1–95** (full curriculum plus extended interview bank).
 
 ## Philosophy
 

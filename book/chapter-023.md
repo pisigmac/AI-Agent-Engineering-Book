@@ -59,7 +59,7 @@ Changing EF without re-ingesting corrupts similarity geometry (Ch 15/20).
 
 `where={"topic": "security"}` is the same idea as Ch 21 allow-lists.
 
-### 4. Persistence is a directory, not magic
+### 4. Persistence is a directory, not an implicit guarantee
 
 `PersistentClient(path=...)` must be versioned and backed up like any datastore.
 

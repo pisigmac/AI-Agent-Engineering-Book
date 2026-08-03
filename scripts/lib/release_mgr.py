@@ -18,9 +18,9 @@ PRESET_RELEASES = {
     "v0.1": {"label": "First 10 Chapters", "max_chapter": 10},
     "v0.5": {"label": "Half Complete", "max_chapter": 47},
     "v0.9": {"label": "Technical Review", "max_chapter": 90},
-    "v1.0": {"label": "First Edition", "max_chapter": 94},
-    "v1.1": {"label": "Errata", "max_chapter": 94},
-    "v2.0": {"label": "New Framework Updates", "max_chapter": 94},
+    "v1.0": {"label": "First Edition", "max_chapter": 95},
+    "v1.1": {"label": "Errata", "max_chapter": 95},
+    "v2.0": {"label": "New Framework Updates", "max_chapter": 95},
 }
 
 
@@ -53,7 +53,7 @@ def plan_release(
     label: str | None = None,
 ) -> ReleasePlan:
     preset = PRESET_RELEASES.get(version, {})
-    max_ch = max_chapter or int(preset.get("max_chapter") or 94)
+    max_ch = max_chapter or int(preset.get("max_chapter") or 95)
     lab = label or str(preset.get("label") or version)
 
     ready: list[int] = []

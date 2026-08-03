@@ -1,0 +1,100 @@
+Tell me about a time you learned something quickly.|Pick a concrete skill (e.g., asyncio). Explain resource used, mini project, and outcome metric.
+Describe a disagreement with a product manager.|Focus on user impact data, experiment or prototype, and agreed decision—not winning the argument.
+Tell me about a bug you shipped to production.|Own impact, detection, fix, test added, and process change—no blaming QA.
+How do you prioritize tech debt?|Balance risk interest vs feature velocity; quantify debt (incident time, deploy friction).
+Describe mentoring someone.|Goal, your actions, their growth metric, what you learned.
+Tell me about working under pressure.|Specific deadline, how you scoped, communicated risks, delivered minimally viable slice.
+How do you give feedback?|Situation-behavior-impact; private for critical; actionable next step.
+Tell me about a time you said no.|Declined scope with alternatives and trade-offs—shows judgment.
+Describe cross-team project.|Stakeholders, alignment doc, interfaces, outcome—common in platform/agent work.
+How do you handle unclear ownership?|Clarify RACI, document decisions, escalate early with options.
+Tell me about improving a process.|Before/after metrics—deploy time, incident count, eval pass rate.
+Describe a time you advocated for users.|User research or ticket theme drove priority change.
+How do you stay current in AI?|Curated sources, building projects, not hype tweets only.
+Tell me about documentation you wrote.|Audience, structure, impact on onboarding time.
+Describe a failed project.|Learnings, what you'd do differently—growth mindset.
+How do you estimate tasks?|Break down, reference past work, include test/doc buffer, communicate uncertainty range.
+Tell me about code review you received.|Specific feedback, how you changed habit, result.
+Tell me about code review you gave.|Kind specific comments, linked to standards/security.
+Describe on-call experience.|Incident handled, comms, postmortem, follow-up fix.
+How do you debug under time pressure?|Reproduce, bisect, observe logs/traces, fix forward vs rollback decision.
+Tell me about diversity and inclusion.|Concrete inclusive actions—interviews, docs, meetings—not platitudes.
+Why this company?|Research-specific: product, culture, problems aligned with your skills.
+Why leave current role?|Positive framing: growth, impact, alignment—never trash employer.
+Where do you see yourself in 5 years?|Technical leadership or deep IC path tied to agent/ML impact.
+How do you handle repetitive work?|Automate, script, or batch—show agent engineer mindset.
+Tell me about ethical concern in a project.|Raised issue, options, outcome—safety and privacy.
+Describe presenting to non-technical audience.|Analogies, visuals, avoided jargon, checked understanding.
+Tell me about a time you changed mind with data.|Hypothesis, experiment, metric, updated decision.
+How do you build trust with new team?|Listen, deliver small wins, communicate proactively.
+Describe remote work challenge.|Timezone overlap plan, async docs, recorded demos.
+Tell me about biggest achievement.|Quantified impact, your specific contribution, team credit.
+How do you handle multitasking?|Priority queue, time boxing, avoid context switch cost lies.
+Describe situation with incomplete data.|Assumptions stated, smallest experiment, iterate.
+Tell me about customer-facing incident.|Empathy, comms timeline, fix, prevention.
+How do you onboard to new codebase?|Read README/tests, trace one request, fix small bug first.
+Tell me about tight coupling you fixed.|Refactor seam, tests, incremental migration.
+Describe performance optimization.|Measure first, bottleneck found, before/after numbers.
+Tell me about security issue you found.|Responsible disclosure, severity, fix verification.
+How do you collaborate with designers?|Early feasibility, prototypes, accessibility considerations.
+Tell me about API design disagreement.|Consumer needs, versioning, backwards compatibility proposal.
+Describe data privacy consideration.|Minimize collection, retention, user consent in feature.
+Tell me about leading without authority.|Influence via prototypes, docs, pairing—common staff path.
+How do you handle burnout signs?|Boundaries, sustainable pace, escalate workload issue early.
+Tell me about teaching others.|Workshop, blog, internal talk—reuse bootcamp chapters.
+Describe time you improved reliability.|SLO defined, alerts tuned, error budget policy.
+Tell me about cost optimization.|Measured cloud/ token spend, change implemented, savings.
+How do you decide build vs buy?|TCO, time to market, strategic differentiation, risk.
+Tell me about working with legacy code.|Characterization tests, strangler fig pattern, respect constraints.
+Describe agile conflict.|Sprint goal clarity, negotiate scope with PM with data.
+Tell me about innovation you proposed.|Problem, spike, pilot metrics, rollout plan.
+How do you handle negative feedback?|Listen, clarify, action plan, follow up.
+Tell me about teamwork sports analogy alternative.|Concrete collaboration story with roles and outcome.
+Describe volunteering or community.|Meetup, OSS, mentoring—shows initiative.
+Tell me about patent or publication (if any).|Your contribution plain language—optional.
+How do you evaluate job offers?|Role, growth, comp, team, ethics, learning budget.
+Tell me about relocation or timezone.|Honest constraints and how you'd make collaboration work.
+Describe handling confidential info.|Need-to-know, secure storage, no interview leaks.
+Tell me about accessibility improvement.|WCAG consideration, testing, user impact.
+How do you define success in first 90 days?|Learn systems, ship small improvement, build relationships.
+Tell me about using AI tools responsibly.|Verify outputs, privacy, cite limits—aligns with agent engineering ethics.
+Describe conflict with senior engineer.|Respectful technical debate, experiment resolved disagreement.
+Tell me about biggest risk you took.|Calculated risk, mitigation, outcome—not reckless.
+How do you handle scope creep?|Document change, trade-off timeline, get explicit approval.
+Tell me about KPI you moved.|Baseline, intervention, measured delta, timeframe.
+Describe favorite collaboration tool.|Why it fits async/sync—Notion, Linear, etc.—tie to team norm.
+Tell me about time you simplified architecture.|Removed moving parts, improved operability metrics.
+How do you interview others?|Structured rubric, reduce bias, take home fairness—if asked.
+Tell me about passion project.|Link to agent/ML portfolio—GitHub demo.
+Describe receiving harsh feedback.|Professional response, improvement, later thank mentor.
+Tell me about adapting to policy change.|Compliance first, implemented controls, trained team.
+How do you handle ambiguous title/role?|Clarify expectations in writing, deliver outcomes.
+Tell me about win as team not hero.|Credit distribution, what you specifically did.
+Describe learning from user research.|Changed feature based on interviews or analytics.
+Tell me about fixing miscommunication.|Reset meeting, shared doc, confirmed understanding.
+How do you manage up?|Status concise, risks early, options not only problems.
+Tell me about working with sales/support.|Feedback loop into product and docs.
+Describe compliance deadline.|Prioritized legal requirements, technical controls shipped.
+Tell me about international team.|Cultural sensitivity, overlap hours, clear written decisions.
+How do you celebrate wins?|Team recognition, retro shout-outs—morale matters.
+Tell me about tough ethical no.|Declined harmful use case with explanation—integrity.
+Describe career pivot into AI.|Steps taken: courses, projects, interviews—your bootcamp path.
+Tell me about long-term learning plan.|Skills matrix, quarterly milestones—Ch 94 toolkit.
+How do you react to sudden priority shift?|Replan, communicate slip, protect critical reliability work.
+Tell me about automation you built.|Saved hours, reduced errors—agent engineer story.
+Describe favorite book or course.|Tie lesson to how you work—not list without insight.
+Tell me about handling duplicate work.|Merge efforts, share component, avoid NIH syndrome smartly.
+How do you ensure inclusive interviews?|Structured questions, diverse panel if possible—you advocate fairness.
+Tell me about gratitude at work.|Recognized others' help in success story—emotional intelligence.
+Describe perfect day at this job.|Realistic: build eval, ship agent feature, collaborate—shows fit research.
+Closing: anything else?|Summarize unique value, enthusiasm, thank interviewer—30 seconds.
+Tell me about a time you improved documentation.|Identified gap, wrote docs, measured faster onboarding or fewer support tickets.
+How do you handle competing deadlines?|Stack rank by impact and dependencies, negotiate dates, communicate early.
+Describe a time you had to learn from failure publicly.|Demo failed or launch bug—how you recovered and communicated.
+Tell me about supporting teammates under stress.|Covered on-call, paired on hard bug, shared credit.
+How do you ensure quality when moving fast?|Tests, eval gates, feature flags, incremental rollout.
+Describe feedback that changed your leadership style.|Specific behavior change and team outcome.
+Tell me about balancing innovation and reliability.|Experiment in shadow/canary while keeping SLO on main path.
+How do you approach salary negotiation?|Research, total comp, role scope—collaborative not adversarial.
+Tell me about a time you championed testing or eval.|Added CI eval or pytest culture—metrics improved.
+Describe working with legal/compliance on AI.|Privacy review, data minimization, documented controls.

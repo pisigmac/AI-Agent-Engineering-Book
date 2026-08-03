@@ -1,0 +1,110 @@
+Explain LangGraph in beginner-friendly terms.|Graph-based agent orchestration on LangChain—StateGraph, nodes, edges, checkpointers, human interrupts.
+Explain LangGraph StateGraph in beginner-friendly terms.|Define state schema, add nodes and edges, compile, invoke—explicit control flow vs hidden loops.
+Explain LangGraph state schema in beginner-friendly terms.|TypedDict or dataclass holding messages and fields—single source of truth per step.
+Explain LangGraph node function in beginner-friendly terms.|Pure-ish step: read state, return partial state update—keep side effects in tools.
+Explain LangGraph conditional edges in beginner-friendly terms.|Route by function on state—if tool needed go to tools else END.
+Explain LangGraph compile in beginner-friendly terms.|Freezes graph for invoke/stream—catch wiring errors early.
+Explain LangGraph checkpointer in beginner-friendly terms.|Persists thread state—resume conversations and human-in-the-loop.
+Explain LangGraph interrupt in beginner-friendly terms.|Pause before sensitive node—wait for human approval then resume.
+Explain LangGraph ToolNode in beginner-friendly terms.|Prebuilt node executing tool calls from AIMessage—pairs with model node.
+Explain LangGraph prebuilt ReAct agent in beginner-friendly terms.|create_react_agent shortcut—know limits before custom graphs.
+Explain LangGraph streaming in beginner-friendly terms.|stream and astream events—UX progress and token streaming.
+Explain LangGraph subgraph in beginner-friendly terms.|Nest graph as node—modular teams and supervisors.
+Explain LangGraph vs LangChain AgentExecutor in beginner-friendly terms.|Graph explicit; AgentExecutor legacy loop—prefer LangGraph for prod control.
+Explain LangGraph Postgres checkpointer in beginner-friendly terms.|Durable multi-tenant threads—ops-friendly persistence.
+Explain LangGraph time travel (concept) in beginner-friendly terms.|Replay or fork thread from checkpoint—debug and audit.
+Explain LangChain in beginner-friendly terms.|Composable LLM app framework—prompts, models, retrievers, agents, LCEL.
+Explain LangChain LCEL in beginner-friendly terms.|Pipe Runnables with |—prompt | model | parser; batch and stream uniformly.
+Explain LangChain RunnableSequence in beginner-friendly terms.|Chain steps left-to-right—each step implements invoke/stream.
+Explain LangChain RunnableParallel in beginner-friendly terms.|Run branches concurrently—merge dict outputs.
+Explain LangChain ChatPromptTemplate in beginner-friendly terms.|Messages with variables—render to provider format.
+Explain LangChain output parser in beginner-friendly terms.|StrOutputParser, JsonOutputParser, Pydantic—validate model output.
+Explain LangChain retriever in beginner-friendly terms.|Interface returns docs for question—vector or hybrid behind it.
+Explain LangChain tool decorator in beginner-friendly terms.|@tool wraps function with schema for model binding.
+Explain LangChain bind_tools in beginner-friendly terms.|Attach tool schemas to chat model—function calling path.
+Explain LangChain AgentExecutor max_iterations in beginner-friendly terms.|Cap loop—always set in interviews and prod.
+Explain LangChain memory ConversationBuffer in beginner-friendly terms.|Stores chat history—watch token growth; prefer summary or checkpointer.
+Explain LangChain hub prompts in beginner-friendly terms.|Pull shared prompts—pin versions for reproducibility.
+Explain LangChain callbacks in beginner-friendly terms.|On LLM/tool events—map to your OpenTelemetry traces.
+Explain LangChain Document loaders in beginner-friendly terms.|Ingest files to Documents—chunk downstream in RAG.
+Explain LangChain text splitters in beginner-friendly terms.|RecursiveCharacterTextSplitter common—tune size for embedding model.
+Explain LangChain EnsembleRetriever in beginner-friendly terms.|Combine multiple retrievers—BM25 plus vector pattern.
+Explain LangChain migration to LangGraph in beginner-friendly terms.|New agents as graphs; keep LCEL for linear chains.
+Explain CrewAI in beginner-friendly terms.|Role-based multi-agent crews—Agent, Task, Crew, Process.
+Explain CrewAI Agent in beginner-friendly terms.|role, goal, backstory, tools—prompt persona for specialized worker.
+Explain CrewAI Task in beginner-friendly terms.|description, expected_output, agent—unit of work with acceptance criteria.
+Explain CrewAI Crew in beginner-friendly terms.|Agents plus tasks plus process—kickoff runs the workflow.
+Explain CrewAI Process.sequential in beginner-friendly terms.|Tasks run in order—output context flows forward.
+Explain CrewAI Process.hierarchical in beginner-friendly terms.|Manager agent delegates—watch cost and loops.
+Explain CrewAI kickoff in beginner-friendly terms.|Entry API with inputs dict—returns consolidated result.
+Explain CrewAI tools in beginner-friendly terms.|Same tool pattern as LangChain—limit tools per agent.
+Explain CrewAI memory in beginner-friendly terms.|Optional recall across tasks—configure retention and PII policy.
+Explain CrewAI vs LangGraph in beginner-friendly terms.|CrewAI opinionated roles; LangGraph custom graph—pick by team and control needs.
+Explain CrewAI training/fine-tune (awareness) in beginner-friendly terms.|CrewAI enterprise features—know concept; focus on eval in interviews.
+Explain n8n in beginner-friendly terms.|Low-code workflow automation—HTTP, CRM, schedules, plus AI nodes.
+Explain n8n AI Agent node in beginner-friendly terms.|LLM plus tools inside workflow—good for integrations not heavy custom code.
+Explain n8n LangChain node in beginner-friendly terms.|Bring LangChain chains into n8n—bridge ops and dev.
+Explain n8n webhook trigger in beginner-friendly terms.|Start flow from external event—common for support and sales automations.
+Explain n8n self-hosted vs cloud in beginner-friendly terms.|Self-host for data residency; cloud for speed—enterprise interview topic.
+Explain n8n credentials store in beginner-friendly terms.|Encrypted creds per integration—rotate and scope minimally.
+Explain n8n error workflows in beginner-friendly terms.|Retry branches and alert Slack—reliability without Python.
+Explain n8n vs code agents in beginner-friendly terms.|n8n for integration-heavy glue; LangGraph when complex state and tests—hybrid common.
+Explain n8n expression language in beginner-friendly terms.|{{ }} access prior node JSON—debug data shape in interviews.
+Explain n8n sub-workflows in beginner-friendly terms.|Reuse flows—like functions for automation.
+Explain AutoGen in beginner-friendly terms.|Microsoft multi-agent conversation framework—agents message each other.
+Explain AutoGen UserProxyAgent in beginner-friendly terms.|Represents human or executes code—termination and approval gates.
+Explain AutoGen AssistantAgent in beginner-friendly terms.|LLM-backed peer—system message defines role.
+Explain AutoGen GroupChat in beginner-friendly terms.|Round-robin or selector—must cap rounds.
+Explain AutoGen code execution in beginner-friendly terms.|Docker sandbox for run_code—security critical talking point.
+Explain AutoGen vs CrewAI in beginner-friendly terms.|AutoGen chat-centric; CrewAI task-centric—both need termination caps.
+Explain OpenAI Agents SDK in beginner-friendly terms.|Vendor SDK for agents, handoffs, tracing—compare lock-in vs LangGraph.
+Explain OpenAI Agents handoff in beginner-friendly terms.|Delegate subtask to specialist agent—similar to supervisor pattern.
+Explain OpenAI Agents tracing in beginner-friendly terms.|Built-in spans—export to your observability stack.
+Explain LlamaIndex in beginner-friendly terms.|Data framework for RAG and agents—indexes, query engines, workflows.
+Explain LlamaIndex agent in beginner-friendly terms.|ReAct or OpenAI agent over tools and query engines.
+Explain LlamaIndex Workflow in beginner-friendly terms.|Event-driven multi-step flows—competes conceptually with LangGraph.
+Explain LlamaIndex query engine in beginner-friendly terms.|Retrieve and synthesize—RAG interview staple.
+Explain LlamaIndex composable retrievers in beginner-friendly terms.|Combine retrievers—parallel to LangChain EnsembleRetriever.
+Explain Semantic Kernel in beginner-friendly terms.|Microsoft orchestration—Kernel, plugins, planners.
+Explain SK KernelFunction in beginner-friendly terms.|Wrap Python as plugin function—schema for planner.
+Explain SK planner in beginner-friendly terms.|Auto sequence of functions—validate plan before execute in prod.
+Explain Haystack pipelines in beginner-friendly terms.|DAG of components for NLP/RAG—Pipeline.connect wiring.
+Explain Haystack vs LangChain in beginner-friendly terms.|Haystack pipeline-first; LangChain broader ecosystem—pick by team.
+Explain Flowise (awareness) in beginner-friendly terms.|Visual LangChain builder—protos only; prod needs export and tests.
+Explain Dify (awareness) in beginner-friendly terms.|LLM app platform with workflows—know for startup stack questions.
+Explain LangSmith in beginner-friendly terms.|LangChain observability—trace runs, datasets, evals—mention in Lang stack interviews.
+Explain LangSmith dataset eval in beginner-friendly terms.|Regression on prompts and graphs—CI for agents.
+Explain LangGraph Platform (awareness) in beginner-friendly terms.|Hosted graphs and deploy—compare self-host LangGraph.
+Explain framework selection criteria in beginner-friendly terms.|Control, team skills, observability, vendor lock-in, test story.
+Explain when to avoid frameworks in beginner-friendly terms.|Tiny feature—direct API plus tests may beat abstraction.
+Explain framework version pinning in beginner-friendly terms.|LangChain 0.2 vs 1.x breaking changes—pin and read migration guides.
+Explain testing LangGraph offline in beginner-friendly terms.|Mock chat model returning fixed AIMessage with tool_calls.
+Explain testing CrewAI offline in beginner-friendly terms.|Mock LLM backend or VCR recorded responses—assert task outputs.
+Explain testing n8n flows in beginner-friendly terms.|Pin workflow JSON in git; staging workspace; manual and contract tests on webhooks.
+Explain MCP with LangGraph in beginner-friendly terms.|MCP tools as ordinary tools—stdio or HTTP transport.
+Explain MCP server in n8n in beginner-friendly terms.|Expose or consume tools—emerging integration pattern.
+Explain LangGraph supervisor pattern in beginner-friendly terms.|Supervisor node routes to worker subgraphs—multi-agent prod pattern.
+Explain LangGraph map-reduce subgraph in beginner-friendly terms.|Fan-out workers aggregate—parallel research tasks.
+Explain LangChain StructuredTool in beginner-friendly terms.|Pydantic args—clear schema for interviews.
+Explain LangGraph reducers on state in beginner-friendly terms.|Annotated list with add_messages—append vs replace semantics.
+Explain CrewAI verbose and logging in beginner-friendly terms.|Debug crew steps—toggle in dev only.
+Explain n8n queue mode in beginner-friendly terms.|Redis-backed scaling for workers—ops at volume.
+Explain n8n AI credentials in beginner-friendly terms.|Separate OpenAI keys per env—never commit.
+Explain LangGraph Send API (awareness) in beginner-friendly terms.|Dynamic edges to multiple workers—parallel tool map.
+Explain LangChain RunnableLambda in beginner-friendly terms.|Custom Python in LCEL—keep logic testable.
+Explain framework observability gap in beginner-friendly terms.|Unify traces across n8n and Python—correlation ids on webhooks.
+Explain framework cost control in beginner-friendly terms.|Token caps in CrewAI and LangGraph config; n8n rate limits.
+Explain framework security in beginner-friendly terms.|Tool allowlists, sandbox code, SSRF on HTTP nodes—name per framework.
+Explain LangGraph human node in beginner-friendly terms.|Custom node waiting on external event—approval ticket pattern.
+Explain CrewAI delegation in beginner-friendly terms.|Agent can delegate subtasks—depth limits.
+Explain n8n sticky sessions in beginner-friendly terms.|Pin execution for debugging—support interviews.
+Interview focus — LangGraph core APIs|StateGraph, add_node, add_edge, compile, invoke, checkpointer.
+Interview focus — LangChain LCEL benefit|Uniform invoke batch stream and composability with | operator.
+Interview focus — CrewAI components|Agent, Task, Crew, Process sequential vs hierarchical.
+Interview focus — n8n use case|Integrate SaaS plus LLM steps quickly; not replace complex agent state machines.
+Interview focus — LangGraph vs CrewAI|Custom graph control vs role/task abstraction—team and product fit.
+Interview focus — production checklist for frameworks|max iterations, persistence, tracing, eval CI, secrets, kill switch.
+What is the LangGraph prebuilt ToolNode used for?|Executes tool calls from the model's AIMessage and returns ToolMessage observations.
+When would you choose n8n over a Python LangGraph service?|Integration-heavy workflows with many SaaS connectors and fewer custom state-machine needs.
+How does CrewAI pass context between sequential tasks?|Prior task output becomes available to later tasks via crew context—define expected_output clearly.
+What LangSmith feature supports agent regression testing?|Datasets plus eval runs on traced chains/graphs—compare scores before deploy.
